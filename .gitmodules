@@ -1,0 +1,6 @@
+[submodule "main"]
+	path = main
+	url = git@github.com:mohmdelsayed/HesScale.git
+[submodule "HesScale"]
+	path = HesScale
+	url = git@github.com:mohmdelsayed/HesScale.git
