@@ -1,6 +1,6 @@
 import torch
 from backpack import backpack, extend
-from perturb_optim import PGD, AntiPGD, FirstOrderUGD, SecondOrderUGD, FirstOrderUPGD, SecondOrderUPGD
+from optimizers import PGD, AntiPGD, FirstOrderUGD, SecondOrderUGD, FirstOrderUPGD, SecondOrderUPGD
 torch.manual_seed(0)
 hidden_units = 10
 n_obs = 10
