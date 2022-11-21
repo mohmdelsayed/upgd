@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import torch.nn as nn
 from torch.optim import SGD
-from search_optimizers.first_order import FirstOrderSearchAntiCorr
+from optim.search.first_order import FirstOrderSearchAntiCorr
 import torch
 import numpy as np
 import matplotlib

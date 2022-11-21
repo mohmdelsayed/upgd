@@ -1,6 +1,6 @@
 import torch
 from backpack import backpack, extend
-from search_optimizers.first_order import FirstOrderSearchNormal, FirstOrderSearchAntiCorr
+from optim.search.first_order import FirstOrderSearchAntiCorr, FirstOrderSearchNormal
 
 torch.manual_seed(0)
 hidden_units = 100
