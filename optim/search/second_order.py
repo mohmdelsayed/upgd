@@ -12,13 +12,16 @@ class SecondOrderSearchNormal(torch.optim.Optimizer):
             for p in group["params"]:
                 state = self.state[p]
                 if len(state) == 0:
+                    state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
+                state["step"] += 1
+                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 avg_utility = state["avg_utility"]
                 hess_param = getattr(p, group["method_field"])
                 noise = torch.randn_like(p.grad)                
                 utility = 0.5 * hess_param * p.data ** 2 - p.grad.data * p.data
                 avg_utility.mul_(group["beta_utility"]).add_(utility, alpha=1 - group["beta_utility"])
-                p.data.add_(noise * (1-torch.tanh_(avg_utility / group["temp"])), alpha=-group["lr"])
+                p.data.add_(noise * (1-torch.tanh_(avg_utility / group["temp"])), alpha=-group["lr"] / bias_correction)
 
 class SecondOrderSearchAntiCorr(torch.optim.Optimizer):
     method = HesScale()
@@ -31,16 +34,16 @@ class SecondOrderSearchAntiCorr(torch.optim.Optimizer):
             for p in group["params"]:
                 state = self.state[p]
                 if len(state) == 0:
+                    state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
                     state["prev_noise"] = torch.zeros_like(p.data)
-
+                state["step"] += 1
+                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 avg_utility = state["avg_utility"]
                 hess_param = getattr(p, group["method_field"])
-
                 new_noise = torch.randn_like(p.grad)
                 noise = (new_noise-state["prev_noise"])
                 state["prev_noise"] = new_noise
-                
                 utility = 0.5 * hess_param * p.data ** 2 - p.grad.data * p.data
                 avg_utility.mul_(group["beta_utility"]).add_(utility, alpha=1 - group["beta_utility"])
-                p.data.add_(noise * (1-torch.tanh_(avg_utility / group["temp"])), alpha=-group["lr"])
+                p.data.add_(noise * (1-torch.tanh_(avg_utility / group["temp"])), alpha=-group["lr"] / bias_correction)
