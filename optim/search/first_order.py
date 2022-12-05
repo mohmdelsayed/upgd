@@ -23,11 +23,11 @@ class FirstOrderSearchNormal(torch.optim.Optimizer):
                 p.data.add_(noise * (1-torch.tanh_(F.normalize(avg_utility / bias_correction, dim=-1) / group["temp"])), alpha=-group["lr"])
 
 class FirstOrderSearchAntiCorr(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma)
         super(FirstOrderSearchAntiCorr, self).__init__(params, defaults)
 
-    def step(self):
+    def step(self, loss):
         for group in self.param_groups:
             for p in group["params"]:
                 state = self.state[p]
@@ -37,7 +37,7 @@ class FirstOrderSearchAntiCorr(torch.optim.Optimizer):
                     state["prev_noise"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                new_noise = torch.randn_like(p.grad)
+                new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
                 noise = (new_noise-state["prev_noise"])
                 state["prev_noise"] = new_noise
                 avg_utility = state["avg_utility"]
