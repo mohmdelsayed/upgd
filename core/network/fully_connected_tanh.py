@@ -18,7 +18,7 @@ class FullyConnectedTanh(nn.Module):
         return self.model(x)
 
     def __str__(self):
-        return "fully_connected_tanh"
+        return self.name
 
 if __name__ == "__main__":
     net = FullyConnectedTanh()

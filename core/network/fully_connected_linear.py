@@ -2,15 +2,13 @@ import torch
 import torch.nn as nn
 
 
-class FullyConnectedReLU(nn.Module):
+class FullyConnectedLinear(nn.Module):
     def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
-        super(FullyConnectedReLU, self).__init__()
-        self.name = "fully_connected_relu"
+        super(FullyConnectedLinear, self).__init__()
+        self.name = "fully_connected_linear"
         self.model = torch.nn.Sequential(
             torch.nn.Linear(n_obs, n_hidden_units, True),
-            torch.nn.ReLU(),
             torch.nn.Linear(n_hidden_units, n_hidden_units // 2, True),
-            torch.nn.ReLU(),
             torch.nn.Linear(n_hidden_units // 2, n_outputs, True),
         )
 
@@ -21,5 +19,5 @@ class FullyConnectedReLU(nn.Module):
         return self.name
 
 if __name__ == "__main__":
-    net = FullyConnectedReLU()
+    net = FullyConnectedLinear()
     print(net)
