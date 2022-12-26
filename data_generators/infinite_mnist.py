@@ -1,6 +1,7 @@
 import torch
 import torchvision
 
+
 class InfiniteMNIST:
     """
     Iteratable Infinite MNIST dataset for online learning
@@ -65,9 +66,9 @@ class InfiniteMNIST:
 
     def change_two_lables(self):
         label_1, label_2 = torch.randint(0, 10, (2,))
-        self.dataset.targets[self.dataset.targets==label_1] = -1
-        self.dataset.targets[self.dataset.targets==label_2] = label_1
-        self.dataset.targets[self.dataset.targets==-1] = label_2
+        self.dataset.targets[self.dataset.targets == label_1] = -1
+        self.dataset.targets[self.dataset.targets == label_2] = label_1
+        self.dataset.targets[self.dataset.targets == -1] = label_2
         self.iterator = iter(self.get_dataloader(self.dataset))
 
     def change_all_lables(self):
@@ -76,6 +77,7 @@ class InfiniteMNIST:
 
     def add_noise(self, tensor):
         return tensor + torch.randn(tensor.size()) * self.noise_std + self.noise_mean
+
 
 class OfflineMNIST:
     """
@@ -121,4 +123,3 @@ class OfflineMNIST:
 
     def add_noise(self, tensor):
         return tensor + torch.randn(tensor.size()) * self.noise_std + self.noise_mean
-
