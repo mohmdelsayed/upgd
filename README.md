@@ -12,3 +12,9 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt 
 pip install HesScale/.
 ```
+
+#### 3. Experiment 1: Catastrohpic forgetting in Linear Nets:
+```sh
+python exp/ex1_cat_forgetting.py
+cat generated_cmds/summer_with_sign_change/sgd.txt| bash
+```
