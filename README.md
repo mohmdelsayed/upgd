@@ -17,4 +17,11 @@ pip install HesScale/.
 ```sh
 python exp/ex1_cat_forgetting.py
 cat generated_cmds/summer_with_sign_change/sgd.txt| bash
+cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt| bash
+```
+
+##### 4. Remove log files:
+```sh
+rm -rf generated_cmds/
+rm -rf logs/
 ```
