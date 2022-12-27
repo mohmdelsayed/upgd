@@ -5,7 +5,7 @@ from core.task.summer_with_sign_change import SummerWithSignChange
 from core.network.fully_connected_tanh import FullyConnectedTanh
 from core.network.fully_connected_relu import FullyConnectedReLU
 from core.runner import Runner
-
+from core.run import Run
 
 
 task = SummerWithSignChange()
@@ -33,5 +33,5 @@ learners = [
 ]
 
 for learner, grid in zip(learners, grids):
-    runner = Runner(learner, grid, task, learner.name)
+    runner = Runner(Run, learner, grid, task, learner.name)
     runner.write_cmd("generated_cmds")
