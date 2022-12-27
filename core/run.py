@@ -1,16 +1,16 @@
-import numpy as np
 import torch
 import sys
 from core.utils import tasks, networks, learners, criterions
 from core.logger import Logger
 
 class Run:
+    name = 'run'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
         self.n_samples = int(n_samples)
         self.task = tasks[task]()
         self.learner = learners[learner](networks[network], kwargs)
         self.logger = Logger(save_path)
-        self.seed = seed
+        self.seed = int(seed)
 
     def start(self):
         torch.manual_seed(self.seed)
@@ -32,11 +32,12 @@ class Run:
             losses_per_step_size.append(loss.item())
 
         self.logger.log(losses=losses_per_step_size,
-                        optimizer_hps=self.learner.optim_kwargs,
-                        seed=self.seed,
                         task=self.task.name, 
                         learner=self.learner.name,
-                        network=self.learner.network.name
+                        network=self.learner.network.name,
+                        optimizer_hps=self.learner.optim_kwargs,
+                        n_samples=self.n_samples,
+                        seed=self.seed,
         )
 
 
