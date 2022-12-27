@@ -1,16 +1,18 @@
 from core.grid_search import GridSearch
 from core.task.task import Task
 from core.learner.learner import Learner
+from core.run import Run
 import os
 
 class Runner:
     def __init__(
-        self, learner: Learner, grid_search: GridSearch, task: Task, file_name: str
+        self, run: Run, learner: Learner, grid_search: GridSearch, task: Task, file_name: str,
     ):
         self.grid_search = grid_search
         self.task = task
         self.learner = learner
         self.file_name = file_name
+        self.run_name = run.name
 
     def get_combinations(self):
         return self.grid_search.get_permutations()
@@ -18,7 +20,7 @@ class Runner:
     def write_cmd(self, directory):
         cmd = ""
         for permutation in self.get_combinations():
-            cmd += f"python3 core/run.py --task {self.task.name} --learner {self.learner}"
+            cmd += f"python3 core/{self.run_name}.py --task {self.task.name} --learner {self.learner}"
             keys, values = zip(*permutation.items())
             for key, value in zip(keys, values):
                 cmd += f" --{key} {value}"
