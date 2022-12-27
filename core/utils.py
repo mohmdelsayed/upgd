@@ -3,9 +3,9 @@ from core.task.summer_with_sign_change import SummerWithSignChange
 from core.task.summer_with_signals_change import SummerWithSignalsChange
 from core.task.utility_task import UtilityTask
 
-from core.network.fully_connected_leakyrelu import FullyConnectedLeakyReLU
-from core.network.fully_connected_relu import FullyConnectedReLU
-from core.network.fully_connected_tanh import FullyConnectedTanh
+from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
+from core.network.fcn_relu import FullyConnectedReLU
+from core.network.fcn_tanh import FullyConnectedTanh
 
 from core.learner.sgd import SGDLearner
 from core.learner.upgd import UPGDv2NormalizedLearner

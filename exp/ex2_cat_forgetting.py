@@ -2,8 +2,8 @@ from core.grid_search import GridSearch
 from core.learner.upgd import UPGDv2NormalizedLearner
 from core.learner.sgd import SGDLearner
 from core.task.summer_with_sign_change import SummerWithSignChange
-from core.network.fully_connected_tanh import FullyConnectedTanh
-from core.network.fully_connected_relu import FullyConnectedReLU
+from core.network.fcn_tanh import FullyConnectedTanh
+from core.network.fcn_relu import FullyConnectedReLU
 from core.runner import Runner
 from core.run import Run
 
