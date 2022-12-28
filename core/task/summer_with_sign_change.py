@@ -23,9 +23,11 @@ class SummerWithSignChange(Task):
         self.criterion = "mse"
         self.n_inputs = n_inputs
         self.n_outputs = n_outputs
-        self.signals = torch.randint(0, n_inputs, (n_operands,))
+        self.n_operands = n_operands
 
     def __next__(self):
+        if self.step == 0:
+            self.signals = torch.randint(0, self.n_inputs, (self.n_operands,))
         self.step += 1
         if self.step % self.change_freq == 0:
             self.change_sign()
