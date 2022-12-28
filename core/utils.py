@@ -5,7 +5,8 @@ from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
 from core.network.fcn_relu import FullyConnectedReLU
-from core.network.fcn_tanh import FullyConnectedTanh
+from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh
+from core.network.fcn_linear import FullyConnectedLinear
 
 from core.learner.sgd import SGDLearner
 from core.learner.upgd import UPGDv2NormalizedLearner
@@ -30,6 +31,8 @@ networks = {
     "fully_connected_leakyrelu": FullyConnectedLeakyReLU,
     "fully_connected_relu": FullyConnectedReLU,
     "fully_connected_tanh": FullyConnectedTanh,
+    "small_fully_connected_tanh": SmallFullyConnectedTanh,
+    "fully_connected_linear": FullyConnectedLinear,
 }
 
 learners = {
@@ -67,3 +70,41 @@ def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     coeff = 1 - 6.0 * difference / (overall_count * (overall_count**2-1))
     return coeff
 
+
+def create_script_generator(path):
+    cmd='''#!/bin/bash
+for f in *.txt
+do
+echo \"#!/bin/bash\" > ${f%.*}.sh
+echo -e \"#SBATCH --signal=USR1@90\" >> ${f%.*}.sh
+echo -e \"#SBATCH --job-name=\"${f%.*}\"\\t\\t\\t# single job name for the array\" >> ${f%.*}.sh
+echo -e \"#SBATCH --mem=4G\\t\\t\\t# maximum memory 100M per job\" >> ${f%.*}.sh
+echo -e \"#SBATCH --time=00:30:00\\t\\t\\t# maximum wall time per job in d-hh:mm or hh:mm:ss\" >> ${f%.*}.sh
+if [[ \"${f%.*}\" != *'SGD'* ]]; then
+echo \"#SBATCH --array=1-240\" >> ${f%.*}.sh
+else
+echo \"#SBATCH --array=1-40\" >> ${f%.*}.sh
+fi
+echo -e \"#SBATCH --gres=gpu:1\\t\\t\\t# Number of GPUs (per node)\" >> ${f%.*}.sh
+echo -e \"#SBATCH --account=def-ashique\" >> ${f%.*}.sh
+echo -e \"#SBATCH --output=%x%A%a.out\\t\\t\\t# standard output (%A is replaced by jobID and %a with the array index)\" >> ${f%.*}.sh
+echo -e \"#SBATCH --error=%x%A%a.err\\t\\t\\t# standard error\\n\" >> ${f%.*}.sh
+
+echo \"FILE=\\"\$SCRATCH/GT-learners/grid_search_command_scripts/${f%.*}.txt\\"\"  >> ${f%.*}.sh
+echo \"SCRIPT=\$(sed -n \\"\${SLURM_ARRAY_TASK_ID}p\\" \$FILE)\"  >> ${f%.*}.sh
+echo \"module load python/3.7.9\" >> ${f%.*}.sh
+echo \"source \$SCRATCH/GT-learners/.gt-learners/bin/activate\" >> ${f%.*}.sh
+echo \"srun \$SCRIPT\" >> ${f%.*}.sh
+done'''
+
+    with open(f"{path}/create_scripts.bash", "w") as f:
+        f.write(cmd)
+
+    
+def create_script_runner(path):
+    cmd='''#!/bin/bash
+for f in *.sh
+do sbatch $f
+done'''
+    with open(f"{path}/run_all_scripts.bash", "w") as f:
+        f.write(cmd)
