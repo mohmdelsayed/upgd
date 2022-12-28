@@ -10,11 +10,10 @@ class UtilityTask(Task):
     def __init__(
         self,
         name="utility_task",
-        n_inputs=16,
+        n_inputs=5,
         n_outputs=1,
         n_operands=2,
         batch_size=32,
-        change_freq=100,
     ):
         super().__init__(name, batch_size)
         self.criterion = "mse_hesscale"
