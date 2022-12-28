@@ -11,6 +11,7 @@ class SummerWithSignalsChange(Task):
         self,
         name="summer_with_signals_change",
         n_inputs=16,
+        n_outputs=1,
         n_subgroups=2,
         batch_size=32,
         change_freq=100,
@@ -21,6 +22,7 @@ class SummerWithSignalsChange(Task):
         self.step = 0
         self.criterion = "mse"
         self.n_inputs = n_inputs
+        self.n_outputs = n_outputs
         self.inc = n_inputs // n_subgroups
         self.change_signals()
 
