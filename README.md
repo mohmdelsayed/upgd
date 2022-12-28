@@ -13,11 +13,26 @@ pip install -r requirements.txt
 pip install HesScale/.
 ```
 
-#### 3. Experiment 1: Catastrohpic forgetting in Linear Nets:
+#### 3. Run experiments:
 ```sh
-python exp/ex1_cat_forgetting.py
-cat generated_cmds/summer_with_sign_change/sgd.txt| bash
-cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt| bash
+python exp/ex1_utility_approximation.py
+cat generated_cmds/utility_task/sgd.txt | bash
+
+python exp/ex2_lop.py
+cat generated_cmds/summer_with_signals_change/sgd.txt | bash
+cat generated_cmds/summer_with_signals_change/upgdv2_normalized.txt | bash
+
+python exp/ex3_cat_forget.py
+cat generated_cmds/summer_with_sign_change/sgd.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt | bash
+
+python exp/ex4_cat_forget_lop.py
+cat generated_cmds/summer_with_sign_change/sgd.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt | bash
+
+python exp/ex5_label_permuted_mnist.py
+cat generated_cmds/label_permuted_mnist/sgd.txt | bash
+cat generated_cmds/label_permuted_mnist/upgdv2_normalized.txt | bash
 ```
 
 ##### 4. Remove log files:
