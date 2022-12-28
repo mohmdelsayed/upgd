@@ -14,6 +14,10 @@ class FullyConnectedLeakyReLU(nn.Module):
             torch.nn.Linear(n_hidden_units // 2, n_outputs, True),
         )
 
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.kaiming_uniform_(m.weight)
+
     def forward(self, x):
         return self.model(x)
 
