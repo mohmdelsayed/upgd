@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.upgd import UPGDv1LearnerFO, UPGDv1LearnerSO, UPGDv2LearnerFO, UPGDv2LearnerSO
+from core.learner.upgd import UPGDv2LearnerFONormalized, UPGDv2LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSONormalized
 from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
@@ -48,10 +48,10 @@ grids = [
 ]
 
 learners = [
-    UPGDv1LearnerFO(FullyConnectedTanh(), dict()),
-    UPGDv1LearnerSO(FullyConnectedTanh(), dict()),
-    UPGDv2LearnerFO(FullyConnectedTanh(), dict()),
-    UPGDv2LearnerSO(FullyConnectedTanh(), dict()),
+    UPGDv1LearnerFONormalized(FullyConnectedTanh(), dict()),
+    UPGDv1LearnerSONormalized(FullyConnectedTanh(), dict()),
+    UPGDv2LearnerFONormalized(FullyConnectedTanh(), dict()),
+    UPGDv2LearnerSONormalized(FullyConnectedTanh(), dict()),
     SearchLearnerNormalFONormalized(FullyConnectedTanh(), dict()),
     SearchLearnerNormalSONormalized(FullyConnectedTanh(), dict()),
     SearchLearnerAntiCorrFONormalized(FullyConnectedTanh(), dict()),

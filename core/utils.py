@@ -12,7 +12,7 @@ from core.network.fcn_linear import FullyConnectedLinear
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
-from core.learner.upgd import UPGDv2LearnerFO, UPGDv2LearnerSO, UPGDv1LearnerFO, UPGDv1LearnerSO
+from core.learner.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
 from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax, SearchLearnerNormalFONormalizedMax, SearchLearnerNormalSONormalizedMax, SearchLearnerAntiCorrFONormalizedMax, SearchLearnerAntiCorrSONormalizedMax
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
@@ -47,10 +47,14 @@ learners = {
     "sgd": SGDLearner,
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
-    "upgdv1_normalized_fo": UPGDv1LearnerFO,
-    "upgdv1_normalized_so": UPGDv1LearnerSO,
-    "upgdv2_normalized_fo": UPGDv2LearnerFO,
-    "upgdv2_normalized_so": UPGDv2LearnerSO,
+    "upgdv1_normalized_fo": UPGDv1LearnerFONormalized,
+    "upgdv1_normalized_so": UPGDv1LearnerSONormalized,
+    "upgdv2_normalized_fo": UPGDv2LearnerFONormalized,
+    "upgdv2_normalized_so": UPGDv2LearnerSONormalized,
+    "upgdv1_max_fo": UPGDv1LearnerFOMax,
+    "upgdv1_max_so": UPGDv1LearnerSOMax,
+    "upgdv2_max_fo": UPGDv2LearnerFOMax,
+    "upgdv2_max_so": UPGDv2LearnerSOMax,
     "search_fo_normal_normalized": SearchLearnerNormalFONormalized,
     "search_so_normal_normalized": SearchLearnerNormalSONormalized,
     "search_fo_anticorr_normalized": SearchLearnerAntiCorrFONormalized,
