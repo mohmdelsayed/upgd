@@ -1,12 +1,12 @@
-import torch, sys
+import torch, sys, os
 from core.utils import tasks, networks, learners, criterions
 from core.logger import Logger
 from core.run import Run
 from core.utils import compute_spearman_rank_coefficient
-
 from core.utils import utility_factory
-utility_factory.pop('nvidia_so')
-utility_factory.pop('second_order')
+from backpack import backpack, extend
+sys.path.insert(1, os.getcwd())
+from HesScale.hesscale import HesScale
 
 class RunUtility(Run):
     name = 'run_utility'
@@ -22,7 +22,7 @@ class RunUtility(Run):
         losses_per_step_size = []
 
         self.learner.set_task(self.task)
-        criterion = criterions[self.task.criterion]()
+        criterion = extend(criterions[self.task.criterion]())
         optimizer = self.learner.optimizer(
             self.learner.parameters, **self.learner.optim_kwargs
         )
@@ -38,7 +38,8 @@ class RunUtility(Run):
             optimizer.zero_grad()
             output = self.learner.predict(input)
             loss = criterion(output, target)
-            loss.backward()
+            with backpack(HesScale()):
+                loss.backward()         
             optimizer.step(loss)
             losses_per_step_size.append(loss.item())
 

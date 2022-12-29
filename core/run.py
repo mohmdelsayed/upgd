@@ -1,7 +1,9 @@
-import torch
-import sys
+import torch, sys, os
 from core.utils import tasks, networks, learners, criterions
 from core.logger import Logger
+from backpack import backpack, extend
+sys.path.insert(1, os.getcwd())
+from HesScale.hesscale import HesScale
 
 class Run:
     name = 'run'
@@ -17,7 +19,7 @@ class Run:
         losses_per_step_size = []
 
         self.learner.set_task(self.task)
-        criterion = criterions[self.task.criterion]()
+        criterion = extend(criterions[self.task.criterion]())
         optimizer = self.learner.optimizer(
             self.learner.parameters, **self.learner.optim_kwargs
         )
@@ -27,7 +29,8 @@ class Run:
             optimizer.zero_grad()
             output = self.learner.predict(input)
             loss = criterion(output, target)
-            loss.backward()
+            with backpack(HesScale()):
+                loss.backward()
             optimizer.step(loss)
             losses_per_step_size.append(loss.item())
 
