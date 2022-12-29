@@ -4,12 +4,12 @@ from core.task.summer_with_sign_change import SummerWithSignChange
 from core.task.summer_with_signals_change import SummerWithSignalsChange
 from core.task.utility_task import UtilityTask
 
-from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
-from core.network.fcn_relu import FullyConnectedReLU
-from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh
-from core.network.fcn_linear import FullyConnectedLinear
+from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates
+from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates
+from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates
+from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates
 
-from core.learner.sgd import SGDLearner
+from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
@@ -37,14 +37,21 @@ tasks = {
 
 networks = {
     "fully_connected_leakyrelu": FullyConnectedLeakyReLU,
+    "small_fully_connected_leakyrelu": SmallFullyConnectedLeakyReLU,
+    "fully_connected_leakyrelu_gates": FullyConnectedLeakyReLUGates,
     "fully_connected_relu": FullyConnectedReLU,
+    "small_fully_connected_relu": SmallFullyConnectedReLU,
+    "fully_connected_relu_gates": FullyConnectedReLUGates,
     "fully_connected_tanh": FullyConnectedTanh,
     "small_fully_connected_tanh": SmallFullyConnectedTanh,
+    "fully_connected_tanh_gates": FullyConnectedTanhGates,
     "fully_connected_linear": FullyConnectedLinear,
+    "fully_connected_linear_gates": FullyConnectedLinearGates,
 }
 
 learners = {
     "sgd": SGDLearner,
+    "sgd_with_hesscale": SGDLearnerWithHesScale,
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
     "upgdv1_normalized_fo": UPGDv1LearnerFONormalized,
