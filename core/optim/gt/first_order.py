@@ -2,33 +2,6 @@ import torch
 from torch.nn import functional as F
 
 
-class ExtendedSGD(torch.optim.SGD):
-    def __init__(self, params, lr=1e-5):
-        super(ExtendedSGD, self).__init__(params, lr=lr)
-
-    def step(self, loss):
-        super().step()
-
-
-class ExtendedAntiPGD(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5):
-        defaults = dict(lr=lr)
-        super(ExtendedAntiPGD, self).__init__(params, defaults)
-
-    def step(self, loss):
-        for group in self.param_groups:
-            for p in group["params"]:
-                state = self.state[p]
-                # State initialization
-                if len(state) == 0:
-                    state["prev_noise"] = torch.zeros_like(p.data)
-
-                new_noise = torch.randn_like(p.grad)
-                perturbed_gradient = p.grad + (new_noise - state["prev_noise"])
-                state["prev_noise"] = new_noise
-                p.data.add_(perturbed_gradient, alpha=-group["lr"])
-
-
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
 class FirstOrderUPGDv1Normal(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
