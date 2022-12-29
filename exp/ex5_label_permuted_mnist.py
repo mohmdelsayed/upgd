@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.upgd import UPGDv2NormalizedLearner
+from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
 from core.learner.sgd import SGDLearner
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.network.fcn_tanh import FullyConnectedTanh
@@ -21,6 +21,16 @@ grids = [
         network=[FullyConnectedTanh()],
         n_samples=[50000],
     ),
+    GridSearch(
+        seed=[i for i in range(0, 2)],
+        # lr=[10 ** -i for i in range(0, 3)],
+        lr=[0.1],
+        beta_utility=[0.0],
+        temp=[1.0],
+        sigma=[1.0],
+        network=[FullyConnectedTanh()],
+        n_samples=[50000],
+    ),
     GridSearch(seed=[i for i in range(0, 2)],
             #    lr=[10 ** -i for i in range(0, 3)],
                lr=[0.1],
@@ -30,7 +40,8 @@ grids = [
 ]
 
 learners = [
-    UPGDv2NormalizedLearner(FullyConnectedTanh(), dict()),
+    UPGDv2NormalizedLearnerFO(FullyConnectedTanh(), dict()),
+    UPGDv2NormalizedLearnerSO(FullyConnectedTanh(), dict()),
     SGDLearner(FullyConnectedTanh(), dict()),
 ]
 
