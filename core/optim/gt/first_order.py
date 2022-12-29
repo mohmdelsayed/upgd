@@ -3,10 +3,10 @@ from torch.nn import functional as F
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
-class FirstOrderUPGDv1Normal(torch.optim.Optimizer):
+class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderUPGDv1Normal, self).__init__(params, defaults)
+        super(FirstOrderUPGDv1NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -29,21 +29,19 @@ class FirstOrderUPGDv1Normal(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction) / group["temp"]
-                )
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
                 p.data.add_(
                     p.grad.data
-                    + noise * (1 - scaled_utility / torch.tanh(state["max_utility"])),
+                    + noise * (1 - scaled_utility),
                     alpha=-group["lr"],
                 )
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 with Anti-correlated noise
-class FirstOrderUPGDv1AntiCorr(torch.optim.Optimizer):
+class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderUPGDv1AntiCorr, self).__init__(params, defaults)
+        super(FirstOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -69,12 +67,7 @@ class FirstOrderUPGDv1AntiCorr(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                # scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
-                scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction)
-                    / group["temp"]
-                    / state["max_utility"]
-                )
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -115,10 +108,10 @@ class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 (utility controls gradient)
-class FirstOrderUPGDv2Normal(torch.optim.Optimizer):
+class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderUPGDv2Normal, self).__init__(params, defaults)
+        super(FirstOrderUPGDv2NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -141,21 +134,19 @@ class FirstOrderUPGDv2Normal(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction) / group["temp"]
-                )
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
                 p.data.add_(
                     (p.grad.data + noise)
-                    * (1 - scaled_utility / torch.tanh(state["max_utility"])),
+                    * (1 - scaled_utility),
                     alpha=-group["lr"],
                 )
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
-class FirstOrderUPGDv2AntiCorr(torch.optim.Optimizer):
+class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderUPGDv2AntiCorr, self).__init__(params, defaults)
+        super(FirstOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -181,11 +172,7 @@ class FirstOrderUPGDv2AntiCorr(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction)
-                    / group["temp"]
-                    / state["max_utility"]
-                )
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
