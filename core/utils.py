@@ -20,6 +20,7 @@ from core.utilities.weight_utility import WeightUtility
 from core.utilities.oracle_utility import OracleUtility
 from core.utilities.fo_nvidia_utility import NvidiaUtilityFO
 from core.utilities.so_nvidia_utility import NvidiaUtilitySO
+from core.utilities.random_utility import RandomUtility
 
 import torch
 import numpy as np
@@ -67,6 +68,7 @@ utility_factory = {
     "oracle": OracleUtility,
     "nvidia_fo": NvidiaUtilityFO,
     "nvidia_so": NvidiaUtilitySO,
+    "random": RandomUtility,
 }
 
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
