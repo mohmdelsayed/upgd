@@ -15,33 +15,23 @@ pip install HesScale/.
 
 #### 3. Run experiments:
 ```sh
-python exp/ex1_utility_approximation.py
-cat generated_cmds/utility_task/sgd.txt | bash
+python experiments/ex1_utility_approximation.py
+cat generated_cmds/utility_task/*.txt | bash
 
-python exp/ex2_lop.py
-cat generated_cmds/summer_with_signals_change/sgd.txt | bash
-cat generated_cmds/summer_with_signals_change/upgdv2_normalized.txt | bash
+python experiments/ex2_lop.py
+cat generated_cmds/summer_with_signals_change/*.txt | bash
 
-python exp/ex3_cat_forget.py
-cat generated_cmds/summer_with_sign_change/sgd.txt | bash
-cat generated_cmds/summer_with_sign_change/pgd.txt | bash
-cat generated_cmds/summer_with_sign_change/anti_pgd.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv1_normalized_fo.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv1_normalized_so.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv2_normalized_fo.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv2_normalized_so.txt | bash
-cat generated_cmds/summer_with_sign_change/search_fo_anticorr.txt | bash
-cat generated_cmds/summer_with_sign_change/search_so_anticorr.txt | bash
+python experiments/ex3_cat_forget.py
+cat generated_cmds/summer_with_sign_change/*.txt | bash
 
-upgdv1_normalized_fo
+python experiments/ex4_cat_forget_lop.py
+cat generated_cmds/summer_with_sign_change/*.txt | bash
 
-python exp/ex4_cat_forget_lop.py
-cat generated_cmds/summer_with_sign_change/sgd.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt | bash
+python experiments/ex5_label_permuted_mnist.py
+cat generated_cmds/label_permuted_mnist/*.txt | bash
 
-python exp/ex5_label_permuted_mnist.py
-cat generated_cmds/label_permuted_mnist/sgd.txt | bash
-cat generated_cmds/label_permuted_mnist/upgdv2_normalized.txt | bash
+python experiments/ex6_static_mnist.py
+cat generated_cmds/static_mnist/*.txt | bash
 ```
 
 ##### 4. Remove log files:
