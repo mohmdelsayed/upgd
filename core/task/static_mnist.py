@@ -9,7 +9,7 @@ class StaticMNIST(Task):
     Each sample is a 28x28 image and the label is a number between 0 and 9.
     """
 
-    def __init__(self, name="mnist", batch_size=32):
+    def __init__(self, name="static_mnist", batch_size=32):
         self.dataset = self.get_dataset(False)
         self.step = 0
         self.n_inputs = 784

@@ -1,3 +1,4 @@
+from core.task.static_mnist import StaticMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.summer_with_sign_change import SummerWithSignChange
 from core.task.summer_with_signals_change import SummerWithSignalsChange
@@ -27,6 +28,7 @@ tasks = {
     "summer_with_sign_change": SummerWithSignChange,
     "summer_with_signals_change": SummerWithSignalsChange,
     "label_permuted_mnist": LabelPermutedMNIST,
+    "static_mnist": StaticMNIST,
     "utility_task": UtilityTask,
 }
 
