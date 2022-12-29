@@ -49,4 +49,10 @@ if __name__ == "__main__":
     ll = sys.argv[1:]
     args = {k[2:]:v for k,v in zip(ll[::2], ll[1::2])}
     run = Run(**args)
-    run.start()
+    try:
+        run.start()
+        with open(f"finished_{args['learner']}.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
+    except:
+        with open(f"failed_{args['learner']}.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
