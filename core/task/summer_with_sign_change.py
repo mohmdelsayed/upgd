@@ -28,10 +28,10 @@ class SummerWithSignChange(Task):
     def __next__(self):
         if self.step == 0:
             self.signals = torch.randint(0, self.n_inputs, (self.n_operands,))
-        self.step += 1
         if self.step % self.change_freq == 0:
             self.change_sign()
 
+        self.step += 1
         try:
             return next(self.iterator)
         except StopIteration:

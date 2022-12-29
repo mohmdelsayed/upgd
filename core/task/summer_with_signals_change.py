@@ -27,9 +27,9 @@ class SummerWithSignalsChange(Task):
         self.change_signals()
 
     def __next__(self):
-        self.step += 1
         if self.step % self.change_freq == 0:
             self.change_signals()
+        self.step += 1
 
         try:
             return next(self.iterator)
