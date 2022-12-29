@@ -24,7 +24,8 @@ cat generated_cmds/summer_with_signals_change/upgdv2_normalized.txt | bash
 
 python exp/ex3_cat_forget.py
 cat generated_cmds/summer_with_sign_change/sgd.txt | bash
-cat generated_cmds/summer_with_sign_change/upgdv2_normalized.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv2_normalized_fo.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv2_normalized_so.txt | bash
 
 python exp/ex4_cat_forget_lop.py
 cat generated_cmds/summer_with_sign_change/sgd.txt | bash
