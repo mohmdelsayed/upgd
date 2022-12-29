@@ -24,8 +24,16 @@ cat generated_cmds/summer_with_signals_change/upgdv2_normalized.txt | bash
 
 python exp/ex3_cat_forget.py
 cat generated_cmds/summer_with_sign_change/sgd.txt | bash
+cat generated_cmds/summer_with_sign_change/pgd.txt | bash
+cat generated_cmds/summer_with_sign_change/anti_pgd.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv1_normalized_fo.txt | bash
+cat generated_cmds/summer_with_sign_change/upgdv1_normalized_so.txt | bash
 cat generated_cmds/summer_with_sign_change/upgdv2_normalized_fo.txt | bash
 cat generated_cmds/summer_with_sign_change/upgdv2_normalized_so.txt | bash
+cat generated_cmds/summer_with_sign_change/search_fo_anticorr.txt | bash
+cat generated_cmds/summer_with_sign_change/search_so_anticorr.txt | bash
+
+upgdv1_normalized_fo
 
 python exp/ex4_cat_forget_lop.py
 cat generated_cmds/summer_with_sign_change/sgd.txt | bash
@@ -38,6 +46,5 @@ cat generated_cmds/label_permuted_mnist/upgdv2_normalized.txt | bash
 
 ##### 4. Remove log files:
 ```sh
-rm -rf generated_cmds/
-rm -rf logs/
+./clean.sh
 ```
