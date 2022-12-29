@@ -21,6 +21,8 @@ from core.utilities.oracle_utility import OracleUtility
 from core.utilities.fo_nvidia_utility import NvidiaUtilityFO
 from core.utilities.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.random_utility import RandomUtility
+from core.utilities.fo_utility_normalized import FirstOrderUtilityNormalized
+from core.utilities.so_utility_normalized import SecondOrderUtilityNormalized
 
 import torch
 import numpy as np
@@ -69,6 +71,8 @@ utility_factory = {
     "nvidia_fo": NvidiaUtilityFO,
     "nvidia_so": NvidiaUtilitySO,
     "random": RandomUtility,
+    "first_order_normalized": FirstOrderUtilityNormalized,
+    "second_order_normalized": SecondOrderUtilityNormalized,
 }
 
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
