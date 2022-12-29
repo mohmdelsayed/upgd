@@ -1,5 +1,4 @@
 from core.grid_search import GridSearch
-from core.learner.sgd_with_hesscale import SGDwithHesScaleLearner
 from core.learner.sgd import SGDLearner
 from core.task.utility_task import UtilityTask
 from core.network.fcn_tanh import SmallFullyConnectedTanh
