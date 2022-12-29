@@ -50,7 +50,7 @@ class UtilityPlotter(Plotter):
         plt.show()
 
 if __name__ == "__main__":
-    best_runs = BestRun("utility_task_batch=1", "area", "small_fully_connected_tanh", ["sgd"]).get_best_run()
+    best_runs = BestRun("utility_task", "area", "small_fully_connected_tanh", ["sgd"]).get_best_run()
     print(best_runs)
     plotter = UtilityPlotter(best_runs)
     plotter.plot()
