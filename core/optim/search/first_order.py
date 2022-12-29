@@ -5,8 +5,8 @@ from torch.nn import functional as F
 
 
 class FirstOrderSearchNormal(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
         super(FirstOrderSearchNormal, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -18,7 +18,10 @@ class FirstOrderSearchNormal(torch.optim.Optimizer):
                     state["avg_utility"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                if group["noise_damping"]:
+                    noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                else:
+                    noise = torch.randn_like(p.grad) * group["sigma"]
                 avg_utility = state["avg_utility"]
                 avg_utility.mul_(group["beta_utility"]).add_(
                     -p.grad.data * p.data, alpha=1 - group["beta_utility"]
@@ -37,8 +40,8 @@ class FirstOrderSearchNormal(torch.optim.Optimizer):
 
 
 class FirstOrderSearchAntiCorr(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
         super(FirstOrderSearchAntiCorr, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -51,7 +54,10 @@ class FirstOrderSearchAntiCorr(torch.optim.Optimizer):
                     state["prev_noise"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                if group["noise_damping"]:
+                    new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                else:
+                    new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
                 avg_utility = state["avg_utility"]

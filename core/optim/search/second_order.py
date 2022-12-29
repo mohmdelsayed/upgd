@@ -7,8 +7,8 @@ import torch
 # Utility-based Search Optimizers
 class SecondOrderSearchNormal(torch.optim.Optimizer):
     method = HesScale()
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
         super(SecondOrderSearchNormal, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -20,7 +20,10 @@ class SecondOrderSearchNormal(torch.optim.Optimizer):
                     state["avg_utility"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                if group["noise_damping"]:
+                    noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                else:
+                    noise = torch.randn_like(p.grad) * group["sigma"]
                 avg_utility = state["avg_utility"]
                 hess_param = getattr(p, group["method_field"])
                 utility = 0.5 * hess_param * p.data ** 2 - p.grad.data * p.data
@@ -42,8 +45,8 @@ class SecondOrderSearchNormal(torch.optim.Optimizer):
 
 class SecondOrderSearchAntiCorr(torch.optim.Optimizer):
     method = HesScale()
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
         super(SecondOrderSearchAntiCorr, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -56,7 +59,10 @@ class SecondOrderSearchAntiCorr(torch.optim.Optimizer):
                     state["prev_noise"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                if group["noise_damping"]:
+                    new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
+                else:
+                    new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
                 avg_utility = state["avg_utility"]
