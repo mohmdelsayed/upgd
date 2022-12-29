@@ -13,7 +13,7 @@ from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.upgd import UPGDv2LearnerFO, UPGDv2LearnerSO, UPGDv1LearnerFO, UPGDv1LearnerSO
-from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
+from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
 from core.utilities.weight_utility import WeightUtility
@@ -51,10 +51,10 @@ learners = {
     "upgdv1_normalized_so": UPGDv1LearnerSO,
     "upgdv2_normalized_fo": UPGDv2LearnerFO,
     "upgdv2_normalized_so": UPGDv2LearnerSO,
-    "search_fo_normal": SearchLearnerNormalFO,
-    "search_so_normal": SearchLearnerNormalSO,
-    "search_fo_anticorr": SearchLearnerAntiCorrFO,
-    "search_so_anticorr": SearchLearnerAntiCorrSO,
+    "search_fo_normal_normalized": SearchLearnerNormalFONormalized,
+    "search_so_normal_normalized": SearchLearnerNormalSONormalized,
+    "search_fo_anticorr_normalized": SearchLearnerAntiCorrFONormalized,
+    "search_so_anticorr_normalized": SearchLearnerAntiCorrSONormalized,
 }
 
 criterions = {

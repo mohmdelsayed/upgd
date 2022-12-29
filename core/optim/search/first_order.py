@@ -4,10 +4,10 @@ from torch.nn import functional as F
 # Utility-based Search Optimizers
 
 
-class FirstOrderSearchNormal(torch.optim.Optimizer):
+class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderSearchNormal, self).__init__(params, defaults)
+        super(FirstOrderSearchNormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -39,10 +39,10 @@ class FirstOrderSearchNormal(torch.optim.Optimizer):
                 )
 
 
-class FirstOrderSearchAntiCorr(torch.optim.Optimizer):
+class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
-        super(FirstOrderSearchAntiCorr, self).__init__(params, defaults)
+        super(FirstOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:

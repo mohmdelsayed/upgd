@@ -1,28 +1,28 @@
 from core.learner.learner import Learner
-from core.optim.search.first_order import FirstOrderSearchAntiCorr, FirstOrderSearchNormal
-from core.optim.search.second_order import SecondOrderSearchAntiCorr, SecondOrderSearchNormal
+from core.optim.search.first_order import FirstOrderSearchAntiCorrNormalized, FirstOrderSearchNormalNormalized
+from core.optim.search.second_order import SecondOrderSearchAntiCorrNormalized, SecondOrderSearchNormalNormalized
 
 
-class SearchLearnerNormalFO(Learner):
+class SearchLearnerNormalFONormalized(Learner):
     def __init__(self, network, optim_kwargs):
-        optimizer = FirstOrderSearchNormal
-        name = "search_fo_normal"
+        optimizer = FirstOrderSearchNormalNormalized
+        name = "search_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class SearchLearnerNormalSO(Learner):
+class SearchLearnerNormalSONormalized(Learner):
     def __init__(self, network, optim_kwargs):
-        optimizer = SecondOrderSearchNormal
-        name = "search_so_normal"
+        optimizer = SecondOrderSearchNormalNormalized
+        name = "search_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class SearchLearnerAntiCorrFO(Learner):
+class SearchLearnerAntiCorrFONormalized(Learner):
     def __init__(self, network, optim_kwargs):
-        optimizer = FirstOrderSearchAntiCorr
-        name = "search_fo_anticorr"
+        optimizer = FirstOrderSearchAntiCorrNormalized
+        name = "search_fo_anticorr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class SearchLearnerAntiCorrSO(Learner):
+class SearchLearnerAntiCorrSONormalized(Learner):
     def __init__(self, network, optim_kwargs):
-        optimizer = SecondOrderSearchAntiCorr
-        name = "search_so_anticorr"
+        optimizer = SecondOrderSearchAntiCorrNormalized
+        name = "search_so_anticorr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)

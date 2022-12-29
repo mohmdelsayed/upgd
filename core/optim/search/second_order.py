@@ -5,11 +5,11 @@ from torch.nn import functional as F
 import torch
 
 # Utility-based Search Optimizers
-class SecondOrderSearchNormal(torch.optim.Optimizer):
+class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
-        super(SecondOrderSearchNormal, self).__init__(params, defaults)
+        super(SecondOrderSearchNormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -43,11 +43,11 @@ class SecondOrderSearchNormal(torch.optim.Optimizer):
                 )
 
 
-class SecondOrderSearchAntiCorr(torch.optim.Optimizer):
+class SecondOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
-        super(SecondOrderSearchAntiCorr, self).__init__(params, defaults)
+        super(SecondOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:

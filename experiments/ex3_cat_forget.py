@@ -1,6 +1,6 @@
 from core.grid_search import GridSearch
 from core.learner.upgd import UPGDv1LearnerFO, UPGDv1LearnerSO, UPGDv2LearnerFO, UPGDv2LearnerSO
-from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
+from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
@@ -49,10 +49,10 @@ learners = [
     UPGDv1LearnerSO(FullyConnectedLinear(), dict()),
     UPGDv2LearnerFO(FullyConnectedLinear(), dict()),
     UPGDv2LearnerSO(FullyConnectedLinear(), dict()),
-    SearchLearnerNormalFO(FullyConnectedLinear(), dict()),
-    SearchLearnerNormalSO(FullyConnectedLinear(), dict()),
-    SearchLearnerAntiCorrFO(FullyConnectedLinear(), dict()),
-    SearchLearnerAntiCorrSO(FullyConnectedLinear(), dict()),
+    SearchLearnerNormalFONormalized(FullyConnectedLinear(), dict()),
+    SearchLearnerNormalSONormalized(FullyConnectedLinear(), dict()),
+    SearchLearnerAntiCorrFONormalized(FullyConnectedLinear(), dict()),
+    SearchLearnerAntiCorrSONormalized(FullyConnectedLinear(), dict()),
     SGDLearner(FullyConnectedLinear(), dict()),
     AntiPGDLearner(FullyConnectedLinear(), dict()),
     PGDLearner(FullyConnectedLinear(), dict()),
