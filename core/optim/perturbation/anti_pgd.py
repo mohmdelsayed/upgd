@@ -1,12 +1,12 @@
 import torch
 
 
-class AntiPGD(torch.optim.Optimizer):
+class ExtendedAntiPGD(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5):
         defaults = dict(lr=lr)
-        super(AntiPGD, self).__init__(params, defaults)
+        super(ExtendedAntiPGD, self).__init__(params, defaults)
 
-    def step(self):
+    def step(self, loss):
         for group in self.param_groups:
             for p in group["params"]:
                 state = self.state[p]

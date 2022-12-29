@@ -9,6 +9,8 @@ from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh
 from core.network.fcn_linear import FullyConnectedLinear
 
 from core.learner.sgd import SGDLearner
+from core.learner.anti_pgd import AntiPGDLearner
+from core.learner.pgd import PGDLearner
 from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
 from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
 from core.utilities.fo_utility import FirstOrderUtility
@@ -38,6 +40,8 @@ networks = {
 
 learners = {
     "sgd": SGDLearner,
+    "anti_pgd": AntiPGDLearner,
+    "pgd": PGDLearner,
     "upgdv2_normalized_fo": UPGDv2NormalizedLearnerFO,
     "upgdv2_normalized_so": UPGDv2NormalizedLearnerSO,
     "search_fo_normal": SearchLearnerNormalFO,
