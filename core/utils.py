@@ -11,7 +11,7 @@ from core.network.fcn_linear import FullyConnectedLinear
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
-from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
+from core.learner.upgd import UPGDv2LearnerFO, UPGDv2LearnerSO, UPGDv1LearnerFO, UPGDv1LearnerSO
 from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
@@ -42,8 +42,10 @@ learners = {
     "sgd": SGDLearner,
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
-    "upgdv2_normalized_fo": UPGDv2NormalizedLearnerFO,
-    "upgdv2_normalized_so": UPGDv2NormalizedLearnerSO,
+    "upgdv1_normalized_fo": UPGDv1LearnerFO,
+    "upgdv1_normalized_so": UPGDv1LearnerSO,
+    "upgdv2_normalized_fo": UPGDv2LearnerFO,
+    "upgdv2_normalized_so": UPGDv2LearnerSO,
     "search_fo_normal": SearchLearnerNormalFO,
     "search_so_normal": SearchLearnerNormalSO,
     "search_fo_anticorr": SearchLearnerAntiCorrFO,
