@@ -3,6 +3,7 @@ import torch
 
 class ExtendedPGD(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, sigma=1.0):
+        _, params = zip(*params)
         defaults = dict(lr=lr, sigma=sigma)
         super(ExtendedPGD, self).__init__(params, defaults)
 

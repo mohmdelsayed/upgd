@@ -6,7 +6,8 @@ import torch
 class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderUPGDv1AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -48,7 +49,8 @@ class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
 class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -84,7 +86,8 @@ class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
 class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderUPGDv2AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -126,7 +129,8 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
 class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:

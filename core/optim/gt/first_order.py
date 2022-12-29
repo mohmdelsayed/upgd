@@ -5,7 +5,8 @@ from torch.nn import functional as F
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
 class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv1NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -40,7 +41,8 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 with Anti-correlated noise
 class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -76,7 +78,8 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 with Anti-correlated noise
 class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv1AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -108,7 +111,8 @@ class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
 
 class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv1NormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -138,7 +142,8 @@ class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 (utility controls gradient)
 class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv2NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -173,7 +178,8 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -209,7 +215,8 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv2AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -241,7 +248,8 @@ class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
 
 class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderUPGDv2NormalNormalized, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
@@ -269,8 +277,9 @@ class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
 # UGD: Utility-regularized Gradient Descent
 class FirstOrderUGD(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, lamda=1.0, beta_utility=0.9, beta_weight=0.9):
+        names, params = zip(*params)
         defaults = dict(
-            lr=lr, lamda=lamda, beta_utility=beta_utility, beta_weight=beta_weight
+            lr=lr, lamda=lamda, beta_utility=beta_utility, beta_weight=beta_weight, names=names
         )
         super(FirstOrderUGD, self).__init__(params, defaults)
 
@@ -302,8 +311,9 @@ class FirstOrderUGD(torch.optim.Optimizer):
 # UGD: Utility-regularized Gradient Descent
 class FirstOrderUGDLearnables(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, lamda=1.0, beta_utility=0.9, beta_weight=0.9):
+        names, params = zip(*params)
         defaults = dict(
-            lr=lr, lamda=lamda, beta_utility=beta_utility, beta_weight=beta_weight
+            lr=lr, lamda=lamda, beta_utility=beta_utility, beta_weight=beta_weight, names=names
         )
         super(FirstOrderUGDLearnables, self).__init__(params, defaults)
 

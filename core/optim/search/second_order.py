@@ -8,7 +8,8 @@ import torch
 class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderSearchNormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -46,7 +47,8 @@ class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):
 class SecondOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -87,7 +89,8 @@ class SecondOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
 class SecondOrderSearchNormalMax(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderSearchNormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -124,7 +127,8 @@ class SecondOrderSearchNormalMax(torch.optim.Optimizer):
 class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
         super(SecondOrderSearchAntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):

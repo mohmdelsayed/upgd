@@ -6,7 +6,8 @@ from torch.nn import functional as F
 
 class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderSearchNormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -41,7 +42,8 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
 
 class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -79,7 +81,8 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 (utility controls gradient)
 class FirstOrderSearchNormalMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderSearchNormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -114,7 +117,8 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping)
+        names, params = zip(*params)
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
         super(FirstOrderSearchAntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
