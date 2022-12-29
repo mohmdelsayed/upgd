@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.sgd import SGDLearner
+from core.learner.sgd import SGDLearnerWithHesScale
 from core.task.utility_task import UtilityTask
 from core.network.fcn_tanh import SmallFullyConnectedTanh
 from core.runner import Runner
@@ -17,7 +17,7 @@ grids = [
 ]
 
 learners = [
-    SGDLearner(SmallFullyConnectedTanh(), dict()),
+    SGDLearnerWithHesScale(SmallFullyConnectedTanh(), dict()),
 ]
 
 for learner, grid in zip(learners, grids):
