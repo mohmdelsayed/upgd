@@ -2,6 +2,8 @@ from core.grid_search import GridSearch
 from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
 from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
 from core.learner.sgd import SGDLearner
+from core.learner.anti_pgd import AntiPGDLearner
+from core.learner.pgd import PGDLearner
 from core.task.summer_with_signals_change import SummerWithSignalsChange
 from core.network.fcn_tanh import FullyConnectedTanh
 from core.runner import Runner
@@ -78,6 +80,18 @@ grids = [
                network=[FullyConnectedTanh()],
                n_samples=[500000],
     ),
+    GridSearch(seed=[i for i in range(0, 2)],
+            #    lr=[10 ** -i for i in range(0, 3)],
+               lr=[0.01],
+               network=[FullyConnectedTanh()],
+               n_samples=[500000],
+    ),
+    GridSearch(seed=[i for i in range(0, 2)],
+            #    lr=[10 ** -i for i in range(0, 3)],
+               lr=[0.01],
+               network=[FullyConnectedTanh()],
+               n_samples=[500000],
+    ),
 ]
 
 learners = [
@@ -88,6 +102,8 @@ learners = [
     SearchLearnerAntiCorrFO(FullyConnectedTanh(), dict()),
     SearchLearnerAntiCorrSO(FullyConnectedTanh(), dict()),
     SGDLearner(FullyConnectedTanh(), dict()),
+    AntiPGDLearner(FullyConnectedTanh(), dict()),
+    PGDLearner(FullyConnectedTanh(), dict()),
 ]
 
 for learner, grid in zip(learners, grids):
