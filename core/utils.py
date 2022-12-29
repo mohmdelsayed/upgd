@@ -9,7 +9,7 @@ from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh
 from core.network.fcn_linear import FullyConnectedLinear
 
 from core.learner.sgd import SGDLearner
-from core.learner.upgd import UPGDv2NormalizedLearner
+from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
 from core.utilities.weight_utility import WeightUtility
@@ -37,7 +37,8 @@ networks = {
 
 learners = {
     "sgd": SGDLearner,
-    "upgdv2_normalized": UPGDv2NormalizedLearner,
+    "upgdv2_normalized_fo": UPGDv2NormalizedLearnerFO,
+    "upgdv2_normalized_so": UPGDv2NormalizedLearnerSO,
 }
 
 criterions = {
