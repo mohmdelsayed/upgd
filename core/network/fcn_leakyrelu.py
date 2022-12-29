@@ -11,10 +11,6 @@ class FullyConnectedLeakyReLU(nn.Sequential):
         self.add_module("act_2", nn.LeakyReLU())
         self.add_module("linear_3", nn.Linear(in_features=n_hidden_units // 2, out_features=n_outputs))
 
-        for m in self.modules():
-            if isinstance(m, nn.Linear):
-                nn.init.kaiming_uniform_(m.weight)
-
     def __str__(self):
         return self.name
 
