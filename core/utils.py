@@ -13,7 +13,7 @@ from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.upgd import UPGDv2LearnerFO, UPGDv2LearnerSO, UPGDv1LearnerFO, UPGDv1LearnerSO
-from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized
+from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax, SearchLearnerNormalFONormalizedMax, SearchLearnerNormalSONormalizedMax, SearchLearnerAntiCorrFONormalizedMax, SearchLearnerAntiCorrSONormalizedMax
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
 from core.utilities.weight_utility import WeightUtility
@@ -55,6 +55,10 @@ learners = {
     "search_so_normal_normalized": SearchLearnerNormalSONormalized,
     "search_fo_anticorr_normalized": SearchLearnerAntiCorrFONormalized,
     "search_so_anticorr_normalized": SearchLearnerAntiCorrSONormalized,
+    "search_fo_normal_max": SearchLearnerNormalFOMax,
+    "search_so_normal_max": SearchLearnerNormalSOMax,
+    "search_fo_anticorr_max": SearchLearnerAntiCorrFOMax,
+    "search_so_anticorr_max": SearchLearnerAntiCorrSOMax,
 }
 
 criterions = {
