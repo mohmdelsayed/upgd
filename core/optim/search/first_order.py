@@ -5,11 +5,11 @@ from torch.nn import functional as F
 
 
 class FirstOrderSearchNormal(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0):
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp)
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0):
+        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma)
         super(FirstOrderSearchNormal, self).__init__(params, defaults)
 
-    def step(self):
+    def step(self, loss):
         for group in self.param_groups:
             for p in group["params"]:
                 state = self.state[p]
@@ -18,7 +18,7 @@ class FirstOrderSearchNormal(torch.optim.Optimizer):
                     state["avg_utility"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                noise = torch.randn_like(p.grad)
+                noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
                 avg_utility = state["avg_utility"]
                 avg_utility.mul_(group["beta_utility"]).add_(
                     -p.grad.data * p.data, alpha=1 - group["beta_utility"]

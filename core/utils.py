@@ -10,6 +10,7 @@ from core.network.fcn_linear import FullyConnectedLinear
 
 from core.learner.sgd import SGDLearner
 from core.learner.upgd import UPGDv2NormalizedLearnerFO, UPGDv2NormalizedLearnerSO
+from core.learner.search import SearchLearnerNormalFO, SearchLearnerNormalSO, SearchLearnerAntiCorrFO, SearchLearnerAntiCorrSO
 from core.utilities.fo_utility import FirstOrderUtility
 from core.utilities.so_utility import SecondOrderUtility
 from core.utilities.weight_utility import WeightUtility
@@ -39,6 +40,10 @@ learners = {
     "sgd": SGDLearner,
     "upgdv2_normalized_fo": UPGDv2NormalizedLearnerFO,
     "upgdv2_normalized_so": UPGDv2NormalizedLearnerSO,
+    "search_fo_normal": SearchLearnerNormalFO,
+    "search_so_normal": SearchLearnerNormalSO,
+    "search_fo_anticorr": SearchLearnerAntiCorrFO,
+    "search_so_anticorr": SearchLearnerAntiCorrSO,
 }
 
 criterions = {
