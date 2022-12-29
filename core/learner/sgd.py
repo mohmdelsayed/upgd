@@ -1,5 +1,5 @@
 from core.learner.learner import Learner
-from core.optim.gt.first_order import ExtendedSGD
+from core.optim.sgd import ExtendedSGD
 
 
 class SGDLearner(Learner):
