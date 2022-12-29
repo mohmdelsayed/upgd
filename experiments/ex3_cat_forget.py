@@ -13,19 +13,18 @@ from core.utils import create_script_generator, create_script_runner
 task = SummerWithSignChange()
 
 gt_grids = GridSearch(
-        seed=[i for i in range(0, 2)],
-        # lr=[10 ** -i for i in range(0, 3)],
-        lr=[0.01],
-        beta_utility=[0.0],
-        temp=[1.0],
-        sigma=[1.0],
+        seed=[i for i in range(0, 30)],
+        lr=[2 ** -i for i in range(0, 8)],
+        beta_utility=[0.0, 0.5, 0.9, 0.99, 0.999],
+        temp=[1.0, 2.0, 0.5],
+        sigma=[1.0, 0.5, 2.0],
         network=[FullyConnectedLinear()],
         n_samples=[20000],
     )
 
-sgd_grids = GridSearch(seed=[i for i in range(0, 2)],
-            #    lr=[10 ** -i for i in range(0, 3)],
-               lr=[0.01],
+sgd_grids = GridSearch(
+               seed=[i for i in range(0, 30)],
+               lr=[2 ** -i for i in range(0, 8)],
                network=[FullyConnectedLinear()],
                n_samples=[20000],
     )

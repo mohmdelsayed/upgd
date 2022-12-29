@@ -6,6 +6,8 @@ from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.network.fcn_tanh import FullyConnectedTanh
+from core.network.fcn_relu import FullyConnectedReLU
+from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
 from core.runner import Runner
 from core.run import Run
 from core.utils import create_script_generator, create_script_runner
@@ -15,20 +17,19 @@ task = LabelPermutedMNIST()
 
 
 gt_grids = GridSearch(
-        seed=[i for i in range(0, 2)],
-        # lr=[10 ** -i for i in range(0, 3)],
-        lr=[0.1],
-        beta_utility=[0.0],
-        temp=[1.0],
-        sigma=[1.0],
-        network=[FullyConnectedTanh()],
+        seed=[i for i in range(0, 30)],
+        lr=[2 ** -i for i in range(0, 8)],
+        beta_utility=[0.0, 0.5, 0.9, 0.99, 0.999],
+        temp=[1.0, 2.0, 0.5],
+        sigma=[1.0, 0.5, 2.0],
+        network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
         n_samples=[50000],
     )
 
-sgd_grids = GridSearch(seed=[i for i in range(0, 2)],
-            #    lr=[10 ** -i for i in range(0, 3)],
-               lr=[0.1],
-               network=[FullyConnectedTanh()],
+sgd_grids = GridSearch(
+               seed=[i for i in range(0, 2)],
+               lr=[2 ** -i for i in range(0, 8)],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
                n_samples=[50000],
     )
 

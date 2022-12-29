@@ -9,7 +9,7 @@ from core.utils import create_script_generator, create_script_runner
 task = UtilityTask()
 
 grids = [
-    GridSearch(seed=[i for i in range(0, 30)],
+    GridSearch(seed=[i for i in range(0, 100)],
                lr=[10**-2],
                network=[SmallFullyConnectedTanh()],
                n_samples=[3000],
