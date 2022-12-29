@@ -19,7 +19,7 @@ class Run:
         losses_per_step_size = []
 
         self.learner.set_task(self.task)
-        criterion = extend(criterions[self.task.criterion]())
+        criterion = extend(criterions[self.task.criterion]()) if self.learner.extend else criterions[self.task.criterion]()
         optimizer = self.learner.optimizer(
             self.learner.parameters, **self.learner.optim_kwargs
         )
@@ -29,7 +29,10 @@ class Run:
             optimizer.zero_grad()
             output = self.learner.predict(input)
             loss = criterion(output, target)
-            with backpack(HesScale()):
+            if self.learner.extend:
+                with backpack(HesScale()):
+                    loss.backward()
+            else:
                 loss.backward()
             optimizer.step(loss)
             losses_per_step_size.append(loss.item())

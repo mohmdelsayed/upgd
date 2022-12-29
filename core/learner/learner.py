@@ -1,6 +1,6 @@
 from backpack import extend
 class Learner:
-    def __init__(self, name, network, optimizer, optim_kwargs, extend=True):
+    def __init__(self, name, network, optimizer, optim_kwargs, extend=False):
         self.network_cls = network
         self.optim_kwargs = optim_kwargs
         for k, v in optim_kwargs.items():
@@ -22,4 +22,4 @@ class Learner:
             self.network = extend(self.network_cls(n_obs=task.n_inputs, n_outputs=task.n_outputs))
         else:
             self.network = self.network_cls(n_obs=task.n_inputs, n_outputs=task.n_outputs)
-        self.parameters = self.network.parameters()
+        self.parameters = self.network.named_parameters()
