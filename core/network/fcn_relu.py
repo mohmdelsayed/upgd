@@ -1,5 +1,5 @@
 import torch.nn as nn
-from gate import GateLayer
+from .gate import GateLayer
 
 class FullyConnectedReLUGates(nn.Sequential):
     def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
