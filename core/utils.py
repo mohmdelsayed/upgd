@@ -109,7 +109,7 @@ def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     coeff = 1 - 6.0 * difference / (overall_count * (overall_count**2-1))
     return coeff
     
-def compute_spearman_rank_coefficient_layer_wise(approx_utility, oracle_utility):
+def compute_spearman_rank_coefficient_layerwise(approx_utility, oracle_utility):
     coeffs = []
     for fo, oracle in zip(approx_utility, oracle_utility):
         overall_count = len(list(oracle.ravel().numpy()))
@@ -146,6 +146,33 @@ def compute_kandell_rank_coefficient(approx_utility, oracle_utility):
             else:
                 num_concordant_pairs += 1
     return (num_concordant_pairs - num_discordant_pairs) / (n * (n-1) / 2)
+
+def compute_kandell_rank_coefficient_layerwise(approx_utility, oracle_utility):
+    coeffs = []
+    for fo, oracle in zip(approx_utility, oracle_utility):
+        oracle_list = list(oracle.ravel().numpy())
+        approx_list = list(fo.ravel().numpy())
+
+        n = len(approx_list)
+        if n == 1:
+            continue
+        ranked_x = np.argsort(np.asarray(approx_list))
+        ranked_y = np.argsort(np.asarray(oracle_list))
+
+        num_concordant_pairs = 0
+        num_discordant_pairs = 0
+        for i in range(n):
+            for j in range(i+1, n):
+                if ranked_x[i] < ranked_x[j] and ranked_y[i] > ranked_y[j]:
+                    num_discordant_pairs += 1
+                elif ranked_x[i] > ranked_x[j] and ranked_y[i] < ranked_y[j]:
+                    num_discordant_pairs += 1
+                else:
+                    num_concordant_pairs += 1
+        coeff =  (num_concordant_pairs - num_discordant_pairs) / (n * (n-1) / 2)
+        coeffs.append(coeff)
+    coeff_average = np.mean(np.array(coeffs))
+    return coeff_average
 
 def create_script_generator(path):
     cmd='''#!/bin/bash
