@@ -2,7 +2,7 @@ import torch, sys, os
 from core.utils import tasks, networks, learners, criterions
 from core.logger import Logger
 from core.run import Run
-from core.utils import compute_spearman_rank_coefficient
+from core.utils import compute_spearman_rank_coefficient, compute_spearman_rank_coefficient_layer_wise
 from core.utils import utility_factory
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
