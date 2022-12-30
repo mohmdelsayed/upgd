@@ -21,8 +21,6 @@ from core.utilities.oracle_utility import OracleUtility
 from core.utilities.fo_nvidia_utility import NvidiaUtilityFO
 from core.utilities.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.random_utility import RandomUtility
-from core.utilities.fo_utility_normalized import FirstOrderUtilityNormalized
-from core.utilities.so_utility_normalized import SecondOrderUtilityNormalized
 from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
@@ -86,11 +84,9 @@ utility_factory = {
     "second_order": SecondOrderUtility,
     "weight": WeightUtility,
     "oracle": OracleUtility,
-    "nvidia_fo": NvidiaUtilityFO,
-    "nvidia_so": NvidiaUtilitySO,
+    # "nvidia_fo": NvidiaUtilityFO,
+    # "nvidia_so": NvidiaUtilitySO,
     "random": RandomUtility,
-    "first_order_normalized": FirstOrderUtilityNormalized,
-    "second_order_normalized": SecondOrderUtilityNormalized,
 }
 
 feature_utility_factory = {
@@ -112,6 +108,20 @@ def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     difference = np.sum((approx_list - oracle_list) ** 2)
     coeff = 1 - 6.0 * difference / (overall_count * (overall_count**2-1))
     return coeff
+    
+def compute_spearman_rank_coefficient_layer_wise(approx_utility, oracle_utility):
+    coeffs = []
+    for fo, oracle in zip(approx_utility, oracle_utility):
+        overall_count = len(list(oracle.ravel().numpy()))
+        if overall_count == 1:
+            continue
+        oracle_list = np.argsort(list(oracle.ravel().numpy()))
+        approx_list = np.argsort(list(fo.ravel().numpy()))
+        difference = np.sum((approx_list - oracle_list) ** 2)
+        coeff = 1 - 6.0 * difference / (overall_count * (overall_count**2-1))
+        coeffs.append(coeff)
+    coeff_average = np.mean(np.array(coeffs))
+    return coeff_average
     
 def compute_kandell_rank_coefficient(approx_utility, oracle_utility):
     approx_list = []
