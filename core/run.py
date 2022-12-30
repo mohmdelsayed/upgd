@@ -4,7 +4,7 @@ from core.logger import Logger
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
-
+import traceback
 class Run:
     name = 'run'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
@@ -56,6 +56,9 @@ if __name__ == "__main__":
         run.start()
         with open(f"finished_{args['learner']}.txt", "a") as f:
             f.write(f"python3 {' '.join(sys.argv)} \n")
-    except:
+    except BaseException as e:
         with open(f"failed_{args['learner']}.txt", "a") as f:
             f.write(f"python3 {' '.join(sys.argv)} \n")
+        with open(f"failed_{args['learner']}_msgs.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
+            f.write(f"{traceback.format_exc()} \n\n")

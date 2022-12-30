@@ -7,7 +7,7 @@ from core.utils import feature_utility_factory
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
-
+import traceback
 class FeatureRunUtility(Run):
     name = 'run_utility_feature'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
@@ -60,11 +60,20 @@ class FeatureRunUtility(Run):
                         seed=self.seed,
                         utilities={key.name:value for (key,value) in util_measure_corr.items()},
         )
-
+        
 
 if __name__ == "__main__":
     # start the run using the command line arguments
     ll = sys.argv[1:]
     args = {k[2:]:v for k,v in zip(ll[::2], ll[1::2])}
     run = FeatureRunUtility(**args)
-    run.start()
+    try:
+        run.start()
+        with open(f"finished_{args['learner']}.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
+    except BaseException as e:
+        with open(f"failed_{args['learner']}.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
+        with open(f"failed_{args['learner']}_msgs.txt", "a") as f:
+            f.write(f"python3 {' '.join(sys.argv)} \n")
+            f.write(f"{traceback.format_exc()} \n\n")
