@@ -14,13 +14,13 @@ from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
 from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
-from core.utilities.fo_utility import FirstOrderUtility
-from core.utilities.so_utility import SecondOrderUtility
-from core.utilities.weight_utility import WeightUtility
-from core.utilities.oracle_utility import OracleUtility
-from core.utilities.fo_nvidia_utility import NvidiaUtilityFO
-from core.utilities.so_nvidia_utility import NvidiaUtilitySO
-from core.utilities.random_utility import RandomUtility
+from core.utilities.weight.fo_utility import FirstOrderUtility
+from core.utilities.weight.so_utility import SecondOrderUtility
+from core.utilities.weight.weight_utility import WeightUtility
+from core.utilities.weight.oracle_utility import OracleUtility
+from core.utilities.weight.fo_nvidia_utility import NvidiaUtilityFO
+from core.utilities.weight.so_nvidia_utility import NvidiaUtilitySO
+from core.utilities.weight.random_utility import RandomUtility
 from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
