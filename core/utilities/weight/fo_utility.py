@@ -11,6 +11,5 @@ class FirstOrderUtility:
             fo_utility_net = []
             for p in  self.network.parameters():
                 fo_utility = - p.data * p.grad                
-                # fo_utility = torch.argsort(fo_utility.ravel(), dim=-1).reshape(p.data.shape)
-                fo_utility_net.append(fo_utility)
+                fo_utility_net.append(torch.mean(fo_utility, dim=0))
             return fo_utility_net  

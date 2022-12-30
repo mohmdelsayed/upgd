@@ -12,5 +12,5 @@ class FeatureFirstOrderUtility:
             for name, p in  self.network.named_parameters():
                 if 'gate' in name:
                     fo_utility = - p.data * p.grad
-                    fo_utility_net.append(fo_utility)
+                    fo_utility_net.append(torch.mean(fo_utility, dim=0))
             return fo_utility_net  
