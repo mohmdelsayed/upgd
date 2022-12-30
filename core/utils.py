@@ -23,6 +23,9 @@ from core.utilities.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.random_utility import RandomUtility
 from core.utilities.fo_utility_normalized import FirstOrderUtilityNormalized
 from core.utilities.so_utility_normalized import SecondOrderUtilityNormalized
+from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
+from core.utilities.feature.oracle_utility import FeatureOracleUtility
+from core.utilities.feature.random_utility import FeatureRandomUtility
 
 import torch
 import numpy as np
@@ -90,6 +93,11 @@ utility_factory = {
     "second_order_normalized": SecondOrderUtilityNormalized,
 }
 
+feature_utility_factory = {
+    "first_order": FeatureFirstOrderUtility,
+    "oracle": FeatureOracleUtility,
+    "random": FeatureRandomUtility,
+}
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     approx_list = []
     oracle_list = []
@@ -104,7 +112,30 @@ def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     difference = np.sum((approx_list - oracle_list) ** 2)
     coeff = 1 - 6.0 * difference / (overall_count * (overall_count**2-1))
     return coeff
+    
+def compute_kandell_rank_coefficient(approx_utility, oracle_utility):
+    approx_list = []
+    oracle_list = []
+    for fo, oracle in zip(approx_utility, oracle_utility):
+        oracle_list += list(oracle.ravel().numpy())
+        approx_list += list(fo.ravel().numpy())
 
+    n = len(approx_list)
+
+    ranked_x = np.argsort(np.asarray(approx_list))
+    ranked_y = np.argsort(np.asarray(oracle_list))
+
+    num_concordant_pairs = 0
+    num_discordant_pairs = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            if ranked_x[i] < ranked_x[j] and ranked_y[i] > ranked_y[j]:
+                num_discordant_pairs += 1
+            elif ranked_x[i] > ranked_x[j] and ranked_y[i] < ranked_y[j]:
+                num_discordant_pairs += 1
+            else:
+                num_concordant_pairs += 1
+    return (num_concordant_pairs - num_discordant_pairs) / (n * (n-1) / 2)
 
 def create_script_generator(path):
     cmd='''#!/bin/bash
