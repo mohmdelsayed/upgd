@@ -2,7 +2,7 @@ import torch, sys, os
 from core.utils import tasks, networks, learners, criterions
 from core.logger import Logger
 from core.run import Run
-from core.utils import compute_kandell_rank_coefficient_layerwise, compute_kandell_rank_coefficient
+from core.utils import compute_spearman_rank_coefficient, compute_spearman_rank_coefficient_layerwise
 from core.utils import utility_factory
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
@@ -52,11 +52,11 @@ class RunUtility(Run):
             oracle_util = oracle_factory.compute_utility(loss, input, target) 
             for measure, _ in util_measure_corr_global.items():
                 measure_util = measure.compute_utility()
-                util_measure_corr_global[measure].append(compute_kandell_rank_coefficient(measure_util, oracle_util))
+                util_measure_corr_global[measure].append(compute_spearman_rank_coefficient(measure_util, oracle_util))
 
             for measure, _ in util_measure_corr_layerwise.items():
                 measure_util = measure.compute_utility()
-                util_measure_corr_layerwise[measure].append(compute_kandell_rank_coefficient_layerwise(measure_util, oracle_util))
+                util_measure_corr_layerwise[measure].append(compute_spearman_rank_coefficient_layerwise(measure_util, oracle_util))
 
 
         self.logger.log(losses=losses_per_step_size,
@@ -66,8 +66,8 @@ class RunUtility(Run):
                         optimizer_hps=self.learner.optim_kwargs,
                         n_samples=self.n_samples,
                         seed=self.seed,
-                        global_util_correlations={key.name:value for (key,value) in util_measure_corr_global.items()},
-                        layerwise_util_correlations={key.name:value for (key,value) in util_measure_corr_layerwise.items()},
+                        global_correlations={key.name:value for (key,value) in util_measure_corr_global.items()},
+                        layerwise_correlations={key.name:value for (key,value) in util_measure_corr_layerwise.items()},
         )
 
 
