@@ -12,5 +12,5 @@ class FeatureRandomUtility:
             for name, p in  self.network.named_parameters():
                 if 'gate' in name:
                     weight_utility = torch.rand_like(p.data)
-                    weight_utility_net.append(torch.mean(weight_utility, dim=0))
-            return weight_utility_net  
+                    weight_utility_net.append(weight_utility)
+            return weight_utility_net
