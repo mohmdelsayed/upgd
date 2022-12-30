@@ -34,7 +34,7 @@ python experiments/ex6_static_mnist.py
 cat generated_cmds/static_mnist/*.txt | bash
 
 python experiments/ex7_feature_utility.py
-cat generated_cmds/utility_task/*.txt | bash
+cat generated_cmds/summer_with_sign_change/*.txt | bash
 ```
 
 ##### 4. Remove log files:
