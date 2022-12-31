@@ -129,5 +129,5 @@ learners = [
 for learner, grid in zip(learners, grids):
     runner = Runner(Run, learner, grid, exp_name, learner.name)
     runner.write_cmd("generated_cmds")
-    create_script_generator(f"generated_cmds/{exp_name}")
+    create_script_generator(f"generated_cmds/{exp_name}", exp_name)
     create_script_runner(f"generated_cmds/{exp_name}")
