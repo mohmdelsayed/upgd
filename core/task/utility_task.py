@@ -16,7 +16,7 @@ class UtilityTask(Task):
         batch_size=32,
     ):
         super().__init__(name, batch_size)
-        self.criterion = "mse_hesscale"
+        self.criterion = "mse"
         self.n_inputs = n_inputs
         self.n_outputs = n_outputs
         self.signals = torch.randint(0, n_inputs, (n_operands,))
