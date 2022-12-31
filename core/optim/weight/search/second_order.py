@@ -3,7 +3,7 @@ sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
 from torch.nn import functional as F
 import torch
-from core.utilities import eps
+from core.utils import eps
 
 # Utility-based Search Optimizers
 class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):

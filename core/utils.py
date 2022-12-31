@@ -1,3 +1,5 @@
+eps = 1e-8
+
 from core.task.static_mnist import StaticMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.summer_with_sign_change import SummerWithSignChange
@@ -33,7 +35,6 @@ from core.utilities.feature.random_utility import FeatureRandomUtility
 import torch
 import numpy as np
 
-eps = 1e-8
 
 tasks = {
     "ex1_weight_utils": SummerWithSignChange,

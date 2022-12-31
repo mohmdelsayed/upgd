@@ -1,6 +1,6 @@
 import torch
 from torch.nn import functional as F
-from core.utilities import eps
+from core.utils import eps
 
 class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
