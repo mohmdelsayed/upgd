@@ -1,5 +1,6 @@
 import torch
 from torch.nn import functional as F
+from core.utilities import eps
 
 # Utility-based Search Optimizers
 
@@ -112,7 +113,7 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
                 p.data.add_(
                     noise
                     * (1 - scaled_utility),
@@ -153,7 +154,7 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
                 p.data.add_(
                     noise * (1 - scaled_utility), alpha=-group["lr"]
                 )

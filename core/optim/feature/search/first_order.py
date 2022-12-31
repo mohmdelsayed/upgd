@@ -1,5 +1,6 @@
 import torch
 from torch.nn import functional as F
+from core.utilities import eps
 
 class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
@@ -71,7 +72,7 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
+                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -157,7 +158,7 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / torch.tanh(state["max_utility"])
+                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:

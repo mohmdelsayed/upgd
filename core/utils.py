@@ -33,6 +33,8 @@ from core.utilities.feature.random_utility import FeatureRandomUtility
 import torch
 import numpy as np
 
+eps = 1e-8
+
 tasks = {
     "ex1_weight_utils": SummerWithSignChange,
     "ex2_lop_summer_with_signals_change": SummerWithSignalsChange,
