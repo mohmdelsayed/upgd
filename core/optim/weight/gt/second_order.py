@@ -1,4 +1,5 @@
 import sys, os
+from torch.nn import functional as F
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
 import torch
@@ -20,7 +21,6 @@ class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
                     state["prev_noise"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
@@ -35,13 +35,8 @@ class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
                 avg_utility.mul_(group["beta_utility"]).add_(
                     utility, alpha=1 - group["beta_utility"]
                 )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
                 scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction)
-                    / group["temp"]
-                    / state["max_utility"]
+                    F.normalize((avg_utility / bias_correction), dim=-1) / group["temp"]
                 )
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
@@ -104,7 +99,6 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
                     state["prev_noise"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
@@ -119,13 +113,8 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                 avg_utility.mul_(group["beta_utility"]).add_(
                     utility, alpha=1 - group["beta_utility"]
                 )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
                 scaled_utility = torch.tanh_(
-                    (avg_utility / bias_correction)
-                    / group["temp"]
-                    / state["max_utility"]
+                    F.normalize((avg_utility / bias_correction), dim=-1) / group["temp"]
                 )
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
