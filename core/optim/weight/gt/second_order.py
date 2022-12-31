@@ -3,7 +3,7 @@ from torch.nn import functional as F
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
 import torch
-from core.utils import eps
+eps = 1e-8
 
 class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
     method = HesScale()

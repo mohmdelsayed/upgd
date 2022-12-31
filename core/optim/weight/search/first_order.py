@@ -1,6 +1,6 @@
 import torch
 from torch.nn import functional as F
-from core.utils import eps
+eps = 1e-8
 
 # Utility-based Search Optimizers
 
