@@ -90,7 +90,6 @@ learners = {
 criterions = {
     "mse": torch.nn.MSELoss,
     "cross_entropy": torch.nn.CrossEntropyLoss,
-    "mse_hesscale": torch.nn.MSELoss,
 }
 
 utility_factory = {
@@ -108,6 +107,7 @@ feature_utility_factory = {
     "oracle": FeatureOracleUtility,
     "random": FeatureRandomUtility,
 }
+
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
     approx_list = []
     oracle_list = []
