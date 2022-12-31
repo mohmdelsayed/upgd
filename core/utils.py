@@ -35,7 +35,7 @@ import numpy as np
 
 
 tasks = {
-    "ex1_weight_utils": SummerWithSignChange,
+    "ex1_weight_utils": UtilityTask,
     "ex2_lop_summer_with_signals_change": SummerWithSignalsChange,
     "ex3_cat_forget_summer_with_sign_change": SummerWithSignChange,
     "ex4_cat_forget_lop_summer_with_sign_change": SummerWithSignChange,
