@@ -56,10 +56,7 @@ class Plotter(PlotterStatic):
 
 
 if __name__ == "__main__":
-    # best_runs = BestRun("summer_with_sign_change", "area", "fully_connected_tanh", ["sgd", "upgdv2_normalized"]).get_best_run()
-    best_runs = BestRun("summer_with_sign_change", "area", "fully_connected_linear", ["sgd", "upgdv2_normalized_fo", "upgdv2_normalized_so"]).get_best_run()
-    # best_runs = BestRun("summer_with_signals_change", "area", "fully_connected_tanh", ["sgd", "upgdv2_normalized"]).get_best_run()
-    # best_runs = BestRun("label_permuted_mnist", "area", "fully_connected_tanh", ["sgd", "upgdv2_normalized"]).get_best_run()
+    best_runs = BestRun("ex3_cat_forget_summer_with_sign_change", "area", "fully_connected_linear", ["sgd", "pgd",  "anti_pgd"]).get_best_run()
 
     print(best_runs)
     plotter = Plotter(best_runs, task_name="mnist")
