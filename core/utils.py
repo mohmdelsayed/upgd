@@ -78,8 +78,8 @@ learners = {
     "search_fo_anticorr_max": SearchLearnerAntiCorrFOMax,
     "search_so_anticorr_max": SearchLearnerAntiCorrSOMax,
 
-    "feature_search_upgdv2_normalized": FeatureSearchLearnerNormalFONormalized,
-    "feature_upgdv2_upgdv2_normalized": FeatureUPGDv2LearnerFONormalized,
+    "feature_search_fo_anticorr_normalized": FeatureSearchLearnerNormalFONormalized,
+    "feature_upgdv2_fo_anticorr_normalized": FeatureUPGDv2LearnerFONormalized,
 }
 
 criterions = {
