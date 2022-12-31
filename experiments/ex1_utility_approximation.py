@@ -3,7 +3,7 @@ from core.learner.sgd import SGDLearnerWithHesScale
 from core.task.utility_task import UtilityTask
 from core.network.fcn_tanh import SmallFullyConnectedTanh
 from core.runner import Runner
-from core.run_utility import RunUtility
+from core.run.run_utility import RunUtility
 from core.utils import create_script_generator, create_script_runner
 
 task = UtilityTask()

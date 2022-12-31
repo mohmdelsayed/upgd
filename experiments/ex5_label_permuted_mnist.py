@@ -9,7 +9,7 @@ from core.network.fcn_tanh import FullyConnectedTanh
 from core.network.fcn_relu import FullyConnectedReLU
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
 from core.runner import Runner
-from core.run import Run
+from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 

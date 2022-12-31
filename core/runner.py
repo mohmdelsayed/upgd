@@ -1,7 +1,7 @@
 from core.grid_search import GridSearch
 from core.task.task import Task
 from core.learner.learner import Learner
-from core.run import Run
+from core.run.run import Run
 import os
 
 class Runner:

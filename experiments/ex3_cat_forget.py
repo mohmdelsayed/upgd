@@ -7,7 +7,7 @@ from core.learner.pgd import PGDLearner
 from core.task.summer_with_sign_change import SummerWithSignChange
 from core.network.fcn_linear import FullyConnectedLinear
 from core.runner import Runner
-from core.run import Run
+from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 task = SummerWithSignChange()

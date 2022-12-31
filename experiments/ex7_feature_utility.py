@@ -3,7 +3,7 @@ from core.learner.sgd import SGDLearner
 from core.task.utility_task import UtilityTask
 from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.runner import Runner
-from core.run_utility_feature import FeatureRunUtility
+from core.run.run_utility_feature import FeatureRunUtility
 from core.utils import create_script_generator, create_script_runner
 
 task = UtilityTask()

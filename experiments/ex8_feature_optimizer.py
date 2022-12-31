@@ -8,7 +8,7 @@ from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.network.fcn_relu import FullyConnectedReLUGates
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLUGates
 from core.runner import Runner
-from core.run import Run
+from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 task = SummerWithSignChange(n_inputs=50)
