@@ -11,7 +11,7 @@ from core.runner import Runner
 from core.run import Run
 from core.utils import create_script_generator, create_script_runner
 
-task = SummerWithSignChange()
+task = SummerWithSignChange(n_inputs=50)
 
 gt_grids = GridSearch(
         seed=[0],
@@ -20,14 +20,14 @@ gt_grids = GridSearch(
         temp=[1.0],
         sigma=[1.0],
         network=[FullyConnectedTanhGates()],
-        n_samples=[20000],
+        n_samples=[50000],
     )
 
 sgd_grids = GridSearch(
                seed=[0],
                lr=[0.01],
                network=[FullyConnectedTanhGates()],
-               n_samples=[20000],
+               n_samples=[50000],
     )
 
 
