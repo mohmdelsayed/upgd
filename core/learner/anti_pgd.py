@@ -1,5 +1,5 @@
 from core.learner.learner import Learner
-from core.optim.perturbation.anti_pgd import ExtendedAntiPGD
+from core.optim.anti_pgd import ExtendedAntiPGD
 
 class AntiPGDLearner(Learner):
     def __init__(self, network, optim_kwargs):
