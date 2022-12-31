@@ -40,7 +40,7 @@ python experiments/ex8_feature_optimizer.py
 cat generated_cmds/ex8_feature_train/*.txt | bash
 ```
 
-##### 4. Remove log files:
+#### 4. Remove log files:
 ```sh
 ./clean.sh
 ```
