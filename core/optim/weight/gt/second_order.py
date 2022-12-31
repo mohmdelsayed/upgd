@@ -12,7 +12,9 @@ class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -55,7 +57,9 @@ class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -92,7 +96,9 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -134,7 +140,9 @@ class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
         super(SecondOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0

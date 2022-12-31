@@ -9,6 +9,8 @@ class ExtendedPGD(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 perturbed_gradient = p.grad + torch.randn_like(p.grad) * group["sigma"]
                 p.data.add_(perturbed_gradient, alpha=-group["lr"])

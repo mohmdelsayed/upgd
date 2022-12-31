@@ -12,7 +12,9 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -48,7 +50,9 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -87,7 +91,9 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -123,7 +129,9 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0

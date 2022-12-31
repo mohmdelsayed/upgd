@@ -11,7 +11,9 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -47,7 +49,9 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -84,7 +88,9 @@ class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -117,7 +123,9 @@ class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -148,7 +156,9 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -184,7 +194,9 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -221,7 +233,9 @@ class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -253,7 +267,9 @@ class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
         super(FirstOrderUPGDv2NormalNormalized, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -285,7 +301,9 @@ class FirstOrderUGD(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0
@@ -319,7 +337,9 @@ class FirstOrderUGDLearnables(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 if len(state) == 0:
                     state["step"] = 0

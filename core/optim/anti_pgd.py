@@ -9,7 +9,9 @@ class ExtendedAntiPGD(torch.optim.Optimizer):
 
     def step(self, loss):
         for group in self.param_groups:
-            for p in group["params"]:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
                 state = self.state[p]
                 # State initialization
                 if len(state) == 0:
