@@ -1,8 +1,40 @@
 from core.grid_search import GridSearch
-from core.learner.feature.upgd import FeatureUPGDv2LearnerFONormalized
-from core.learner.weight.upgd import UPGDv2LearnerFONormalized
-from core.learner.weight.search import SearchLearnerAntiCorrFONormalized
+from core.learner.weight.upgd import (
+    UPGDv2LearnerFOAntiCorrNormalized,
+    UPGDv1LearnerFOAntiCorrNormalized,
+    UPGDv2LearnerFOAntiCorrMax,
+    UPGDv1LearnerFOAntiCorrMax,
+    UPGDv2LearnerFONormalNormalized,
+    UPGDv1LearnerFONormalNormalized,
+    UPGDv2LearnerFONormalMax,
+    UPGDv1LearnerFONormalMax,
+)
+
+from core.learner.weight.search import (
+    SearchLearnerAntiCorrFONormalized,
+    SearchLearnerAntiCorrFOMax,
+    SearchLearnerNormalFONormalized,
+    SearchLearnerNormalFOMax,
+)
+from core.learner.feature.upgd import (
+    FeatureUPGDv2LearnerFOAntiCorrNormalized,
+    FeatureUPGDv1LearnerFOAntiCorrNormalized,
+    FeatureUPGDv2LearnerFOAntiCorrMax,
+    FeatureUPGDv1LearnerFOAntiCorrMax,
+    FeatureUPGDv2LearnerFONormalNormalized,
+    FeatureUPGDv1LearnerFONormalNormalized,
+    FeatureUPGDv2LearnerFONormalMax,
+    FeatureUPGDv1LearnerFONormalMax,    
+)
+from core.learner.feature.search import (
+    FeatureSearchLearnerAntiCorrFONormalized,
+    FeatureSearchLearnerAntiCorrFOMax,
+    FeatureSearchLearnerNormalFONormalized,
+    FeatureSearchLearnerNormalFOMax,
+)
 from core.learner.sgd import SGDLearner
+from core.learner.anti_pgd import AntiPGDLearner
+from core.learner.pgd import PGDLearner
 from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.network.fcn_relu import FullyConnectedReLUGates
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLUGates
@@ -14,33 +46,70 @@ exp_name = "ex8_feature_train"
 task = tasks[exp_name]()
 
 gt_grids = GridSearch(
-        seed=[0],
-        lr=[0.01],
-        beta_utility=[0.0],
+        seed=[i for i in range(0, 30)],
+        lr=[2 ** -i for i in range(1, 9)],
+        beta_utility=[0.0, 0.5, 0.9, 0.99, 0.999],
         temp=[1.0],
-        sigma=[1.0],
-        network=[FullyConnectedTanhGates()],
-        n_samples=[50000],
+        sigma=[2.0, 1.0, 0.5, 0.25],
+        network=[FullyConnectedTanhGates(), FullyConnectedReLUGates(), FullyConnectedLeakyReLUGates()],
+        n_samples=[20000],
     )
 
 sgd_grids = GridSearch(
-               seed=[0],
-               lr=[0.01],
-               network=[FullyConnectedTanhGates()],
-               n_samples=[50000],
+                seed=[i for i in range(0, 30)],
+                lr=[2 ** -i for i in range(1, 9)],
+                network=[FullyConnectedTanhGates(), FullyConnectedReLUGates(), FullyConnectedLeakyReLUGates()],
+                n_samples=[20000],
     )
 
 
-grids = [
-    gt_grids,
-    gt_grids,
-    sgd_grids,
-]
+# gt_grids = GridSearch(
+#         seed=[0],
+#         lr=[0.01],
+#         beta_utility=[0.0],
+#         temp=[1.0],
+#         sigma=[1.0],
+#         network=[FullyConnectedTanhGates(), FullyConnectedReLUGates(), FullyConnectedLeakyReLUGates()],
+#         n_samples=[1],
+#     )
+
+# sgd_grids = GridSearch(
+#         seed=[0],
+#         lr=[0.01],
+#         network=[FullyConnectedTanhGates(), FullyConnectedReLUGates(), FullyConnectedLeakyReLUGates()],
+#         n_samples=[1],
+#     )
+
+grids = [gt_grids for _ in range(24)] + [sgd_grids for _ in range(3)]
 
 learners = [
-    FeatureUPGDv2LearnerFONormalized(),
+    FeatureUPGDv2LearnerFOAntiCorrNormalized(),
+    FeatureUPGDv1LearnerFOAntiCorrNormalized(),
+    FeatureUPGDv2LearnerFOAntiCorrMax(),
+    FeatureUPGDv1LearnerFOAntiCorrMax(),
+    FeatureUPGDv2LearnerFONormalNormalized(),
+    FeatureUPGDv1LearnerFONormalNormalized(),
+    FeatureUPGDv2LearnerFONormalMax(),
+    FeatureUPGDv1LearnerFONormalMax(),    
+    FeatureSearchLearnerAntiCorrFONormalized(),
+    FeatureSearchLearnerAntiCorrFOMax(),
+    FeatureSearchLearnerNormalFONormalized(),
+    FeatureSearchLearnerNormalFOMax(),
     SearchLearnerAntiCorrFONormalized(),
+    SearchLearnerAntiCorrFOMax(),
+    SearchLearnerNormalFONormalized(),
+    SearchLearnerNormalFOMax(),
+    UPGDv2LearnerFOAntiCorrNormalized(),
+    UPGDv1LearnerFOAntiCorrNormalized(),
+    UPGDv2LearnerFOAntiCorrMax(),
+    UPGDv1LearnerFOAntiCorrMax(),
+    UPGDv2LearnerFONormalNormalized(),
+    UPGDv1LearnerFONormalNormalized(),
+    UPGDv2LearnerFONormalMax(),
+    UPGDv1LearnerFONormalMax(),
     SGDLearner(),
+    AntiPGDLearner(),
+    PGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):
