@@ -231,7 +231,7 @@ echo -e \"#SBATCH --account=def-ashique\" >> ${{f%.*}}.sh
 echo -e \"#SBATCH --output=%x%A%a.out\\t\\t\\t# standard output (%A is replaced by jobID and %a with the array index)\" >> ${{f%.*}}.sh
 echo -e \"#SBATCH --error=%x%A%a.err\\t\\t\\t# standard error\\n\" >> ${{f%.*}}.sh
 
-cd \"../../\"
+echo "cd \"../../\"" >> ${{f%.*}}.sh
 echo \"FILE=\\"\$SCRATCH/GT-learners/generated_cmds/{exp_name}/${{f%.*}}.txt\\"\"  >> ${{f%.*}}.sh
 echo \"SCRIPT=\$(sed -n \\"\${{SLURM_ARRAY_TASK_ID}}p\\" \$FILE)\"  >> ${{f%.*}}.sh
 echo \"module load python/3.7.9\" >> ${{f%.*}}.sh
