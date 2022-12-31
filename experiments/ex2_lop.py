@@ -52,9 +52,18 @@ gt_grids = GridSearch(
         n_samples=[500000],
     )
 
-sgd_grids = GridSearch(
+pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(0, 8)],
+               lr=[2 ** -i for i in range(1, 9)],
+               sigma=[2.0, 1.0, 0.5, 0.25,],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+               n_samples=[500000],
+    )
+
+
+sgd_grid = GridSearch(
+               seed=[i for i in range(0, 30)],
+               lr=[2 ** -i for i in range(1, 9)],
                network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
                n_samples=[500000],
     )
@@ -69,15 +78,23 @@ sgd_grids = GridSearch(
 #         n_samples=[1],
 #     )
 
-# sgd_grids = GridSearch(
+# sgd_grid = GridSearch(
 #         seed=[0],
 #         lr=[0.01],
 #         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
 #         n_samples=[1],
 #     )
 
+# pgd_grids = GridSearch(
+#         seed=[0],
+#         lr=[0.01],
+#         sigma=[1.0],
+#         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+#         n_samples=[1],
+#     )
 
-grids = [gt_grids for _ in range(24)] + [sgd_grids for _ in range(3)]
+
+grids = [gt_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
 
 learners = [
     SearchLearnerAntiCorrFONormalized(),
