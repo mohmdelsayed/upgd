@@ -1,7 +1,7 @@
 from core.grid_search import GridSearch
-from core.learner.feature.upgd import FeatureUPGDv2Learner
-from core.learner.upgd import UPGDv2LearnerFONormalized
-from core.learner.search import SearchLearnerAntiCorrFONormalized
+from core.learner.feature.upgd import FeatureUPGDv2LearnerFONormalized
+from core.learner.weight.upgd import UPGDv2LearnerFONormalized
+from core.learner.weight.search import SearchLearnerAntiCorrFONormalized
 from core.learner.sgd import SGDLearner
 from core.task.summer_with_sign_change import SummerWithSignChange
 from core.network.fcn_tanh import FullyConnectedTanhGates
@@ -38,7 +38,7 @@ grids = [
 ]
 
 learners = [
-    FeatureUPGDv2Learner(FullyConnectedTanhGates(), dict()),
+    FeatureUPGDv2LearnerFONormalized(FullyConnectedTanhGates(), dict()),
     SearchLearnerAntiCorrFONormalized(FullyConnectedTanhGates(), dict()),
     SGDLearner(FullyConnectedTanhGates(), dict()),
 ]

@@ -1,6 +1,6 @@
 from core.learner.learner import Learner
-from core.optim.search.first_order import FirstOrderSearchAntiCorrNormalized, FirstOrderSearchNormalNormalized, FirstOrderSearchNormalMax, FirstOrderSearchAntiCorrMax
-from core.optim.search.second_order import SecondOrderSearchAntiCorrNormalized, SecondOrderSearchNormalNormalized, SecondOrderSearchNormalMax, SecondOrderSearchAntiCorrMax
+from core.optim.weight.search.first_order import FirstOrderSearchAntiCorrNormalized, FirstOrderSearchNormalNormalized, FirstOrderSearchNormalMax, FirstOrderSearchAntiCorrMax
+from core.optim.weight.search.second_order import SecondOrderSearchAntiCorrNormalized, SecondOrderSearchNormalNormalized, SecondOrderSearchNormalMax, SecondOrderSearchAntiCorrMax
 
 
 class SearchLearnerNormalFONormalized(Learner):

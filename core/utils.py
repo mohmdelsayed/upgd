@@ -12,9 +12,13 @@ from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGa
 from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
-from core.learner.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
-from core.learner.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
-from core.learner.feature.upgd import FeatureUPGDv2Learner
+
+from core.learner.weight.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
+from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
+
+from core.learner.feature.upgd import FeatureUPGDv2LearnerFONormalized
+from core.learner.feature.search import FeatureSearchLearnerNormalFONormalized
+
 from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
 from core.utilities.weight.weight_utility import WeightUtility
@@ -56,6 +60,7 @@ learners = {
     "sgd_with_hesscale": SGDLearnerWithHesScale,
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
+
     "upgdv1_normalized_fo": UPGDv1LearnerFONormalized,
     "upgdv1_normalized_so": UPGDv1LearnerSONormalized,
     "upgdv2_normalized_fo": UPGDv2LearnerFONormalized,
@@ -72,7 +77,9 @@ learners = {
     "search_so_normal_max": SearchLearnerNormalSOMax,
     "search_fo_anticorr_max": SearchLearnerAntiCorrFOMax,
     "search_so_anticorr_max": SearchLearnerAntiCorrSOMax,
-    "feature_upgdv2": FeatureUPGDv2Learner,
+
+    "feature_search_upgdv2_normalized": FeatureSearchLearnerNormalFONormalized,
+    "feature_upgdv2_upgdv2_normalized": FeatureUPGDv2LearnerFONormalized,
 }
 
 criterions = {

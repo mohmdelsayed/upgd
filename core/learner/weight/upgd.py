@@ -1,6 +1,6 @@
 from core.learner.learner import Learner
-from core.optim.gt.first_order import FirstOrderUPGDv2AntiCorrNormalized, FirstOrderUPGDv1AntiCorrNormalized, FirstOrderUPGDv2AntiCorrMax, FirstOrderUPGDv1AntiCorrMax
-from core.optim.gt.second_order import SecondOrderUPGDv2AntiCorrNormalized, SecondOrderUPGDv1AntiCorrNormalized, SecondOrderUPGDv2AntiCorrMax, SecondOrderUPGDv1AntiCorrMax
+from core.optim.weight.gt.first_order import FirstOrderUPGDv2AntiCorrNormalized, FirstOrderUPGDv1AntiCorrNormalized, FirstOrderUPGDv2AntiCorrMax, FirstOrderUPGDv1AntiCorrMax
+from core.optim.weight.gt.second_order import SecondOrderUPGDv2AntiCorrNormalized, SecondOrderUPGDv1AntiCorrNormalized, SecondOrderUPGDv2AntiCorrMax, SecondOrderUPGDv1AntiCorrMax
 
 
 class UPGDv2LearnerFONormalized(Learner):
