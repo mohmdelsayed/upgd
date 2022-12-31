@@ -6,10 +6,10 @@ import os
 
 class Runner:
     def __init__(
-        self, run: Run, learner: Learner, grid_search: GridSearch, task: Task, file_name: str,
+        self, run: Run, learner: Learner, grid_search: GridSearch, exp_name: str, file_name: str,
     ):
         self.grid_search = grid_search
-        self.task = task
+        self.exp_name = exp_name
         self.learner = learner
         self.file_name = file_name
         self.run_name = run.name
@@ -20,13 +20,13 @@ class Runner:
     def write_cmd(self, directory):
         cmd = ""
         for permutation in self.get_combinations():
-            cmd += f"python3 core/run/{self.run_name}.py --task {self.task.name} --learner {self.learner}"
+            cmd += f"python3 core/run/{self.run_name}.py --task {self.exp_name} --learner {self.learner}"
             keys, values = zip(*permutation.items())
             for key, value in zip(keys, values):
                 cmd += f" --{key} {value}"
             cmd += "\n"
 
-        dir = os.path.join(directory, self.task.name)
+        dir = os.path.join(directory, self.exp_name)
         if not os.path.exists(dir):
             os.makedirs(dir)
 

@@ -34,11 +34,14 @@ import torch
 import numpy as np
 
 tasks = {
-    "summer_with_sign_change": SummerWithSignChange,
-    "summer_with_signals_change": SummerWithSignalsChange,
-    "label_permuted_mnist": LabelPermutedMNIST,
-    "static_mnist": StaticMNIST,
-    "utility_task": UtilityTask,
+    "ex1_weight_utils": SummerWithSignChange,
+    "ex2_lop_summer_with_signals_change": SummerWithSignalsChange,
+    "ex3_cat_forget_summer_with_sign_change": SummerWithSignChange,
+    "ex4_cat_forget_lop_summer_with_sign_change": SummerWithSignChange,
+    "ex5_label_permuted_mnist" : LabelPermutedMNIST,
+    "ex6_static_mnist" : StaticMNIST,
+    "ex7_feature_utils": UtilityTask,
+    "ex8_feature_train": SummerWithSignChange,
 }
 
 networks = {

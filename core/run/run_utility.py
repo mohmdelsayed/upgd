@@ -13,6 +13,7 @@ class RunUtility(Run):
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
         self.n_samples = int(n_samples)
         self.task = tasks[task]()
+        self.task_name = task
         self.learner = learners[learner](networks[network], kwargs)
         self.logger = Logger(save_path)
         self.seed = int(seed)
@@ -60,7 +61,7 @@ class RunUtility(Run):
 
 
         self.logger.log(losses=losses_per_step_size,
-                        task=self.task.name, 
+                        task=self.task_name, 
                         learner=self.learner.name,
                         network=self.learner.network.name,
                         optimizer_hps=self.learner.optim_kwargs,
