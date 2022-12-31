@@ -13,7 +13,7 @@ from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 
-task = StaticMNIST()
+task = StaticMNIST(name="ex6_static_mnist")
 
 
 gt_grids = GridSearch(

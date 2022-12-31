@@ -13,7 +13,7 @@ from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 
-task = SummerWithSignalsChange()
+task = SummerWithSignalsChange(name="ex2_lop_summer_with_signals_change")
 
 gt_grids = GridSearch(
         seed=[i for i in range(0, 30)],

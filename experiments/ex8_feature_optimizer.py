@@ -11,7 +11,7 @@ from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
-task = SummerWithSignChange(n_inputs=50)
+task = SummerWithSignChange(name="ex8_feature_train", n_inputs=50)
 
 gt_grids = GridSearch(
         seed=[0],

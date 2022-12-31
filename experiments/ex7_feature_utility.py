@@ -6,7 +6,7 @@ from core.runner import Runner
 from core.run.run_utility_feature import FeatureRunUtility
 from core.utils import create_script_generator, create_script_runner
 
-task = UtilityTask()
+task = UtilityTask(name="ex7_feature_utils")
 
 grids = [
     GridSearch(seed=[i for i in range(0, 100)],

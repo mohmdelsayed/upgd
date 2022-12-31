@@ -13,7 +13,7 @@ from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner
 
 
-task = LabelPermutedMNIST()
+task = LabelPermutedMNIST(name="ex5_label_permuted_mnist")
 
 
 gt_grids = GridSearch(
