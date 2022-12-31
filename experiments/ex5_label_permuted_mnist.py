@@ -48,17 +48,17 @@ grids = [
 ]
 
 learners = [
-    UPGDv1LearnerFONormalized(FullyConnectedTanh(), dict()),
-    UPGDv1LearnerSONormalized(FullyConnectedTanh(), dict()),
-    UPGDv2LearnerFONormalized(FullyConnectedTanh(), dict()),
-    UPGDv2LearnerSONormalized(FullyConnectedTanh(), dict()),
-    SearchLearnerNormalFONormalized(FullyConnectedTanh(), dict()),
-    SearchLearnerNormalSONormalized(FullyConnectedTanh(), dict()),
-    SearchLearnerAntiCorrFONormalized(FullyConnectedTanh(), dict()),
-    SearchLearnerAntiCorrSONormalized(FullyConnectedTanh(), dict()),
-    SGDLearner(FullyConnectedTanh(), dict()),
-    AntiPGDLearner(FullyConnectedTanh(), dict()),
-    PGDLearner(FullyConnectedTanh(), dict()),
+    UPGDv1LearnerFONormalized(),
+    UPGDv1LearnerSONormalized(),
+    UPGDv2LearnerFONormalized(),
+    UPGDv2LearnerSONormalized(),
+    SearchLearnerNormalFONormalized(),
+    SearchLearnerNormalSONormalized(),
+    SearchLearnerAntiCorrFONormalized(),
+    SearchLearnerAntiCorrSONormalized(),
+    SGDLearner(),
+    AntiPGDLearner(),
+    PGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

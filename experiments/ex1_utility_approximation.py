@@ -17,7 +17,7 @@ grids = [
 ]
 
 learners = [
-    SGDLearnerWithHesScale(SmallFullyConnectedTanh(), dict()),
+    SGDLearnerWithHesScale(),
 ]
 
 for learner, grid in zip(learners, grids):

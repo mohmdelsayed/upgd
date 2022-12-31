@@ -17,7 +17,7 @@ grids = [
 ]
 
 learners = [
-    SGDLearner(FullyConnectedTanhGates(), dict()),
+    SGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

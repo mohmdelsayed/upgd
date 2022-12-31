@@ -38,9 +38,9 @@ grids = [
 ]
 
 learners = [
-    FeatureUPGDv2LearnerFONormalized(FullyConnectedTanhGates(), dict()),
-    SearchLearnerAntiCorrFONormalized(FullyConnectedTanhGates(), dict()),
-    SGDLearner(FullyConnectedTanhGates(), dict()),
+    FeatureUPGDv2LearnerFONormalized(),
+    SearchLearnerAntiCorrFONormalized(),
+    SGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):
