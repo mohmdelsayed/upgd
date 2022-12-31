@@ -1,4 +1,4 @@
-# GT-Learners
+# Continual Perturbation with Utility Propagation
 
 ## Installation:
 #### 1. You need to have environemnt with python 3.7:
