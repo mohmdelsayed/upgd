@@ -3,15 +3,15 @@ from core.learner.feature.upgd import FeatureUPGDv2LearnerFONormalized
 from core.learner.weight.upgd import UPGDv2LearnerFONormalized
 from core.learner.weight.search import SearchLearnerAntiCorrFONormalized
 from core.learner.sgd import SGDLearner
-from core.task.summer_with_sign_change import SummerWithSignChange
 from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.network.fcn_relu import FullyConnectedReLUGates
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLUGates
 from core.runner import Runner
 from core.run.run import Run
-from core.utils import create_script_generator, create_script_runner
+from core.utils import create_script_generator, create_script_runner, tasks
 
-task = SummerWithSignChange(name="ex8_feature_train", n_inputs=50)
+exp_name = "ex8_feature_train"
+task = tasks[exp_name]()
 
 gt_grids = GridSearch(
         seed=[0],
@@ -44,7 +44,7 @@ learners = [
 ]
 
 for learner, grid in zip(learners, grids):
-    runner = Runner(Run, learner, grid, task, learner.name)
+    runner = Runner(Run, learner, grid, exp_name, learner.name)
     runner.write_cmd("generated_cmds")
-    create_script_generator(f"generated_cmds/{task.name}")
-    create_script_runner(f"generated_cmds/{task.name}")
+    create_script_generator(f"generated_cmds/{exp_name}")
+    create_script_runner(f"generated_cmds/{exp_name}")

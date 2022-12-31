@@ -1,12 +1,12 @@
 from core.grid_search import GridSearch
 from core.learner.sgd import SGDLearner
-from core.task.utility_task import UtilityTask
 from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.runner import Runner
 from core.run.run_utility_feature import FeatureRunUtility
-from core.utils import create_script_generator, create_script_runner
+from core.utils import create_script_generator, create_script_runner, tasks
 
-task = UtilityTask(name="ex7_feature_utils")
+exp_name = "ex7_feature_utils"
+task = tasks[exp_name]()
 
 grids = [
     GridSearch(seed=[i for i in range(0, 100)],
@@ -21,7 +21,7 @@ learners = [
 ]
 
 for learner, grid in zip(learners, grids):
-    runner = Runner(FeatureRunUtility, learner, grid, task, learner.name)
+    runner = Runner(FeatureRunUtility, learner, grid, exp_name, learner.name)
     runner.write_cmd("generated_cmds")
-    create_script_generator(f"generated_cmds/{task.name}")
-    create_script_runner(f"generated_cmds/{task.name}")
+    create_script_generator(f"generated_cmds/{exp_name}")
+    create_script_runner(f"generated_cmds/{exp_name}")

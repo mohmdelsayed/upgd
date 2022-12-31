@@ -4,16 +4,15 @@ from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLe
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
-from core.task.summer_with_sign_change import SummerWithSignChange
 from core.network.fcn_tanh import FullyConnectedTanh
 from core.network.fcn_relu import FullyConnectedReLU
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
 from core.runner import Runner
 from core.run.run import Run
-from core.utils import create_script_generator, create_script_runner
+from core.utils import create_script_generator, create_script_runner, tasks
 
-
-task = SummerWithSignChange(name="ex4_cat_forget_summer_with_sign_change")
+exp_name = "ex4_cat_forget_lop_summer_with_sign_change"
+task = tasks[exp_name]()
 
 gt_grids = GridSearch(
         seed=[i for i in range(0, 30)],
@@ -62,7 +61,7 @@ learners = [
 ]
 
 for learner, grid in zip(learners, grids):
-    runner = Runner(Run, learner, grid, task, learner.name)
+    runner = Runner(Run, learner, grid, exp_name, learner.name)
     runner.write_cmd("generated_cmds")
-    create_script_generator(f"generated_cmds/{task.name}")
-    create_script_runner(f"generated_cmds/{task.name}")
+    create_script_generator(f"generated_cmds/{exp_name}")
+    create_script_runner(f"generated_cmds/{exp_name}")
