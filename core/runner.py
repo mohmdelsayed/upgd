@@ -20,7 +20,7 @@ class Runner:
     def write_cmd(self, directory):
         cmd = ""
         for permutation in self.get_combinations():
-            cmd += f"python3 core/{self.run_name}.py --task {self.task.name} --learner {self.learner}"
+            cmd += f"python3 core/run/{self.run_name}.py --task {self.task.name} --learner {self.learner}"
             keys, values = zip(*permutation.items())
             for key, value in zip(keys, values):
                 cmd += f" --{key} {value}"
