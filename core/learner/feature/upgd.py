@@ -1,5 +1,5 @@
 from core.learner.learner import Learner
-from core.optim.search.first_order import FeatureSearchAntiCorrNormalized
+from core.optim.feature.search.first_order import FeatureSearchAntiCorrNormalized
 
 class FeatureUPGDv2Learner(Learner):
     def __init__(self, network, optim_kwargs):

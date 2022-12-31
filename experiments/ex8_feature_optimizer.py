@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.upgd_featurewise import FeatureUPGDv2Learner
+from core.learner.feature.upgd import FeatureUPGDv2Learner
 from core.learner.upgd import UPGDv2LearnerFONormalized
 from core.learner.search import SearchLearnerAntiCorrFONormalized
 from core.learner.sgd import SGDLearner
