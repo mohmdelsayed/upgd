@@ -5,6 +5,7 @@ from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
 import traceback
+import time
 class Run:
     name = 'run'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
@@ -53,10 +54,11 @@ if __name__ == "__main__":
     ll = sys.argv[1:]
     args = {k[2:]:v for k,v in zip(ll[::2], ll[1::2])}
     run = Run(**args)
+    current_time = time.time()
     try:
         run.start()
         with open(f"finished_{args['learner']}.txt", "a") as f:
-            f.write(f"python3 {' '.join(sys.argv)} \n")
+            f.write(f"python3 {' '.join(sys.argv)} time_elapsed: {time.time()-current_time} \n")
     except BaseException as e:
         with open(f"failed_{args['learner']}.txt", "a") as f:
             f.write(f"python3 {' '.join(sys.argv)} \n")
