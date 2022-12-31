@@ -6,96 +6,96 @@ from core.optim.weight.gt.second_order import SecondOrderUPGDv2AntiCorrNormalize
 class UPGDv2LearnerFOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2AntiCorrNormalized
-        name = "upgdv2_anticorr_normalized_fo"
+        name = "upgd_v2_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv2LearnerSOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv2AntiCorrNormalized
-        name = "upgdv2_anticorr_normalized_so"
+        name = "upgd_v2_so_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv1LearnerFOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1AntiCorrNormalized
-        name = "upgdv1_anticorr_normalized_fo"
+        name = "upgd_v1_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv1LearnerSOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv1AntiCorrNormalized
-        name = "upgdv1_anticorr_normalized_so"
+        name = "upgd_v1_so_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv2LearnerFOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2AntiCorrMax
-        name = "upgdv2_anticorr_max_fo"
+        name = "upgd_v2_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv2LearnerSOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv2AntiCorrMax
-        name = "upgdv2_anticorr_max_so"
+        name = "upgd_v2_so_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv1LearnerFOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1AntiCorrMax
-        name = "upgdv1_anticorr_max_fo"
+        name = "upgd_v1_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv1LearnerSOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv1AntiCorrMax
-        name = "upgdv1_anticorr_max_so"
+        name = "upgd_v1_so_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 
 class UPGDv2LearnerFONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2NormalNormalized
-        name = "upgdv2_normal_normalized_fo"
+        name = "upgd_v2_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv2LearnerSONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv2NormalNormalized
-        name = "upgdv2_normal_normalized_so"
+        name = "upgd_v2_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv1LearnerFONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1NormalNormalized
-        name = "upgdv1_normal_normalized_fo"
+        name = "upgd_v1_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv1LearnerSONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv1NormalNormalized
-        name = "upgdv1_normal_normalized_so"
+        name = "upgd_v1_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv2LearnerFONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2NormalMax
-        name = "upgdv2_normal_max_fo"
+        name = "upgd_v2_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv2LearnerSONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv2NormalMax
-        name = "upgdv2_normal_max_so"
+        name = "upgd_v2_so_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class UPGDv1LearnerFONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1NormalMax
-        name = "upgdv1_normal_max_fo"
+        name = "upgd_v1_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class UPGDv1LearnerSONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderUPGDv1NormalMax
-        name = "upgdv1_normal_max_so"
+        name = "upgd_v1_so_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)

@@ -4,47 +4,47 @@ from core.optim.feature.gt.first_order import FirstOrderUPGDv2AntiCorrNormalized
 class FeatureUPGDv2LearnerFOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2AntiCorrNormalized
-        name = "feature_upgdv2_fo_anticorr_normalized"
+        name = "feature_upgd_v2_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv1LearnerFOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1AntiCorrNormalized
-        name = "feature_upgdv1_fo_anticorr_normalized"
+        name = "feature_upgd_v1_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv2LearnerFONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2NormalNormalized
-        name = "feature_upgdv2_fo_normal_normalized"
+        name = "feature_upgd_v2_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv1LearnerFONormalNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1NormalNormalized
-        name = "feature_upgdv1_fo_normal_normalized"
+        name = "feature_upgd_v1_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv2LearnerFOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2AntiCorrMax
-        name = "feature_upgdv2_fo_anticorr_max"
+        name = "feature_upgd_v2_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv1LearnerFOAntiCorrMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1AntiCorrMax
-        name = "feature_upgdv1_fo_anticorr_max"
+        name = "feature_upgd_v1_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv2LearnerFONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2NormalMax
-        name = "feature_upgdv2_fo_normal_max"
+        name = "feature_upgd_v2_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureUPGDv1LearnerFONormalMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv1NormalMax
-        name = "feature_upgdv1_fo_normal_max"
+        name = "feature_upgd_v1_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)

@@ -18,13 +18,13 @@ class SearchLearnerNormalSONormalized(Learner):
 class SearchLearnerAntiCorrFONormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderSearchAntiCorrNormalized
-        name = "search_fo_anticorr_normalized"
+        name = "search_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class SearchLearnerAntiCorrSONormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderSearchAntiCorrNormalized
-        name = "search_so_anticorr_normalized"
+        name = "search_so_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
 class SearchLearnerNormalFOMax(Learner):
@@ -42,11 +42,11 @@ class SearchLearnerNormalSOMax(Learner):
 class SearchLearnerAntiCorrFOMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderSearchAntiCorrMax
-        name = "search_fo_anticorr_max"
+        name = "search_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class SearchLearnerAntiCorrSOMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = SecondOrderSearchAntiCorrMax
-        name = "search_so_anticorr_max"
+        name = "search_so_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)

@@ -4,7 +4,7 @@ from core.optim.feature.search.first_order import FirstOrderSearchAntiCorrNormal
 class FeatureSearchLearnerAntiCorrFONormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderSearchAntiCorrNormalized
-        name = "feature_search_fo_anticorr_normalized"
+        name = "feature_search_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureSearchLearnerNormalFONormalized(Learner):
@@ -16,7 +16,7 @@ class FeatureSearchLearnerNormalFONormalized(Learner):
 class FeatureSearchLearnerAntiCorrFOMax(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderSearchAntiCorrMax
-        name = "feature_search_fo_anticorr_max"
+        name = "feature_search_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureSearchLearnerNormalFOMax(Learner):
