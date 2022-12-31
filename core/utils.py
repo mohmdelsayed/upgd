@@ -16,7 +16,7 @@ from core.learner.pgd import PGDLearner
 from core.learner.weight.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
 from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
 
-from core.learner.feature.upgd import FeatureUPGDv2LearnerFONormalized, FeatureUPGDv1LearnerFONormalized
+from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized
 from core.learner.feature.search import FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFONormalized
 
 from core.utilities.weight.fo_utility import FirstOrderUtility
@@ -83,8 +83,11 @@ learners = {
 
     "feature_search_fo_anticorr_normalized": FeatureSearchLearnerAntiCorrFONormalized,
     "feature_search_fo_normal_normalized": FeatureSearchLearnerNormalFONormalized,
-    "feature_upgdv2_fo_anticorr_normalized": FeatureUPGDv2LearnerFONormalized,
-    "feature_upgdv1_fo_anticorr_normalized": FeatureUPGDv1LearnerFONormalized,
+    
+    "feature_upgdv2_fo_anticorr_normalized": FeatureUPGDv2LearnerFOAntiCorrNormalized,
+    "feature_upgdv1_fo_anticorr_normalized": FeatureUPGDv1LearnerFOAntiCorrNormalized,
+    "feature_upgdv2_fo_normal_normalized": FeatureUPGDv2LearnerFONormalNormalized,
+    "feature_upgdv1_fo_normal_normalized": FeatureUPGDv1LearnerFONormalNormalized,
 }
 
 criterions = {
