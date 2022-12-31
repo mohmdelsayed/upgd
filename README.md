@@ -3,6 +3,7 @@
 ## Installation:
 #### 1. You need to have environemnt with python 3.7:
 ``` sh
+git clone  --recursive git@github.com:mohmdelsayed/GT-learners.git
 python3.7 -m venv .gt-learners
 source .gt-learners/bin/activate
 ```
