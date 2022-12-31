@@ -13,11 +13,11 @@ from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 
-from core.learner.weight.upgd import UPGDv1LearnerFOMax, UPGDv1LearnerSONormalized, UPGDv1LearnerFONormalized, UPGDv1LearnerSOMax, UPGDv2LearnerFOMax, UPGDv2LearnerSONormalized, UPGDv2LearnerFONormalized, UPGDv2LearnerSOMax
+from core.learner.weight.upgd import UPGDv2LearnerFOAntiCorrNormalized, UPGDv2LearnerSOAntiCorrNormalized, UPGDv1LearnerFOAntiCorrNormalized, UPGDv1LearnerSOAntiCorrNormalized, UPGDv2LearnerFOAntiCorrMax, UPGDv2LearnerSOAntiCorrMax, UPGDv1LearnerFOAntiCorrMax, UPGDv1LearnerSOAntiCorrMax, UPGDv2LearnerFONormalNormalized, UPGDv2LearnerSONormalNormalized, UPGDv1LearnerFONormalNormalized, UPGDv1LearnerSONormalNormalized, UPGDv2LearnerFONormalMax, UPGDv2LearnerSONormalMax, UPGDv1LearnerFONormalMax, UPGDv1LearnerSONormalMax
 from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
 
-from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized
-from core.learner.feature.search import FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFONormalized
+from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrMax, FeatureUPGDv1LearnerFOAntiCorrMax, FeatureUPGDv2LearnerFONormalMax, FeatureUPGDv1LearnerFONormalMax
+from core.learner.feature.search import FeatureSearchLearnerAntiCorrFONormalized, FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFOMax, FeatureSearchLearnerNormalFOMax
 
 from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
@@ -64,30 +64,50 @@ learners = {
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
 
-    "upgdv1_normalized_fo": UPGDv1LearnerFONormalized,
-    "upgdv1_normalized_so": UPGDv1LearnerSONormalized,
-    "upgdv2_normalized_fo": UPGDv2LearnerFONormalized,
-    "upgdv2_normalized_so": UPGDv2LearnerSONormalized,
-    "upgdv1_max_fo": UPGDv1LearnerFOMax,
-    "upgdv1_max_so": UPGDv1LearnerSOMax,
-    "upgdv2_max_fo": UPGDv2LearnerFOMax,
-    "upgdv2_max_so": UPGDv2LearnerSOMax,
+    "upgd_v2_fo_anti_corr_normalized": UPGDv2LearnerFOAntiCorrNormalized,
+    "upgd_v2_so_anti_corr_normalized": UPGDv2LearnerSOAntiCorrNormalized,
+    "upgd_v1_fo_anti_corr_normalized": UPGDv1LearnerFOAntiCorrNormalized,
+    "upgd_v1_so_anti_corr_normalized": UPGDv1LearnerSOAntiCorrNormalized,
+    "upgd_v2_fo_anti_corr_max": UPGDv2LearnerFOAntiCorrMax,
+    "upgd_v2_so_anti_corr_max": UPGDv2LearnerSOAntiCorrMax,
+    "upgd_v1_fo_anti_corr_max": UPGDv1LearnerFOAntiCorrMax,
+    "upgd_v1_so_anti_corr_max": UPGDv1LearnerSOAntiCorrMax,
+
+    "upgd_v2_fo_normal_normalized": UPGDv2LearnerFONormalNormalized,
+    "upgd_v2_so_normal_normalized": UPGDv2LearnerSONormalNormalized,
+    "upgd_v1_fo_normal_normalized": UPGDv1LearnerFONormalNormalized,
+    "upgd_v1_so_normal_normalized": UPGDv1LearnerSONormalNormalized,
+    "upgd_v2_fo_normal_max": UPGDv2LearnerFONormalMax,
+    "upgd_v2_so_normal_max": UPGDv2LearnerSONormalMax,
+    "upgd_v1_fo_normal_max": UPGDv1LearnerFONormalMax,
+    "upgd_v1_so_normal_max": UPGDv1LearnerSONormalMax,
+
+    "search_fo_anti_corr_normalized": SearchLearnerAntiCorrFONormalized,
+    "search_so_anti_corr_normalized": SearchLearnerAntiCorrSONormalized,
+    "search_fo_anti_corr_max": SearchLearnerAntiCorrFOMax,
+    "search_so_anti_corr_max": SearchLearnerAntiCorrSOMax,
+
     "search_fo_normal_normalized": SearchLearnerNormalFONormalized,
     "search_so_normal_normalized": SearchLearnerNormalSONormalized,
-    "search_fo_anticorr_normalized": SearchLearnerAntiCorrFONormalized,
-    "search_so_anticorr_normalized": SearchLearnerAntiCorrSONormalized,
     "search_fo_normal_max": SearchLearnerNormalFOMax,
     "search_so_normal_max": SearchLearnerNormalSOMax,
-    "search_fo_anticorr_max": SearchLearnerAntiCorrFOMax,
-    "search_so_anticorr_max": SearchLearnerAntiCorrSOMax,
 
-    "feature_search_fo_anticorr_normalized": FeatureSearchLearnerAntiCorrFONormalized,
+    "feature_upgd_v2_fo_normal_normalized": FeatureUPGDv2LearnerFONormalNormalized,
+    "feature_upgd_v1_fo_normal_normalized": FeatureUPGDv1LearnerFONormalNormalized,
+    "feature_upgd_v2_fo_normal_max": FeatureUPGDv2LearnerFONormalMax,
+    "feature_upgd_v1_fo_normal_max": FeatureUPGDv1LearnerFONormalMax,
+
+    "feature_upgd_v2_fo_anti_corr_normalized": FeatureUPGDv2LearnerFOAntiCorrNormalized,
+    "feature_upgd_v1_fo_anti_corr_normalized": FeatureUPGDv1LearnerFOAntiCorrNormalized,
+    "feature_upgd_v2_fo_anti_corr_max": FeatureUPGDv2LearnerFOAntiCorrMax,
+    "feature_upgd_v1_fo_anti_corr_max": FeatureUPGDv1LearnerFOAntiCorrMax,
+
+    "feature_search_fo_anti_corr_normalized": FeatureSearchLearnerAntiCorrFONormalized,
+    "feature_search_fo_anti_corr_max": FeatureSearchLearnerAntiCorrFOMax,
+
     "feature_search_fo_normal_normalized": FeatureSearchLearnerNormalFONormalized,
-    
-    "feature_upgdv2_fo_anticorr_normalized": FeatureUPGDv2LearnerFOAntiCorrNormalized,
-    "feature_upgdv1_fo_anticorr_normalized": FeatureUPGDv1LearnerFOAntiCorrNormalized,
-    "feature_upgdv2_fo_normal_normalized": FeatureUPGDv2LearnerFONormalNormalized,
-    "feature_upgdv1_fo_normal_normalized": FeatureUPGDv1LearnerFONormalNormalized,
+    "feature_search_fo_normal_max": FeatureSearchLearnerNormalFOMax,
+
 }
 
 criterions = {

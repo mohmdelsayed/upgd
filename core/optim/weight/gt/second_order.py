@@ -233,12 +233,12 @@ class SecondOrderUPGDv1NormalMax(torch.optim.Optimizer):
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
-class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
+class SecondOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         names, params = zip(*params)
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
-        super(SecondOrderUPGDv2AntiCorrNormalized, self).__init__(params, defaults)
+        super(SecondOrderUPGDv2NormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -269,12 +269,12 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                 )
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
-class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
+class SecondOrderUPGDv2NormalMax(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
         names, params = zip(*params)
         defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, method_field=type(self).method.savefield, noise_damping=noise_damping, names=names)
-        super(SecondOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
+        super(SecondOrderUPGDv2NormalMax, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
