@@ -6,7 +6,7 @@ import numpy as np
 from core.plotter import Plotter
 
 class UtilityPlotter(Plotter):
-    def __init__(self, best_runs_path, avg_interval=1):
+    def __init__(self, best_runs_path, avg_interval=50):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
 
@@ -51,7 +51,7 @@ class UtilityPlotter(Plotter):
         plt.show()
 
 if __name__ == "__main__":
-    best_runs = BestRun("utility_task", "area", "fully_connected_tanh", ["sgd_with_hesscale"]).get_best_run()
+    best_runs = BestRun("utility_task", "area", "fully_connected_tanh_gates", ["sgd"]).get_best_run()
     print(best_runs)
     plotter = UtilityPlotter(best_runs)
     plotter.plot("global_correlations")
