@@ -228,8 +228,6 @@ echo \"#SBATCH --array=1-40\" >> ${{f%.*}}.sh
 fi
 echo -e \"#SBATCH --gres=gpu:1\\t\\t\\t# Number of GPUs (per node)\" >> ${{f%.*}}.sh
 echo -e \"#SBATCH --account=def-ashique\" >> ${{f%.*}}.sh
-echo -e \"#SBATCH --output=%x%A%a.out\\t\\t\\t# standard output (%A is replaced by jobID and %a with the array index)\" >> ${{f%.*}}.sh
-echo -e \"#SBATCH --error=%x%A%a.err\\t\\t\\t# standard error\\n\" >> ${{f%.*}}.sh
 
 echo "cd \"../../\"" >> ${{f%.*}}.sh
 echo \"FILE=\\"\$SCRATCH/GT-learners/generated_cmds/{exp_name}/${{f%.*}}.txt\\"\"  >> ${{f%.*}}.sh
