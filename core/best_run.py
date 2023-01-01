@@ -25,7 +25,7 @@ class BestRun:
                         data = json.load(json_file)
                         configuration_list.append(data["losses"])
 
-                mean_list = np.array(configuration_list).mean(axis=-1)
+                mean_list = np.nan_to_num(np.array(configuration_list)).mean(axis=-1)
                 configs[subdirectory]["means"] = mean_list
 
             best_configs.append(min(configs.keys(), key=(lambda k: sum(configs[k]["means"]))))
