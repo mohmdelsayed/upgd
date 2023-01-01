@@ -7,8 +7,18 @@ from core.utils import feature_utility_factory
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
+import signal
 import traceback
 import time
+from functools import partial
+
+def signal_handler(msg, signal, frame):
+    print('Exit signal: ', signal)
+    cmd, learner = msg
+    with open(f'timeout_{learner}.txt', 'a') as f:
+        f.write(f"{cmd} \n")
+    exit(0)
+
 class FeatureRunUtility(Run):
     name = 'run_utility_feature'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
@@ -78,14 +88,16 @@ if __name__ == "__main__":
     ll = sys.argv[1:]
     args = {k[2:]:v for k,v in zip(ll[::2], ll[1::2])}
     run = FeatureRunUtility(**args)
+    cmd = f"python3 {' '.join(sys.argv)}"
+    signal.signal(signal.SIGUSR1, partial(signal_handler, (cmd, args['learner'])))
+    current_time = time.time()
     try:
-        current_time = time.time()
         run.start()
         with open(f"finished_{args['learner']}.txt", "a") as f:
-            f.write(f"python3 {' '.join(sys.argv)} time_elapsed: {time.time()-current_time} \n")
-    except BaseException as e:
+            f.write(f"{cmd} time_elapsed: {time.time()-current_time} \n")
+    except Exception as e:
         with open(f"failed_{args['learner']}.txt", "a") as f:
-            f.write(f"python3 {' '.join(sys.argv)} \n")
+            f.write(f"{cmd} \n")
         with open(f"failed_{args['learner']}_msgs.txt", "a") as f:
-            f.write(f"python3 {' '.join(sys.argv)} \n")
+            f.write(f"{cmd} \n")
             f.write(f"{traceback.format_exc()} \n\n")
