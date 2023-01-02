@@ -41,27 +41,27 @@ task = tasks[exp_name]()
 
 gt_grids = GridSearch(
         seed=[i for i in range(0, 30)],
-        lr=[2 ** -i for i in range(1, 9)],
-        beta_utility=[0.0, 0.5, 0.9, 0.99, 0.999],
+        lr=[2 ** -i for i in range(3, 9)],
+        beta_utility=[0.0, 0.5, 0.9, 0.99],
         temp=[1.0],
-        sigma=[2.0, 1.0, 0.5, 0.25],
+        sigma=[1.0],
         network=[FullyConnectedLinear()],
-        n_samples=[20000],
+        n_samples=[100000],
     )
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 9)],
+               lr=[2 ** -i for i in range(3, 9)],
                network=[FullyConnectedLinear()],
-               n_samples=[20000],
+               n_samples=[100000],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 9)],
-               sigma=[2.0, 1.0, 0.5, 0.25],
+               lr=[2 ** -i for i in range(3, 9)],
+               sigma=[1.0],
                network=[FullyConnectedLinear()],
-               n_samples=[20000],
+               n_samples=[100000],
     )
 
 # gt_grids = GridSearch(
