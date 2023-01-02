@@ -15,10 +15,7 @@ class FullyConnectedLeakyReLUGates(nn.Sequential):
         self.add_module("linear_3", nn.Linear(in_features=n_hidden_units // 2, out_features=n_outputs))
         for m in self.modules():
             if isinstance(m, nn.Linear):
-                nn.init.kaiming_uniform_(m.weight)
-                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
-                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
-                nn.init.uniform_(m.bias, -bound, bound)
+                m.reset_parameters()
 
     def __str__(self):
         return self.name
@@ -34,10 +31,7 @@ class FullyConnectedLeakyReLU(nn.Sequential):
         self.add_module("linear_3", nn.Linear(in_features=n_hidden_units // 2, out_features=n_outputs))
         for m in self.modules():
             if isinstance(m, nn.Linear):
-                nn.init.kaiming_uniform_(m.weight)
-                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
-                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
-                nn.init.uniform_(m.bias, -bound, bound)
+                m.reset_parameters()
 
     def __str__(self):
         return self.name
@@ -51,10 +45,7 @@ class SmallFullyConnectedLeakyReLU(nn.Sequential):
         self.add_module("linear_2", nn.Linear(in_features=n_hidden_units, out_features=n_outputs))
         for m in self.modules():
             if isinstance(m, nn.Linear):
-                nn.init.kaiming_uniform_(m.weight)
-                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
-                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
-                nn.init.uniform_(m.bias, -bound, bound)
+                m.reset_parameters()
 
     def __str__(self):
         return self.name
