@@ -16,6 +16,9 @@ class FullyConnectedTanhGates(nn.Sequential):
         for m in self.modules():
             if isinstance(m, nn.Linear):
                 nn.init.kaiming_uniform_(m.weight)
+                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
+                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+                nn.init.uniform_(m.bias, -bound, bound)
 
     def __str__(self):
         return self.name
@@ -32,6 +35,9 @@ class FullyConnectedTanh(nn.Sequential):
         for m in self.modules():
             if isinstance(m, nn.Linear):
                 nn.init.kaiming_uniform_(m.weight)
+                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
+                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+                nn.init.uniform_(m.bias, -bound, bound)
 
     def __str__(self):
         return self.name
@@ -46,9 +52,9 @@ class SmallFullyConnectedTanh(nn.Sequential):
         for m in self.modules():
             if isinstance(m, nn.Linear):
                 nn.init.kaiming_uniform_(m.weight)
-        for m in self.modules():
-            if isinstance(m, nn.Linear):
-                nn.init.kaiming_uniform_(m.weight)
+                fan_in, _ = nn.init._calculate_fan_in_and_fan_out(m.weight)
+                bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+                nn.init.uniform_(m.bias, -bound, bound)
 
     def __str__(self):
         return self.name
