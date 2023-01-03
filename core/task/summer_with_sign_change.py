@@ -14,7 +14,7 @@ class SummerWithSignChange(Task):
         n_outputs=1,
         n_operands=2,
         batch_size=32,
-        change_freq=50,
+        change_freq=100,
     ):
         super().__init__(name, batch_size)
         self.change_freq = change_freq
@@ -40,7 +40,7 @@ class SummerWithSignChange(Task):
     def generator(self):
         while True:
             inputs = torch.randn((self.batch_size, self.n_inputs))
-            yield inputs, self.multiplier * inputs[:, self.signals].mean(
+            yield inputs, self.multiplier * inputs[:, self.signals].sum(
                 dim=-1
             ).unsqueeze(1)
 
