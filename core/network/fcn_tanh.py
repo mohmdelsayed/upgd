@@ -3,7 +3,7 @@ from .gate import GateLayer
 import torch, math
 
 class FullyConnectedTanhGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=100):
         super(FullyConnectedTanhGates, self).__init__()
         self.name = "fully_connected_tanh_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -21,7 +21,7 @@ class FullyConnectedTanhGates(nn.Sequential):
         return self.name
 
 class FullyConnectedTanh(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=100):
         super(FullyConnectedTanh, self).__init__()
         self.name = "fully_connected_tanh"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))

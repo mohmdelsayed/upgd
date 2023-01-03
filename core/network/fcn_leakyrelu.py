@@ -3,7 +3,7 @@ from .gate import GateLayer
 import torch, math
 
 class FullyConnectedLeakyReLUGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=100):
         super(FullyConnectedLeakyReLUGates, self).__init__()
         self.name = "fully_connected_leakyrelu_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -21,7 +21,7 @@ class FullyConnectedLeakyReLUGates(nn.Sequential):
         return self.name
 
 class FullyConnectedLeakyReLU(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=100):
         super(FullyConnectedLeakyReLU, self).__init__()
         self.name = "fully_connected_leakyrelu"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
