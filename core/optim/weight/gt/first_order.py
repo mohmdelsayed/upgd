@@ -1,6 +1,6 @@
 import torch
 from torch.nn import functional as F
-eps = 1e-8
+eps = 1e-4
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
 class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
