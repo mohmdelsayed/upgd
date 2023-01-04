@@ -18,16 +18,6 @@ from core.learner.weight.upgd import (
     UPGDv1LearnerSONormalMax,
 )
 
-from core.learner.weight.search import (
-    SearchLearnerAntiCorrFONormalized,
-    SearchLearnerAntiCorrSONormalized,
-    SearchLearnerAntiCorrFOMax,
-    SearchLearnerAntiCorrSOMax,
-    SearchLearnerNormalFONormalized,
-    SearchLearnerNormalSONormalized,
-    SearchLearnerNormalFOMax,
-    SearchLearnerNormalSOMax,
-)
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
@@ -41,8 +31,8 @@ task = tasks[exp_name]()
 
 gt_grids = GridSearch(
         seed=[i for i in range(0, 30)],
-        lr=[2 ** -i for i in range(3, 9)],
-        beta_utility=[0.0, 0.5, 0.9, 0.99],
+        lr=[10 ** -i for i in range(0, 5)],
+        beta_utility=[0.0],
         temp=[1.0],
         sigma=[1.0],
         network=[FullyConnectedLinear()],
@@ -51,14 +41,14 @@ gt_grids = GridSearch(
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(3, 9)],
+               lr=[10 ** -i for i in range(0, 5)],
                network=[FullyConnectedLinear()],
                n_samples=[100000],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(3, 9)],
+               lr=[10 ** -i for i in range(0, 5)],
                sigma=[1.0],
                network=[FullyConnectedLinear()],
                n_samples=[100000],
@@ -90,17 +80,9 @@ pgd_grids = GridSearch(
 #     )
 
 
-grids = [gt_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [gt_grids for _ in range(16)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
 
 learners = [
-    SearchLearnerAntiCorrFONormalized(),
-    SearchLearnerAntiCorrSONormalized(),
-    SearchLearnerAntiCorrFOMax(),
-    SearchLearnerAntiCorrSOMax(),
-    SearchLearnerNormalFONormalized(),
-    SearchLearnerNormalSONormalized(),
-    SearchLearnerNormalFOMax(),
-    SearchLearnerNormalSOMax(),
     UPGDv2LearnerFOAntiCorrNormalized(),
     UPGDv2LearnerSOAntiCorrNormalized(),
     UPGDv1LearnerFOAntiCorrNormalized(),
