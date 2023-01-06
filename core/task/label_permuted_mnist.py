@@ -10,7 +10,7 @@ class LabelPermutedMNIST(Task):
     The labels are permuted every 100 steps.
     """
 
-    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=2000):
+    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=1000):
         self.dataset = self.get_dataset(False)
         self.change_freq = change_freq
         self.step = 0
@@ -57,7 +57,8 @@ class LabelPermutedMNIST(Task):
         )
 
     def change_all_lables(self):
-        self.dataset.targets = (self.dataset.targets + 1) % 10
+        random_shift = torch.randint(0, 10, (1,))
+        self.dataset.targets = (self.dataset.targets + random_shift) % 10
         self.iterator = iter(self.get_dataloader(self.dataset))
 
 
