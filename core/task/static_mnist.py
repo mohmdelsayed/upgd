@@ -10,7 +10,7 @@ class StaticMNIST(Task):
     """
 
     def __init__(self, name="static_mnist", batch_size=32):
-        self.dataset = self.get_dataset(False)
+        self.dataset = self.get_dataset(True)
         self.step = 0
         self.n_inputs = 784
         self.n_outputs = 10
