@@ -36,10 +36,10 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -83,10 +83,10 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -123,10 +123,10 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -167,10 +167,10 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])

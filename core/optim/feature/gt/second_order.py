@@ -40,10 +40,10 @@ class SecondOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -85,10 +85,10 @@ class SecondOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -127,10 +127,10 @@ class SecondOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -169,10 +169,10 @@ class SecondOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -218,10 +218,10 @@ class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -267,10 +267,10 @@ class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -313,10 +313,10 @@ class SecondOrderUPGDv1NormalMax(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
@@ -359,10 +359,10 @@ class SecondOrderUPGDv2NormalMax(torch.optim.Optimizer):
                         noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.unsqueeze(1)), alpha=-group["lr"])
+                        p.data.add_(noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
                     p.data.add_(p.grad.data, alpha=-group["lr"])
