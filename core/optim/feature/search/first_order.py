@@ -25,7 +25,7 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     avg_utility.mul_(group["beta_utility"]).add_(
                         -p.grad.data * p.data, alpha=1 - group["beta_utility"]
                     )
-                    self.gate_utility = torch.tanh(F.normalize(avg_utility / bias_correction, dim=0) / group["temp"])
+                    self.gate_utility = torch.tanh(F.normalize(avg_utility / bias_correction, dim=-1) / group["temp"])
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -114,7 +114,7 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
                     avg_utility.mul_(group["beta_utility"]).add_(
                         -p.grad.data * p.data, alpha=1 - group["beta_utility"]
                     )
-                    self.gate_utility = torch.tanh(F.normalize(avg_utility / bias_correction, dim=0) / group["temp"])
+                    self.gate_utility = torch.tanh(F.normalize(avg_utility / bias_correction, dim=-1) / group["temp"])
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
