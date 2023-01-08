@@ -10,7 +10,7 @@ class LabelPermutedMNIST(Task):
     The labels are permuted every 100 steps.
     """
 
-    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=2000):
+    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=1000):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
