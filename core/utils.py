@@ -4,9 +4,9 @@ from core.task.summer_with_sign_change import SummerWithSignChange
 from core.task.summer_with_signals_change import SummerWithSignalsChange
 from core.task.utility_task import UtilityTask
 
-from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates
-from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates
-from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates
+from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
+from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates
+from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates
 
 from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
@@ -30,6 +30,8 @@ from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
 from core.utilities.feature.so_utility import FeatureSecondOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
+from core.utilities.feature.fo_nvidia_utility import FeatureNvidiaUtilityFO
+from core.utilities.feature.so_nvidia_utility import FeatureNvidiaUtilitySO
 
 import torch
 import numpy as np
@@ -58,6 +60,9 @@ networks = {
     "fully_connected_tanh_gates": FullyConnectedTanhGates,
     "fully_connected_linear": FullyConnectedLinear,
     "fully_connected_linear_gates": FullyConnectedLinearGates,
+    "small_fully_connected_tanh_gates": SmallFullyConnectedTanhGates,
+    "small_fully_connected_leakyrelu_gates": SmallFullyConnectedLeakyReLUGates,
+    "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
 }
 
 learners = {
@@ -137,8 +142,8 @@ utility_factory = {
     "second_order": SecondOrderUtility,
     "weight": WeightUtility,
     "oracle": OracleUtility,
-    # "nvidia_fo": NvidiaUtilityFO,
-    # "nvidia_so": NvidiaUtilitySO,
+    "nvidia_fo": NvidiaUtilityFO,
+    "nvidia_so": NvidiaUtilitySO,
     "random": RandomUtility,
 }
 
@@ -147,6 +152,8 @@ feature_utility_factory = {
     "second_order": FeatureSecondOrderUtility,
     "oracle": FeatureOracleUtility,
     "random": FeatureRandomUtility,
+    "nvidia_fo": FeatureNvidiaUtilityFO,
+    "nvidia_so": FeatureNvidiaUtilitySO,
 }
 
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
