@@ -18,5 +18,5 @@ class OracleUtility:
                     loss = self.criterion(output, targets)
                     p.ravel()[i] = old_value
                     true_utility.ravel()[i] = loss - original_loss
-                true_utility_net.append(torch.mean(true_utility, dim=0))
+                true_utility_net.append(true_utility)
             return true_utility_net

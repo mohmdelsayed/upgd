@@ -11,5 +11,5 @@ class SecondOrderUtility:
             fo_utility_net = []
             for p in  self.network.parameters():
                 fo_utility = -p.data * p.grad + 0.5 * (p.data ** 2) * p.hesscale
-                fo_utility_net.append(torch.mean(fo_utility, dim=0))
+                fo_utility_net.append(fo_utility)
             return fo_utility_net  

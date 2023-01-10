@@ -11,5 +11,5 @@ class RandomUtility:
             weight_utility_net = []
             for p in  self.network.parameters():
                 weight_utility = torch.rand_like(p.data)
-                weight_utility_net.append(torch.mean(weight_utility, dim=0))
+                weight_utility_net.append(weight_utility)
             return weight_utility_net  
