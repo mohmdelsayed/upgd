@@ -27,6 +27,7 @@ from core.utilities.weight.fo_nvidia_utility import NvidiaUtilityFO
 from core.utilities.weight.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.weight.random_utility import RandomUtility
 from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
+from core.utilities.feature.so_utility import FeatureSecondOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
 
@@ -143,6 +144,7 @@ utility_factory = {
 
 feature_utility_factory = {
     "first_order": FeatureFirstOrderUtility,
+    "second_order": FeatureSecondOrderUtility,
     "oracle": FeatureOracleUtility,
     "random": FeatureRandomUtility,
 }

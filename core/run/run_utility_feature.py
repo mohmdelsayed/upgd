@@ -7,6 +7,7 @@ from core.utils import feature_utility_factory
 from backpack import backpack, extend
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
+from core.network.gate import GateLayer, GateLayerGrad
 import signal
 import traceback
 import time
@@ -34,6 +35,9 @@ class FeatureRunUtility(Run):
         losses_per_step_size = []
         
         self.learner.set_task(self.task)
+        if self.learner.extend:    
+            extension = HesScale()
+            extension.set_module_extension(GateLayer, GateLayerGrad())
         criterion = extend(criterions[self.task.criterion]()) if self.learner.extend else criterions[self.task.criterion]()
         optimizer = self.learner.optimizer(
             self.learner.parameters, **self.learner.optim_kwargs
@@ -54,7 +58,7 @@ class FeatureRunUtility(Run):
             output = self.learner.predict(input)
             loss = criterion(output, target)
             if self.learner.extend:
-                with backpack(HesScale()):
+                with backpack(extension):
                     loss.backward()
             else:
                 loss.backward()
