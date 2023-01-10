@@ -1,4 +1,4 @@
-# Continual Perturbation with Utility Propagation
+# Utility-based Perturbed Gradient Descent
 
 ## Installation:
 #### 1. You need to have environemnt with python 3.7:
