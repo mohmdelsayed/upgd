@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.sgd import SGDLearner
+from core.learner.sgd import SGDLearnerWithHesScale
 from core.network.fcn_tanh import FullyConnectedTanhGates
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLUGates
@@ -19,7 +19,7 @@ grids = [
 ]
 
 learners = [
-    SGDLearner(),
+    SGDLearnerWithHesScale(),
 ]
 
 for learner, grid in zip(learners, grids):
