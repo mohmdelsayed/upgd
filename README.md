@@ -1,5 +1,8 @@
 # Utility-based Perturbed Gradient Descent
 
+Utility-based Perturbed Gradient Descent (UPGD) is an online representation-learning algorithm that is well-suited for continual learning agents with no knowledge about task boundaries. UPGD protects useful weights or features and perturbs less useful ones based on their utilities. Our empirical results show that our method alleviates catastrophic forgetting and decaying plasticity, enabling the use of modern representation learning methods to work in the continual learning setting.
+
+
 ## Installation:
 #### 1. You need to have environemnt with python 3.7:
 ``` sh
