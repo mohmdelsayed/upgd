@@ -3,9 +3,17 @@ import matplotlib.pyplot as plt
 from core.best_run import BestRun
 import os
 import numpy as np
+import matplotlib
+matplotlib.rcParams['axes.spines.right'] = False
+matplotlib.rcParams['axes.spines.top'] = False
+matplotlib.rcParams["axes.spines.right"] = False
+matplotlib.rcParams["axes.spines.top"] = False
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+matplotlib.rcParams.update({'font.size': 12})
 
 class UtilityPlotter:
-    def __init__(self, best_runs_path, avg_interval=1):
+    def __init__(self, best_runs_path, avg_interval=20):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
 
@@ -20,6 +28,8 @@ class UtilityPlotter:
                     configuration_list.append(data["losses"])
                     learner_name = data["learner"]
                     for measure in data[corr_name]:
+                        if "nvidia" in measure:
+                            continue
                         if measure not in util_correlations:
                             util_correlations[measure] = []
                         util_correlations[measure].append(data[corr_name][measure])
@@ -41,13 +51,14 @@ class UtilityPlotter:
                 std_measure = np.array(util_correlations[measure]).std(axis=0) / np.sqrt(len(seeds))
                 plt.plot(mean_measure, label=f"{measure}")
                 plt.fill_between(range(len(mean_measure)), mean_measure - std_measure, mean_measure + std_measure, alpha=0.1)
-                plt.title(corr_name)
+                # plt.title(corr_name)
                 plt.legend()
 
         
         plt.xlabel(f"Bin ({self.avg_interval} samples each)")
-        plt.ylabel("Loss")
-        plt.show()
+        plt.ylabel("Spearman's Coefficient")
+        plt.savefig(f"{corr_name}.pdf", bbox_inches='tight')
+        plt.clf()
 
 if __name__ == "__main__":
     best_runs = BestRun("ex1_weight_utils", "area", "small_fully_connected_tanh", ["sgd_with_hesscale"]).get_best_run()
