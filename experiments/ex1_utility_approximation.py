@@ -14,7 +14,7 @@ grids = [
     GridSearch(seed=[i for i in range(0, 30)],
                lr=[10**-2],
                network=[SmallFullyConnectedTanh(), SmallFullyConnectedReLU(), SmallFullyConnectedLeakyReLU()],
-               n_samples=[3000],
+               n_samples=[2000],
     ),
 ]
 

@@ -21,7 +21,7 @@ class FullyConnectedLeakyReLUGates(nn.Sequential):
         return self.name
 
 class SmallFullyConnectedLeakyReLUGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=60):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
         super(SmallFullyConnectedLeakyReLUGates, self).__init__()
         self.name = "small_fully_connected_leakyrelu_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -55,7 +55,7 @@ class FullyConnectedLeakyReLU(nn.Sequential):
         return self.name
 
 class SmallFullyConnectedLeakyReLU(nn.Sequential):
-    def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=10):
+    def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=50):
         super(SmallFullyConnectedLeakyReLU, self).__init__()
         self.name = "small_fully_connected_leakyrelu"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))

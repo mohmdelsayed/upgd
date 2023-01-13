@@ -21,7 +21,7 @@ class FullyConnectedTanhGates(nn.Sequential):
         return self.name
 
 class SmallFullyConnectedTanhGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=60):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
         super(SmallFullyConnectedTanhGates, self).__init__()
         self.name = "small_fully_connected_tanh_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -54,7 +54,7 @@ class FullyConnectedTanh(nn.Sequential):
         return self.name
 
 class SmallFullyConnectedTanh(nn.Sequential):
-    def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=10):
+    def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=50):
         super(SmallFullyConnectedTanh, self).__init__()
         self.name = "small_fully_connected_tanh"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))

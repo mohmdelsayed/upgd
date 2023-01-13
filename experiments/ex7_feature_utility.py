@@ -1,8 +1,8 @@
 from core.grid_search import GridSearch
 from core.learner.sgd import SGDLearnerWithHesScale
-from core.network.fcn_tanh import FullyConnectedTanhGates
-from core.network.fcn_leakyrelu import FullyConnectedLeakyReLUGates
-from core.network.fcn_relu import FullyConnectedReLUGates
+from core.network.fcn_tanh import SmallFullyConnectedTanhGates
+from core.network.fcn_leakyrelu import SmallFullyConnectedLeakyReLUGates
+from core.network.fcn_relu import SmallFullyConnectedReLUGates
 from core.runner import Runner
 from core.run.run_utility_feature import FeatureRunUtility
 from core.utils import create_script_generator, create_script_runner, tasks
@@ -13,8 +13,8 @@ task = tasks[exp_name]()
 grids = [
     GridSearch(seed=[i for i in range(0, 30)],
                lr=[10**-2],
-               network=[FullyConnectedTanhGates(), FullyConnectedLeakyReLUGates(), FullyConnectedReLUGates()],
-               n_samples=[3000],
+               network=[SmallFullyConnectedTanhGates(), SmallFullyConnectedLeakyReLUGates(), SmallFullyConnectedReLUGates()],
+               n_samples=[2000],
     ),
 ]
 
