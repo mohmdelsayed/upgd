@@ -48,7 +48,8 @@ gt_grids = GridSearch(
         temp=[1.0],
         sigma=[1.0],
         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-        n_samples=[10000],
+        n_samples=[20000],
+        noise_damping=[0, 1],
     )
 
 pgd_grids = GridSearch(
@@ -56,14 +57,14 @@ pgd_grids = GridSearch(
                lr=[10 ** -i for i in range(0, 4)],
                sigma=[1.0],
                network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-               n_samples=[10000],
+               n_samples=[20000],
     )
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
                lr=[10 ** -i for i in range(0, 4)],
                network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-               n_samples=[10000],
+               n_samples=[20000],
     )
 
 # gt_grids = GridSearch(
