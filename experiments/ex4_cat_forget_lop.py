@@ -39,6 +39,7 @@ gt_grids = GridSearch(
         sigma=[1.0],
         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
         n_samples=[100000],
+        noise_damping=[0,1],
     )
 
 sgd_grid = GridSearch(
