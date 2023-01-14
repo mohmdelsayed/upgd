@@ -9,6 +9,7 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
         super(FirstOrderUPGDv1NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
+        global_max_util = torch.tensor(-torch.inf)
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
@@ -17,21 +18,26 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
                 if len(state) == 0:
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
-                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 avg_utility = state["avg_utility"]
+                avg_utility.mul_(group["beta_utility"]).add_(
+                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
+                )
+                current_util_max = avg_utility.max()
+                if current_util_max > global_max_util:
+                    global_max_util = current_util_max
+                    
+        for group in self.param_groups:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
+                state = self.state[p]
+                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
                     noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
                 else:
                     noise = torch.randn_like(p.grad) * group["sigma"]
-                avg_utility.mul_(group["beta_utility"]).add_(
-                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
-                )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
+                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     p.grad.data
                     + noise * (1 - scaled_utility),
@@ -47,6 +53,7 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
         super(FirstOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
+        global_max_util = torch.tensor(-torch.inf)
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
@@ -56,8 +63,20 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
                     state["prev_noise"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
+                avg_utility = state["avg_utility"]
+                avg_utility.mul_(group["beta_utility"]).add_(
+                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
+                )
+                current_util_max = avg_utility.max()
+                if current_util_max > global_max_util:
+                    global_max_util = current_util_max
+                    
+        for group in self.param_groups:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
+                state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
                     new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
@@ -65,14 +84,7 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                     new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                avg_utility = state["avg_utility"]
-                avg_utility.mul_(group["beta_utility"]).add_(
-                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
-                )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
+                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -154,6 +166,7 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
         super(FirstOrderUPGDv2NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
+        global_max_util = torch.tensor(-torch.inf)
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
@@ -162,21 +175,26 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
                 if len(state) == 0:
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
-                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 avg_utility = state["avg_utility"]
+                avg_utility.mul_(group["beta_utility"]).add_(
+                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
+                )
+                current_util_max = avg_utility.max()
+                if current_util_max > global_max_util:
+                    global_max_util = current_util_max
+                    
+        for group in self.param_groups:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
+                state = self.state[p]
+                bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
                     noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
                 else:
                     noise = torch.randn_like(p.grad) * group["sigma"]
-                avg_utility.mul_(group["beta_utility"]).add_(
-                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
-                )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
+                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     (p.grad.data + noise)
                     * (1 - scaled_utility),
@@ -192,6 +210,7 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
         super(FirstOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
+        global_max_util = torch.tensor(-torch.inf)
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
@@ -201,8 +220,20 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                     state["step"] = 0
                     state["avg_utility"] = torch.zeros_like(p.data)
                     state["prev_noise"] = torch.zeros_like(p.data)
-                    state["max_utility"] = torch.tensor(-torch.inf)
                 state["step"] += 1
+                avg_utility = state["avg_utility"]
+                avg_utility.mul_(group["beta_utility"]).add_(
+                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
+                )
+                current_util_max = avg_utility.max()
+                if current_util_max > global_max_util:
+                    global_max_util = current_util_max
+                    
+        for group in self.param_groups:
+            for name, p in zip(group["names"], group["params"]):
+                if 'gate' in name:
+                    continue
+                state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 if group["noise_damping"]:
                     new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
@@ -210,14 +241,7 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                     new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                avg_utility = state["avg_utility"]
-                avg_utility.mul_(group["beta_utility"]).add_(
-                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
-                )
-                current_max = avg_utility.max()
-                if state["max_utility"] < current_max:
-                    state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
+                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
