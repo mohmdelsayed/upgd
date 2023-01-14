@@ -120,7 +120,7 @@ class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -168,7 +168,7 @@ class SecondOrderSearchNormalMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:

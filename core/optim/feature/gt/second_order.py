@@ -207,7 +207,7 @@ class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -256,7 +256,7 @@ class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -304,7 +304,7 @@ class SecondOrderUPGDv1NormalMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
@@ -350,7 +350,7 @@ class SecondOrderUPGDv2NormalMax(torch.optim.Optimizer):
                     current_max = avg_utility.max()
                     if state["max_utility"] < current_max:
                         state["max_utility"] = current_max
-                    self.gate_utility = torch.tanh((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                    self.gate_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                     continue
                 if self.gate_utility is not None:
                     if group["noise_damping"]:
