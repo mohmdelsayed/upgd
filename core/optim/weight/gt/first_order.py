@@ -1,6 +1,5 @@
 import torch
 from torch.nn import functional as F
-eps = 1e-4
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
 class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
@@ -32,7 +31,7 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     p.grad.data
                     + noise * (1 - scaled_utility),
@@ -73,7 +72,7 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -177,7 +176,7 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     (p.grad.data + noise)
                     * (1 - scaled_utility),
@@ -218,7 +217,7 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                 current_max = avg_utility.max()
                 if state["max_utility"] < current_max:
                     state["max_utility"] = current_max
-                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"]) / (torch.tanh(state["max_utility"])+eps)
+                scaled_utility = torch.tanh_((avg_utility / bias_correction) / group["temp"] / state["max_utility"]) / torch.tanh_(torch.tensor(1.0))
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
