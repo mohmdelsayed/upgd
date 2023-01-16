@@ -18,7 +18,7 @@ pip install HesScale/.
 pip install .
 ```
 
-#### 3. Run experiments:
+#### 3. Run experiments in the paper:
 ```sh
 python experiments/ex1_utility_approximation.py
 cat generated_cmds/ex1_weight_utils/*.txt | bash
