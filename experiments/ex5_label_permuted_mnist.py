@@ -28,6 +28,7 @@ from core.learner.weight.search import (
     SearchLearnerNormalFOMax,
     SearchLearnerNormalSOMax,
 )
+from core.learner.adam import AdamLearner
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
@@ -43,7 +44,7 @@ task = tasks[exp_name]()
 
 gt_grids = GridSearch(
         seed=[i for i in range(0, 30)],
-        lr=[10 ** -i for i in range(0, 4)],
+        lr=[10 ** -i for i in range(0, 5)],
         beta_utility=[0.0],
         temp=[1.0],
         sigma=[1.0],
@@ -55,7 +56,7 @@ gt_grids = GridSearch(
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(0, 4)],
+               lr=[10 ** -i for i in range(0, 5)],
                sigma=[1.0],
                network=[FullyConnectedTanh()],
                n_samples=[500000],
@@ -63,7 +64,7 @@ pgd_grids = GridSearch(
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(0, 4)],
+               lr=[10 ** -i for i in range(0, 5)],
                network=[FullyConnectedTanh()],
                n_samples=[500000],
     )
@@ -93,7 +94,7 @@ sgd_grid = GridSearch(
 #         n_samples=[1],
 #     )
 
-grids = [gt_grids for _ in range(16)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [gt_grids for _ in range(16)] +  [sgd_grid for _ in range(2)] + [pgd_grids for _ in range(2)]
 
 learners = [
     UPGDv2LearnerFOAntiCorrNormalized(),
@@ -113,6 +114,7 @@ learners = [
     UPGDv1LearnerFONormalMax(),
     UPGDv1LearnerSONormalMax(),
     SGDLearner(),
+    AdamLearner(),
     AntiPGDLearner(),
     PGDLearner(),
 ]
