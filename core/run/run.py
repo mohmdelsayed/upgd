@@ -31,6 +31,8 @@ class Run:
         torch.manual_seed(self.seed)
         losses_per_step_size = []
 
+        if self.task.criterion == 'cross_entropy':
+            accuracy_per_step_size = []
         self.learner.set_task(self.task)
         if self.learner.extend:    
             extension = HesScale()
@@ -52,15 +54,28 @@ class Run:
                 loss.backward()
             optimizer.step(loss)
             losses_per_step_size.append(loss.item())
+            if self.task.criterion == 'cross_entropy':
+                accuracy_per_step_size.append((output.argmax(dim=1) == target).float().mean().item())
 
-        self.logger.log(losses=losses_per_step_size,
-                        task=self.task_name, 
-                        learner=self.learner.name,
-                        network=self.learner.network.name,
-                        optimizer_hps=self.learner.optim_kwargs,
-                        n_samples=self.n_samples,
-                        seed=self.seed,
-        )
+        if self.task.criterion == 'cross_entropy':
+            self.logger.log(losses=losses_per_step_size,
+                            accuracies=accuracy_per_step_size,
+                            task=self.task_name, 
+                            learner=self.learner.name,
+                            network=self.learner.network.name,
+                            optimizer_hps=self.learner.optim_kwargs,
+                            n_samples=self.n_samples,
+                            seed=self.seed,
+            )
+        else:
+            self.logger.log(losses=losses_per_step_size,
+                            task=self.task_name,
+                            learner=self.learner.name,
+                            network=self.learner.network.name,
+                            optimizer_hps=self.learner.optim_kwargs,
+                            n_samples=self.n_samples,
+                            seed=self.seed,
+            )
 
 
 if __name__ == "__main__":
