@@ -1,5 +1,6 @@
 from core.task.static_mnist import StaticMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
+from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.summer_with_sign_change import SummerWithSignChange
 from core.task.summer_with_signals_change import SummerWithSignalsChange
 from core.task.utility_task import UtilityTask
@@ -47,6 +48,7 @@ tasks = {
     "ex6_static_mnist" : StaticMNIST,
     "ex7_feature_utils": UtilityTask,
     "ex8_feature_train": SummerWithSignChange,
+    "ex2_lop_permuted_mnist": InputPermutedMNIST,
 }
 
 networks = {
