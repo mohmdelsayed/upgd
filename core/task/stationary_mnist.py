@@ -3,7 +3,7 @@ import torchvision
 from .task import Task
 
 
-class StaticMNIST(Task):
+class StationaryMNIST(Task):
     """
     Iteratable MNIST task.
     Each sample is a 28x28 image and the label is a number between 0 and 9.
