@@ -1,14 +1,16 @@
-from core.task.static_mnist import StaticMNIST
+from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
+from core.task.two_label_change_mnist import TwoLabelChangeMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
-from core.task.summer_with_sign_change import SummerWithSignChange
-from core.task.summer_with_signals_change import SummerWithSignalsChange
+from core.task.binary_split_mnist import BinarySplitMNIST
+from core.task.changing_average import ChangingAverage
+from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
-from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates
+from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 
 from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
@@ -41,17 +43,32 @@ import numpy as np
 
 tasks = {
     "ex1_weight_utils": UtilityTask,
-    "ex2_lop_summer_with_signals_change": SummerWithSignalsChange,
-    "ex3_cat_forget_summer_with_sign_change": SummerWithSignChange,
-    "ex4_cat_forget_lop_summer_with_sign_change": SummerWithSignChange,
-    "ex5_label_permuted_mnist" : LabelPermutedMNIST,
-    "ex6_static_mnist" : StaticMNIST,
-    "ex7_feature_utils": UtilityTask,
-    "ex8_feature_train": SummerWithSignChange,
-    "ex2_lop_permuted_mnist": InputPermutedMNIST,
+    "ex2_feature_utils": UtilityTask,
+    
+    "ex3_permuted_average": PermutedAverage,
+    "ex3_permuted_average_features": PermutedAverage,
+
+    "ex4_changing_average": ChangingAverage,
+    "ex4_changing_average_features": ChangingAverage,
+
+    "ex5_stationary_mnist" : StationaryMNIST,
+    "ex5_stationary_mnist_features" : StationaryMNIST,
+
+    "ex6_input_permuted_mnist": InputPermutedMNIST,
+    "ex6_input_permuted_mnist_features": InputPermutedMNIST,
+
+    "ex7_binary_split_mnist": BinarySplitMNIST,
+    "ex7_binary_split_mnist_features": BinarySplitMNIST,
+
+    "ex8_two_label_change_mnist": TwoLabelChangeMNIST,
+    "ex8_two_label_change_mnist_features": TwoLabelChangeMNIST,
+
+    "ex9_label_permuted_mnist" : LabelPermutedMNIST,
+    "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
 }
 
 networks = {
+    "linear_layer": LinearLayer,
     "fully_connected_leakyrelu": FullyConnectedLeakyReLU,
     "small_fully_connected_leakyrelu": SmallFullyConnectedLeakyReLU,
     "fully_connected_leakyrelu_gates": FullyConnectedLeakyReLUGates,
@@ -63,9 +80,11 @@ networks = {
     "fully_connected_tanh_gates": FullyConnectedTanhGates,
     "fully_connected_linear": FullyConnectedLinear,
     "fully_connected_linear_gates": FullyConnectedLinearGates,
+    "small_fully_connected_linear": SmallFullyConnectedLinear,
     "small_fully_connected_tanh_gates": SmallFullyConnectedTanhGates,
     "small_fully_connected_leakyrelu_gates": SmallFullyConnectedLeakyReLUGates,
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
+    "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
 }
 
 learners = {
