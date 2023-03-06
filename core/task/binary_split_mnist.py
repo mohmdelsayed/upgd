@@ -5,7 +5,7 @@ from .task import Task
 
 class BinarySplitMNIST(Task):
     """
-    Iteratable MNIST task with binary classification.
+    Iteratable MNIST with binary classification tasks.
     Each sample is a 28x28 image and the label is a number between 0 and 9.
     The binary classifications is changed every 1000 steps.
     """
