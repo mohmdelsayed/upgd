@@ -2,19 +2,19 @@ import torch
 from .task import Task
 
 
-class SummerWithSignalsChange(Task):
+class PermutedAverage(Task):
     """
-    Iteretable task that sums a number of random signals which change every certain number of steps.
+    Iteretable task that averages a number of random inputs which change every certain number of steps.
     """
 
     def __init__(
         self,
-        name="summer_with_signals_change",
+        name="permuted_average",
         n_inputs=16,
         n_outputs=1,
         n_subgroups=2,
         batch_size=32,
-        change_freq=100,
+        change_freq=50,
     ):
         super().__init__(name, batch_size)
         self.change_freq = change_freq
@@ -39,7 +39,7 @@ class SummerWithSignalsChange(Task):
     def generator(self):
         while True:
             inputs = torch.randn((self.batch_size, self.n_inputs))
-            yield inputs, inputs[:, self.signals].sum(dim=-1).unsqueeze(1)
+            yield inputs, inputs[:, self.signals].mean(dim=-1).unsqueeze(1)
 
     def change_signals(self):
         self.multiplier = (self.multiplier + 1) % self.inc
