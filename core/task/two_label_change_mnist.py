@@ -7,7 +7,7 @@ class TwoLabelChangeMNIST(Task):
     """
     Iteratable MNIST task with changing two labels.
     Each sample is a 28x28 image and the label is a number between 0 and 9.
-    Two labels are changed every 100 steps.
+    Two labels are changed every 1000 steps.
     """
 
     def __init__(self, name="two_label_change_mnist", batch_size=32, change_freq=1000):
