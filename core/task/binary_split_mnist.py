@@ -66,6 +66,8 @@ class BinarySplitMNIST(Task):
         dataset = self.get_dataset(True)
         indicies = torch.isin(dataset.targets, selected_classes)
         dataset.targets = dataset.targets[indicies]
+        dataset.targets[dataset.targets == label_1] = 0
+        dataset.targets[dataset.targets == label_2] = 1
         dataset.data = dataset.data[indicies]
         self.iterator = iter(self.get_dataloader(dataset))
         self.prev_label1 = label_1
