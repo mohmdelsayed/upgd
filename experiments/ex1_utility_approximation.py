@@ -3,6 +3,7 @@ from core.learner.sgd import SGDLearnerWithHesScale
 from core.network.fcn_tanh import SmallFullyConnectedTanh
 from core.network.fcn_leakyrelu import SmallFullyConnectedLeakyReLU
 from core.network.fcn_relu import SmallFullyConnectedReLU
+from core.network.fcn_linear import SmallFullyConnectedLinear
 from core.runner import Runner
 from core.run.run_utility import RunUtility
 from core.utils import create_script_generator, create_script_runner, tasks
@@ -13,7 +14,7 @@ task = tasks[exp_name]()
 grids = [
     GridSearch(seed=[i for i in range(0, 30)],
                lr=[10**-2],
-               network=[SmallFullyConnectedTanh(), SmallFullyConnectedReLU(), SmallFullyConnectedLeakyReLU()],
+               network=[SmallFullyConnectedTanh(), SmallFullyConnectedReLU(), SmallFullyConnectedLeakyReLU(), SmallFullyConnectedLinear()],
                n_samples=[2000],
     ),
 ]

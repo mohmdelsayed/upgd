@@ -18,91 +18,51 @@ from core.learner.weight.upgd import (
     UPGDv1LearnerSONormalMax,
 )
 
-from core.learner.weight.search import (
-    SearchLearnerAntiCorrFONormalized,
-    SearchLearnerAntiCorrSONormalized,
-    SearchLearnerAntiCorrFOMax,
-    SearchLearnerAntiCorrSOMax,
-    SearchLearnerNormalFONormalized,
-    SearchLearnerNormalSONormalized,
-    SearchLearnerNormalFOMax,
-    SearchLearnerNormalSOMax,
-)
+
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.network.fcn_tanh import FullyConnectedTanh
 from core.network.fcn_relu import FullyConnectedReLU
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
+from core.network.fcn_linear import FullyConnectedLinear, LinearLayer
 from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex6_static_mnist"
+exp_name = "ex8_two_label_change_mnist"
 task = tasks[exp_name]()
 
 gt_grids = GridSearch(
-        seed=[i for i in range(0, 30)],
-        lr=[10 ** -i for i in range(0, 4)],
-        beta_utility=[0.0],
-        temp=[1.0],
-        sigma=[1.0],
-        network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-        n_samples=[20000],
-        noise_damping=[0, 1],
+               seed=[i for i in range(0, 30)],
+               lr=[2 ** -i for i in range(1, 7)],
+               beta_utility=[0.0],
+               temp=[1.0],
+               sigma=[1.0],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
+               n_samples=[250000],
+               noise_damping=[0, 1],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(0, 4)],
+               lr=[2 ** -i for i in range(1, 7)],
                sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-               n_samples=[20000],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
+               n_samples=[250000],
     )
+
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(0, 4)],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-               n_samples=[20000],
+               lr=[2 ** -i for i in range(1, 7)],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
+               n_samples=[250000],
     )
 
-# gt_grids = GridSearch(
-#         seed=[0],
-#         lr=[0.01],
-#         beta_utility=[0.0],
-#         temp=[1.0],
-#         sigma=[1.0],
-#         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-#         n_samples=[1],
-#     )
-
-# sgd_grid = GridSearch(
-#         seed=[0],
-#         lr=[0.01],
-#         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-#         n_samples=[1],
-#     )
-
-# pgd_grids = GridSearch(
-#         seed=[0],
-#         lr=[0.01],
-#         sigma=[1.0],
-#         network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
-#         n_samples=[1],
-#     )
-
-grids = [gt_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [gt_grids for _ in range(16)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
 
 learners = [
-    SearchLearnerAntiCorrFONormalized(),
-    SearchLearnerAntiCorrSONormalized(),
-    SearchLearnerAntiCorrFOMax(),
-    SearchLearnerAntiCorrSOMax(),
-    SearchLearnerNormalFONormalized(),
-    SearchLearnerNormalSONormalized(),
-    SearchLearnerNormalFOMax(),
-    SearchLearnerNormalSOMax(),
     UPGDv2LearnerFOAntiCorrNormalized(),
     UPGDv2LearnerSOAntiCorrNormalized(),
     UPGDv1LearnerFOAntiCorrNormalized(),
