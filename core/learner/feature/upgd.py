@@ -1,6 +1,6 @@
 from core.learner.learner import Learner
-from core.optim.feature.gt.first_order import FirstOrderUPGDv2AntiCorrNormalized, FirstOrderUPGDv1AntiCorrNormalized, FirstOrderUPGDv1NormalNormalized, FirstOrderUPGDv2NormalNormalized, FirstOrderUPGDv1NormalMax, FirstOrderUPGDv2NormalMax, FirstOrderUPGDv1AntiCorrMax, FirstOrderUPGDv2AntiCorrMax
-from core.optim.feature.gt.second_order import SecondOrderUPGDv2AntiCorrNormalized, SecondOrderUPGDv1AntiCorrNormalized, SecondOrderUPGDv1NormalNormalized, SecondOrderUPGDv2NormalNormalized, SecondOrderUPGDv1NormalMax, SecondOrderUPGDv2NormalMax, SecondOrderUPGDv1AntiCorrMax, SecondOrderUPGDv2AntiCorrMax
+from core.optim.feature.upgd.first_order import FirstOrderUPGDv2AntiCorrNormalized, FirstOrderUPGDv1AntiCorrNormalized, FirstOrderUPGDv1NormalNormalized, FirstOrderUPGDv2NormalNormalized, FirstOrderUPGDv1NormalMax, FirstOrderUPGDv2NormalMax, FirstOrderUPGDv1AntiCorrMax, FirstOrderUPGDv2AntiCorrMax
+from core.optim.feature.upgd.second_order import SecondOrderUPGDv2AntiCorrNormalized, SecondOrderUPGDv1AntiCorrNormalized, SecondOrderUPGDv1NormalNormalized, SecondOrderUPGDv2NormalNormalized, SecondOrderUPGDv1NormalMax, SecondOrderUPGDv2NormalMax, SecondOrderUPGDv1AntiCorrMax, SecondOrderUPGDv2AntiCorrMax
 class FeatureUPGDv2LearnerFOAntiCorrNormalized(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = FirstOrderUPGDv2AntiCorrNormalized
