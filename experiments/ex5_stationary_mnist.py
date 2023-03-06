@@ -42,7 +42,7 @@ from core.utils import create_script_generator, create_script_runner, tasks
 exp_name = "ex5_stationary_mnist"
 task = tasks[exp_name]()
 
-gt_grids = GridSearch(
+up_grids = GridSearch(
         seed=[i for i in range(0, 30)],
         lr=[2 ** -i for i in range(1, 7)],
         beta_utility=[0.0],
@@ -68,7 +68,7 @@ sgd_grid = GridSearch(
                n_samples=[20000],
     )
 
-grids = [gt_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [up_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
 
 learners = [
     SearchLearnerAntiCorrFONormalized(),
