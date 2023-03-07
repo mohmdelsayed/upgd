@@ -36,7 +36,7 @@ class Plotter:
             plt.fill_between(range(len(mean_list)), mean_list - std_list, mean_list + std_list, alpha=0.1)
             plt.legend()
         
-        plt.xlabel(f"Task")
+        plt.xlabel(f"Number of tasks")
         plt.ylabel("Loss")
         plt.ylim(bottom=0.0)
         plt.savefig("avg_losses.pdf", bbox_inches='tight')
