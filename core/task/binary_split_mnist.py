@@ -30,7 +30,7 @@ class BinarySplitMNIST(Task):
             return next(self.iterator)
         except StopIteration:
             # restart the iterator if the previous iterator is exhausted.
-            self.iterator = self.generator()
+            self.change_classes()
             return next(self.iterator)
 
     def generator(self):
