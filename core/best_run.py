@@ -8,7 +8,7 @@ class BestRun:
         self.network_name = network_name
         self.learners = learners
     
-    def get_best_run(self):
+    def get_best_run(self, measure="loss"):
         best_configs = []
         for learner in self.learners:
             path = f"logs/{self.task_name}/{learner}/{self.network_name}/"
@@ -23,13 +23,16 @@ class BestRun:
                 for seed in seeds:
                     with open(f"{subdirectory}/{seed}") as json_file:
                         data = json.load(json_file)
-                        configuration_list.append(data["losses"])
+                        configuration_list.append(data[measure])
 
                 mean_list = np.nan_to_num(np.array(configuration_list)).mean(axis=-1)
                 configs[subdirectory]["means"] = mean_list
-
-            best_configs.append(min(configs.keys(), key=(lambda k: sum(configs[k]["means"]))))
-
+            if measure == "loss":
+                best_configs.append(min(configs.keys(), key=(lambda k: sum(configs[k]["means"]))))
+            elif measure == "accuracy":
+                best_configs.append(max(configs.keys(), key=(lambda k: sum(configs[k]["means"]))))
+            else:
+                raise Exception("measure must be loss or accuracy")
         return best_configs
 
 if __name__ == "__main__":
@@ -43,5 +46,5 @@ if __name__ == "__main__":
     parser.add_argument('--metric', nargs='+', default=[])
     parser.add_argument('--learners', nargs='+', default=[])
     args = parser.parse_args()
-    best_configs = BestRun(args.task_name, args.metric, args.network_name, args.learners).get_best_run()
+    best_configs = BestRun(args.task_name, args.metric, args.network_name, args.learners).get_best_run(measure="loss")
     print(best_configs)
