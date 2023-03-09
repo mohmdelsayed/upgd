@@ -16,7 +16,7 @@ class BinarySplitMNIST(Task):
         self.n_inputs = 784
         self.n_outputs = 2
         self.criterion = "cross_entropy"
-        self.prev_label1, self.prev_label2 = torch.randint(0, 10, (self.n_outputs,))
+        self.prev_label1, self.prev_label2 = 0, 1
         super().__init__(name, batch_size)
 
     def __next__(self):
@@ -64,10 +64,7 @@ class BinarySplitMNIST(Task):
         )
 
     def change_classes(self):
-        while True:
-            label_1, label_2 = torch.randint(0, 10, (2,))
-            if label_1 != label_2 and label_1 != self.prev_label1 and label_2 != self.prev_label2 and label_1 != self.prev_label2 and label_2 != self.prev_label1:
-                break
+        label_1, label_2 = (self.prev_label1 + 2) % 10, (self.prev_label2 + 2) % 10
         selected_classes = torch.tensor([label_1, label_2])
         dataset = self.get_dataset(True)
         indicies = torch.isin(dataset.targets, selected_classes)
