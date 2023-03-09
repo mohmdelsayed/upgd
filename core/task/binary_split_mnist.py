@@ -16,8 +16,7 @@ class BinarySplitMNIST(Task):
         self.n_inputs = 784
         self.n_outputs = 2
         self.criterion = "cross_entropy"
-        self.prev_label1 = None
-        self.prev_label2 = None
+        self.prev_label1, self.prev_label2 = torch.randint(0, 10, (self.n_outputs,))
         super().__init__(name, batch_size)
 
     def __next__(self):
@@ -30,11 +29,18 @@ class BinarySplitMNIST(Task):
             return next(self.iterator)
         except StopIteration:
             # restart the iterator if the previous iterator is exhausted.
-            self.change_classes()
+            self.iterator = self.generator()
             return next(self.iterator)
 
     def generator(self):
-        return iter(self.get_dataloader(self.get_dataset(True)))
+        selected_classes = torch.tensor([self.prev_label1, self.prev_label2])
+        dataset = self.get_dataset(True)
+        indicies = torch.isin(dataset.targets, selected_classes)
+        dataset.targets = dataset.targets[indicies]
+        dataset.targets[dataset.targets == self.prev_label1] = 0
+        dataset.targets[dataset.targets == self.prev_label2] = 1
+        dataset.data = dataset.data[indicies]
+        return iter(self.get_dataloader(dataset))
 
     def get_dataset(self, train=True):
         return torchvision.datasets.MNIST(
