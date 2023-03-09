@@ -20,6 +20,20 @@ class FullyConnectedLeakyReLUGates(nn.Sequential):
     def __str__(self):
         return self.name
 
+    def zero_init(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.zeros_(m.weight)
+                if m.bias is not None:
+                    torch.nn.init.zeros_(m.bias)
+
+    def const_init(self, const=0.1):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.constant_(m.weight, const)
+                if m.bias is not None:
+                    torch.nn.init.constant_(m.bias, const)
+
 class SmallFullyConnectedLeakyReLUGates(nn.Sequential):
     def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
         super(SmallFullyConnectedLeakyReLUGates, self).__init__()
@@ -53,6 +67,20 @@ class FullyConnectedLeakyReLU(nn.Sequential):
 
     def __str__(self):
         return self.name
+
+    def zero_init(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.zeros_(m.weight)
+                if m.bias is not None:
+                    torch.nn.init.zeros_(m.bias)
+
+    def const_init(self, const=0.1):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.constant_(m.weight, const)
+                if m.bias is not None:
+                    torch.nn.init.constant_(m.bias, const)
 
 class SmallFullyConnectedLeakyReLU(nn.Sequential):
     def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=50):

@@ -20,6 +20,20 @@ class FullyConnectedTanhGates(nn.Sequential):
     def __str__(self):
         return self.name
 
+    def zero_init(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.zeros_(m.weight)
+                if m.bias is not None:
+                    torch.nn.init.zeros_(m.bias)
+
+    def const_init(self, const=0.1):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.constant_(m.weight, const)
+                if m.bias is not None:
+                    torch.nn.init.constant_(m.bias, const)
+
 class SmallFullyConnectedTanhGates(nn.Sequential):
     def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
         super(SmallFullyConnectedTanhGates, self).__init__()
@@ -52,6 +66,20 @@ class FullyConnectedTanh(nn.Sequential):
 
     def __str__(self):
         return self.name
+
+    def zero_init(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.zeros_(m.weight)
+                if m.bias is not None:
+                    torch.nn.init.zeros_(m.bias)
+
+    def const_init(self, const=0.1):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                torch.nn.init.constant_(m.weight, const)
+                if m.bias is not None:
+                    torch.nn.init.constant_(m.bias, const)
 
 class SmallFullyConnectedTanh(nn.Sequential):
     def __init__(self, n_obs=4, n_outputs=1, n_hidden_units=50):

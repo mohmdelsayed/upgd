@@ -65,6 +65,9 @@ tasks = {
 
     "ex9_label_permuted_mnist" : LabelPermutedMNIST,
     "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
+
+    "ex10_const_initialization": StationaryMNIST,
+    "ex10_zero_initialization": StationaryMNIST,
 }
 
 networks = {
