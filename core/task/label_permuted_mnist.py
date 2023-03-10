@@ -10,12 +10,12 @@ class LabelPermutedMNIST(Task):
     The labels are permuted every 1000 steps.
     """
 
-    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=1000):
+    def __init__(self, name="label_permuted_mnist", batch_size=32, change_freq=500):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 10
+        self.n_outputs = 52
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
 
@@ -36,14 +36,15 @@ class LabelPermutedMNIST(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self, train=True):
-        return torchvision.datasets.MNIST(
+        return torchvision.datasets.EMNIST(
             "dataset",
             train=train,
             download=True,
+            split="balanced",
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
-                    torchvision.transforms.Normalize((0.1307,), (0.3081,)),
+                    torchvision.transforms.Normalize((0.5,), (0.5,)),
                     torchvision.transforms.Lambda(lambda x: torch.flatten(x)),
                 ]
             ),
@@ -57,7 +58,7 @@ class LabelPermutedMNIST(Task):
         )
 
     def change_all_lables(self):
-        self.dataset.targets = torch.randperm(10)[self.dataset.targets]
+        self.dataset.targets = torch.randperm(self.n_outputs)[self.dataset.targets]
         self.iterator = iter(self.get_dataloader(self.dataset))
 
 

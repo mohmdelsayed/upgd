@@ -13,7 +13,7 @@ class StationaryMNIST(Task):
         self.dataset = self.get_dataset(True)
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 10
+        self.n_outputs = 52
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
 
@@ -31,14 +31,15 @@ class StationaryMNIST(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self, train=True):
-        return torchvision.datasets.MNIST(
+        return torchvision.datasets.EMNIST(
             "dataset",
             train=train,
             download=True,
+            split="balanced",
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
-                    torchvision.transforms.Normalize((0.1307,), (0.3081,)),
+                    torchvision.transforms.Normalize((0.5,), (0.5,)),
                     torchvision.transforms.Lambda(lambda x: torch.flatten(x)),
                 ]
             ),
@@ -52,7 +53,7 @@ class StationaryMNIST(Task):
         )
 
 if __name__ == "__main__":
-    task = StaticMNIST()
+    task = StationaryMNIST()
     for i, (x, y) in enumerate(task):
         print(x.shape, y.shape)
         if i == 10:

@@ -10,12 +10,12 @@ class TwoLabelChangeMNIST(Task):
     Two labels are changed every 1000 steps.
     """
 
-    def __init__(self, name="two_label_change_mnist", batch_size=32, change_freq=1000):
+    def __init__(self, name="two_label_change_mnist", batch_size=32, change_freq=500):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 10
+        self.n_outputs = 52
         self.criterion = "cross_entropy"
         self.prev_label1 = None
         self.prev_label2 = None
@@ -38,14 +38,15 @@ class TwoLabelChangeMNIST(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self, train=True):
-        return torchvision.datasets.MNIST(
+        return torchvision.datasets.EMNIST(
             "dataset",
             train=train,
             download=True,
+            split="balanced",
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
-                    torchvision.transforms.Normalize((0.1307,), (0.3081,)),
+                    torchvision.transforms.Normalize((0.5,), (0.5,)),
                     torchvision.transforms.Lambda(lambda x: torch.flatten(x)),
                 ]
             ),
@@ -60,7 +61,7 @@ class TwoLabelChangeMNIST(Task):
 
     def change_two_labels(self):
         while True:
-            label_1, label_2 = torch.randint(0, 10, (2,))
+            label_1, label_2 = torch.randint(0, self.n_outputs, (2,))
             if label_1 != label_2 and label_1 != self.prev_label1 and label_2 != self.prev_label2:
                 break
         self.dataset.targets[self.dataset.targets == label_1] = -1

@@ -10,7 +10,7 @@ class BinarySplitMNIST(Task):
     The binary classifications is changed every 1000 steps.
     """
 
-    def __init__(self, name="binary_split_mnist", batch_size=32, change_freq=1000):
+    def __init__(self, name="binary_split_mnist", batch_size=32, change_freq=500):
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
@@ -43,14 +43,15 @@ class BinarySplitMNIST(Task):
         return iter(self.get_dataloader(dataset))
 
     def get_dataset(self, train=True):
-        return torchvision.datasets.MNIST(
+        return torchvision.datasets.EMNIST(
             "dataset",
             train=train,
             download=True,
+            split="balanced",
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
-                    torchvision.transforms.Normalize((0.1307,), (0.3081,)),
+                    torchvision.transforms.Normalize((0.5,), (0.5,)),
                     torchvision.transforms.Lambda(lambda x: torch.flatten(x)),
                 ]
             ),
@@ -64,7 +65,7 @@ class BinarySplitMNIST(Task):
         )
 
     def change_classes(self):
-        label_1, label_2 = (self.prev_label1 + 2) % 10, (self.prev_label2 + 2) % 10
+        label_1, label_2 = (self.prev_label1 + 2) % 52, (self.prev_label2 + 2) % 52
         selected_classes = torch.tensor([label_1, label_2])
         dataset = self.get_dataset(True)
         indicies = torch.isin(dataset.targets, selected_classes)
