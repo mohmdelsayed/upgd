@@ -15,7 +15,7 @@ class LabelPermutedMNIST(Task):
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 52
+        self.n_outputs = 47
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
 

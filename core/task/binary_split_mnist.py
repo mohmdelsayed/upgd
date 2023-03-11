@@ -65,7 +65,7 @@ class BinarySplitMNIST(Task):
         )
 
     def change_classes(self):
-        label_1, label_2 = (self.prev_label1 + 2) % 52, (self.prev_label2 + 2) % 52
+        label_1, label_2 = (self.prev_label1 + 2) % 47, (self.prev_label2 + 2) % 47
         selected_classes = torch.tensor([label_1, label_2])
         dataset = self.get_dataset(True)
         indicies = torch.isin(dataset.targets, selected_classes)
