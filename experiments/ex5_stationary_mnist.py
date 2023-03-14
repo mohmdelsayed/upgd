@@ -34,7 +34,6 @@ from core.learner.pgd import PGDLearner
 from core.network.fcn_tanh import FullyConnectedTanh
 from core.network.fcn_relu import FullyConnectedReLU
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
-from core.network.fcn_linear import FullyConnectedLinear, LinearLayer
 from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner, tasks
@@ -44,28 +43,28 @@ task = tasks[exp_name]()
 
 up_grids = GridSearch(
         seed=[i for i in range(0, 30)],
-        lr=[2 ** -i for i in range(1, 7)],
+        lr=[10 ** -i for i in range(1, 6)],
         beta_utility=[0.0],
         temp=[1.0],
         sigma=[1.0],
-        network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-        n_samples=[20000],
+        network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+        n_samples=[1000000],
         noise_damping=[0, 1],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
+               lr=[10 ** -i for i in range(1, 6)],
                sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-               n_samples=[20000],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+               n_samples=[1000000],
     )
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-               n_samples=[20000],
+               lr=[10 ** -i for i in range(1, 6)],
+               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+               n_samples=[1000000],
     )
 
 grids = [up_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 

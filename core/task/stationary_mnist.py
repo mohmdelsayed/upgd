@@ -9,11 +9,11 @@ class StationaryMNIST(Task):
     Each sample is a 28x28 image and the label is a number between 0 and 9.
     """
 
-    def __init__(self, name="static_mnist", batch_size=32):
+    def __init__(self, name="stationary_mnist", batch_size=1):
         self.dataset = self.get_dataset(True)
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 52
+        self.n_outputs = 10
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
 
@@ -31,11 +31,10 @@ class StationaryMNIST(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self, train=True):
-        return torchvision.datasets.EMNIST(
+        return torchvision.datasets.MNIST(
             "dataset",
             train=train,
             download=True,
-            split="balanced",
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
