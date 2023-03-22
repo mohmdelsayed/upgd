@@ -34,51 +34,51 @@ exp_name = "ex6_input_permuted_mnist"
 task = tasks[exp_name]()
 
 up_grids = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
-               beta_utility=[0.0],
+               seed=[i for i in range(0, 15)],
+               lr=[10 ** -i for i in range(1, 6)],
+               beta_utility=[0.0, 0.9, 0.99, 0.999],
                temp=[1.0],
                sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-               n_samples=[250000],
-               noise_damping=[0, 1],
+               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               n_samples=[1000000],
+               noise_damping=[0],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
+               lr=[10 ** -i for i in range(1, 6)],
                sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-               n_samples=[250000],
+               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               n_samples=[1000000],
     )
 
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU(), FullyConnectedLinear(), LinearLayer()],
-               n_samples=[250000],
+               lr=[10 ** -i for i in range(1, 6)],
+               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               n_samples=[1000000],
     )
 
-grids = [up_grids for _ in range(16)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [up_grids for _ in range(4)]+ [sgd_grid] +  [pgd_grids for _ in range(2)] 
 
 learners = [
     UPGDv2LearnerFOAntiCorrNormalized(),
-    UPGDv2LearnerSOAntiCorrNormalized(),
+    # UPGDv2LearnerSOAntiCorrNormalized(),
     UPGDv1LearnerFOAntiCorrNormalized(),
-    UPGDv1LearnerSOAntiCorrNormalized(),
+    # UPGDv1LearnerSOAntiCorrNormalized(),
     UPGDv2LearnerFOAntiCorrMax(),
-    UPGDv2LearnerSOAntiCorrMax(),
+    # UPGDv2LearnerSOAntiCorrMax(),
     UPGDv1LearnerFOAntiCorrMax(),
-    UPGDv1LearnerSOAntiCorrMax(),
-    UPGDv2LearnerFONormalNormalized(),
-    UPGDv2LearnerSONormalNormalized(),
-    UPGDv1LearnerFONormalNormalized(),
-    UPGDv1LearnerSONormalNormalized(),
-    UPGDv2LearnerFONormalMax(),
-    UPGDv2LearnerSONormalMax(),
-    UPGDv1LearnerFONormalMax(),
-    UPGDv1LearnerSONormalMax(),
+    # UPGDv1LearnerSOAntiCorrMax(),
+    # UPGDv2LearnerFONormalNormalized(),
+    # UPGDv2LearnerSONormalNormalized(),
+    # UPGDv1LearnerFONormalNormalized(),
+    # UPGDv1LearnerSONormalNormalized(),
+    # UPGDv2LearnerFONormalMax(),
+    # UPGDv2LearnerSONormalMax(),
+    # UPGDv1LearnerFONormalMax(),
+    # UPGDv1LearnerSONormalMax(),
     SGDLearner(),
     AntiPGDLearner(),
     PGDLearner(),
