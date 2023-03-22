@@ -13,8 +13,8 @@ class PermutedAverage(Task):
         n_inputs=16,
         n_outputs=1,
         n_subgroups=2,
-        batch_size=32,
-        change_freq=50,
+        batch_size=1,
+        change_freq=200,
     ):
         super().__init__(name, batch_size)
         self.change_freq = change_freq
