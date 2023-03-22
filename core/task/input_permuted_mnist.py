@@ -11,13 +11,13 @@ class InputPermutedMNIST(Task):
     The labels are permuted every 1000 steps.
     """
 
-    def __init__(self, name="input_permuted_mnist", batch_size=32, change_freq=500):
+    def __init__(self, name="input_permuted_mnist", batch_size=1, change_freq=2500):
         self.permute_transform = []
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
-        self.n_outputs = 52
+        self.n_outputs = 47
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
 
