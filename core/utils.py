@@ -1,5 +1,7 @@
 from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
+from core.task.label_permuted_cifar100 import LabelPermutedCIFAR100
+from core.task.ten_label_change_cifar100 import TenLabelChangeCIFAR10O
 from core.task.two_label_change_mnist import TwoLabelChangeMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.binary_split_mnist import BinarySplitMNIST
@@ -8,7 +10,7 @@ from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
-from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates
+from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 
@@ -65,6 +67,8 @@ tasks = {
 
     "ex9_label_permuted_mnist" : LabelPermutedMNIST,
     "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
+    "ex9_label_permuted_cifar100" : LabelPermutedCIFAR100,
+    "ex9_ten_label_change_cifar100" : TenLabelChangeCIFAR10O,
 
     "ex10_const_initialization": StationaryMNIST,
     "ex10_zero_initialization": StationaryMNIST,
@@ -88,6 +92,7 @@ networks = {
     "small_fully_connected_leakyrelu_gates": SmallFullyConnectedLeakyReLUGates,
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
     "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
+    "convolutional_network_relu": ConvolutionalNetworkReLU,
 }
 
 learners = {
