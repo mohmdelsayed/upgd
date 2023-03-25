@@ -13,7 +13,7 @@ class UtilityTask(Task):
         n_inputs=5,
         n_outputs=1,
         n_operands=2,
-        batch_size=32,
+        batch_size=1,
     ):
         super().__init__(name, batch_size)
         self.criterion = "mse"
