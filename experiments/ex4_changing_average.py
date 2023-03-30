@@ -31,30 +31,28 @@ exp_name = "ex4_changing_average"
 task = tasks[exp_name]()
 
 up_grids = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
-               beta_utility=[0.0],
-               temp=[1.0],
+               seed=[i for i in range(0, 20)],
+               lr=[2 ** -i for i in range(1, 11)],
+               beta_utility=[0.0, 0.9, 0.99, 0.999, 0.9999],
                sigma=[1.0],
                network=[FullyConnectedLinear()],
-               n_samples=[250000],
-               noise_damping=[0, 1],
+               n_samples=[1000000],
     )
 
 pgd_grids = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
+               lr=[2 ** -i for i in range(1, 11)],
                sigma=[1.0],
                network=[FullyConnectedLinear()],
-               n_samples=[250000],
+               n_samples=[1000000],
     )
 
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 30)],
-               lr=[2 ** -i for i in range(1, 7)],
+               lr=[2 ** -i for i in range(1, 11)],
                network=[FullyConnectedLinear(), LinearLayer()],
-               n_samples=[250000],
+               n_samples=[1000000],
     )
 
 grids = [up_grids for _ in range(16)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
