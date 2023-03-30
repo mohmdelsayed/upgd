@@ -1,13 +1,11 @@
 import torch
 from torch.nn import functional as F
 
-# Utility-based Search Optimizers
-
 
 class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
+        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderSearchNormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -21,10 +19,7 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
                     state["avg_utility"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                if group["noise_damping"]:
-                    noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
-                else:
-                    noise = torch.randn_like(p.grad) * group["sigma"]
+                noise = torch.randn_like(p.grad) * group["sigma"]
                 avg_utility = state["avg_utility"]
                 avg_utility.mul_(group["beta_utility"]).add_(
                     -p.grad.data * p.data, alpha=1 - group["beta_utility"]
@@ -33,9 +28,8 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
                     noise
                     * (
                         1
-                        - torch.tanh_(
+                        - torch.sigmoid_(
                             F.normalize(avg_utility / bias_correction, dim=-1)
-                            / group["temp"]
                         )
                     ),
                     alpha=-group["lr"],
@@ -43,9 +37,9 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
 
 
 class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
+        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -60,10 +54,7 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = torch.zeros_like(p.data)
                 state["step"] += 1
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                if group["noise_damping"]:
-                    new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
-                else:
-                    new_noise = torch.randn_like(p.grad) * group["sigma"]
+                new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
                 avg_utility = state["avg_utility"]
@@ -74,19 +65,17 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     noise
                     * (
                         1
-                        - torch.tanh_(
+                        - torch.sigmoid_(
                             F.normalize(avg_utility / bias_correction, dim=-1)
-                            / group["temp"]
                         )
                     ),
                     alpha=-group["lr"],
                 )
 
-# UPGD: Utilited-based Perturbed Gradient Descent: variation 2 (utility controls gradient)
 class FirstOrderSearchNormalMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
+        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderSearchNormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -114,11 +103,8 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
                     continue
                 state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                if group["noise_damping"]:
-                    noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
-                else:
-                    noise = torch.randn_like(p.grad) * group["sigma"]
-                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
+                noise = torch.randn_like(p.grad) * group["sigma"]
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
                 p.data.add_(
                     noise
                     * (1 - scaled_utility),
@@ -126,11 +112,10 @@ class FirstOrderSearchNormalMax(torch.optim.Optimizer):
                 )
 
 
-# UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, temp=1.0, sigma=1.0, noise_damping=True):
+    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, temp=temp, sigma=sigma, noise_damping=noise_damping, names=names)
+        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderSearchAntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -159,13 +144,10 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     continue
                 state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
-                if group["noise_damping"]:
-                    new_noise = torch.randn_like(p.grad) * group["sigma"] * torch.tanh(loss)
-                else:
-                    new_noise = torch.randn_like(p.grad) * group["sigma"]
+                new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                scaled_utility = torch.tanh_((state["avg_utility"] / bias_correction) / group["temp"] / global_max_util) / torch.tanh_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
                 p.data.add_(
                     noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
