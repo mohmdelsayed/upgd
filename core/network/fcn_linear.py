@@ -3,7 +3,7 @@ from .gate import GateLayer
 import torch, math
 
 class FullyConnectedLinearGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=64):
         super(FullyConnectedLinearGates, self).__init__()
         self.name = "fully_connected_linear_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -18,7 +18,7 @@ class FullyConnectedLinearGates(nn.Sequential):
     def __str__(self):
         return self.name
 class FullyConnectedLinear(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=64):
         super(FullyConnectedLinear, self).__init__()
         self.name = "fully_connected_linear"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -32,7 +32,7 @@ class FullyConnectedLinear(nn.Sequential):
         return self.name
 
 class SmallFullyConnectedLinearGates(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=64):
         super(SmallFullyConnectedLinearGates, self).__init__()
         self.name = "small_fully_connected_linear_gates"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
@@ -48,7 +48,7 @@ class SmallFullyConnectedLinearGates(nn.Sequential):
         return self.name
     
 class SmallFullyConnectedLinear(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=50):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=64):
         super(SmallFullyConnectedLinear, self).__init__()
         self.name = "small_fully_connected_linear"
         self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units))
