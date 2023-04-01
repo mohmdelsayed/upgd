@@ -115,7 +115,7 @@ class SecondOrderSearchNormalMax(torch.optim.Optimizer):
                 state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 noise = torch.randn_like(p.grad) * group["sigma"]
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     noise
                     * (1 - scaled_utility),
@@ -161,7 +161,7 @@ class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
                 new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     noise * (1 - scaled_utility), alpha=-group["lr"]
                 )

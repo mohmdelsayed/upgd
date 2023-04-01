@@ -119,7 +119,7 @@ class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
             for name, p in zip(reversed(group["names"]), reversed(group["params"])):
                 state = self.state[p]
                 if 'gate' in name:
-                    gate_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                    gate_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                     continue
                 if gate_utility is not None:
                     new_noise = torch.randn_like(p.grad) * group["sigma"]
@@ -170,7 +170,7 @@ class SecondOrderSearchNormalMax(torch.optim.Optimizer):
             for name, p in zip(reversed(group["names"]), reversed(group["params"])):
                 state = self.state[p]
                 if 'gate' in name:
-                    gate_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                    gate_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                     continue
                 if gate_utility is not None:
                     noise = torch.randn_like(p.grad) * group["sigma"]

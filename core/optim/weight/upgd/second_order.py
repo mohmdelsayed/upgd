@@ -78,7 +78,7 @@ class SecondOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                 new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -155,7 +155,7 @@ class SecondOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                 new_noise = torch.randn_like(p.grad) * group["sigma"]
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -229,7 +229,7 @@ class SecondOrderUPGDv1NormalMax(torch.optim.Optimizer):
                 state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 noise = torch.randn_like(p.grad) * group["sigma"]
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
@@ -300,7 +300,7 @@ class SecondOrderUPGDv2NormalMax(torch.optim.Optimizer):
                 state = self.state[p]
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 noise = torch.randn_like(p.grad) * group["sigma"]
-                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util) / torch.sigmoid_(torch.tensor(1.0))
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
                 p.data.add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
