@@ -21,9 +21,11 @@ from core.learner.adam import AdamLearner
 
 from core.learner.weight.upgd import UPGDv2LearnerFOAntiCorrNormalized, UPGDv2LearnerSOAntiCorrNormalized, UPGDv1LearnerFOAntiCorrNormalized, UPGDv1LearnerSOAntiCorrNormalized, UPGDv2LearnerFOAntiCorrMax, UPGDv2LearnerSOAntiCorrMax, UPGDv1LearnerFOAntiCorrMax, UPGDv1LearnerSOAntiCorrMax, UPGDv2LearnerFONormalNormalized, UPGDv2LearnerSONormalNormalized, UPGDv1LearnerFONormalNormalized, UPGDv1LearnerSONormalNormalized, UPGDv2LearnerFONormalMax, UPGDv2LearnerSONormalMax, UPGDv1LearnerFONormalMax, UPGDv1LearnerSONormalMax
 from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
+from core.learner.weight.random import RandomSearchLearnerNormal, RandomSearchLearnerAntiCorr
 
 from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrMax, FeatureUPGDv1LearnerFOAntiCorrMax, FeatureUPGDv2LearnerFONormalMax, FeatureUPGDv1LearnerFONormalMax, FeatureUPGDv1LearnerSOAntiCorrMax, FeatureUPGDv2LearnerSOAntiCorrMax, FeatureUPGDv1LearnerSONormalMax, FeatureUPGDv2LearnerSONormalMax, FeatureUPGDv1LearnerSOAntiCorrNormalized, FeatureUPGDv1LearnerSONormalNormalized, FeatureUPGDv2LearnerSOAntiCorrNormalized, FeatureUPGDv2LearnerSONormalNormalized
 from core.learner.feature.search import FeatureSearchLearnerAntiCorrFONormalized, FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFOMax, FeatureSearchLearnerNormalFOMax, FeatureSearchLearnerAntiCorrSONormalized, FeatureSearchLearnerNormalSONormalized, FeatureSearchLearnerAntiCorrSOMax, FeatureSearchLearnerNormalSOMax
+from core.learner.feature.random import FeatureRandomSearchLearnerNormal, FeatureRandomSearchLearnerAntiCorr
 
 from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
@@ -161,6 +163,12 @@ learners = {
 
     "feature_search_so_normal_normalized": FeatureSearchLearnerNormalSONormalized,
     "feature_search_so_normal_max": FeatureSearchLearnerNormalSOMax,
+
+    "random_search_normal": RandomSearchLearnerNormal,
+    "random_search_anti_corr": RandomSearchLearnerAntiCorr,
+
+    "feature_random_search_normal": FeatureRandomSearchLearnerNormal,
+    "feature_random_search_anti_corr": FeatureRandomSearchLearnerAntiCorr,
 }
 
 criterions = {
