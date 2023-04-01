@@ -18,6 +18,7 @@ from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.adam import AdamLearner
+from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
 
 from core.learner.weight.upgd import UPGDv2LearnerFOAntiCorrNormalized, UPGDv2LearnerSOAntiCorrNormalized, UPGDv1LearnerFOAntiCorrNormalized, UPGDv1LearnerSOAntiCorrNormalized, UPGDv2LearnerFOAntiCorrMax, UPGDv2LearnerSOAntiCorrMax, UPGDv1LearnerFOAntiCorrMax, UPGDv1LearnerSOAntiCorrMax, UPGDv2LearnerFONormalNormalized, UPGDv2LearnerSONormalNormalized, UPGDv1LearnerFONormalNormalized, UPGDv1LearnerSONormalNormalized, UPGDv2LearnerFONormalMax, UPGDv2LearnerSONormalMax, UPGDv1LearnerFONormalMax, UPGDv1LearnerSONormalMax
 from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
@@ -103,6 +104,7 @@ learners = {
     "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
     "adam": AdamLearner,
+    "shrink_and_perturb": ShrinkandPerturbLearner,
 
     "upgd_v2_fo_anti_corr_normalized": UPGDv2LearnerFOAntiCorrNormalized,
     "upgd_v2_so_anti_corr_normalized": UPGDv2LearnerSOAntiCorrNormalized,
