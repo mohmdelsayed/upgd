@@ -15,9 +15,9 @@ class ExtendedAntiPGD(torch.optim.Optimizer):
                 state = self.state[p]
                 # State initialization
                 if len(state) == 0:
-                    state["prev_noise"] = torch.zeros_like(p.data) * group["sigma"]
+                    state["prev_noise"] = torch.zeros_like(p.data)
 
-                new_noise = torch.randn_like(p.grad)
+                new_noise = torch.randn_like(p.grad) * group["sigma"]
                 perturbed_gradient = p.grad + (new_noise - state["prev_noise"])
                 state["prev_noise"] = new_noise
                 p.data.add_(perturbed_gradient, alpha=-group["lr"])
