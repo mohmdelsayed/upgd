@@ -19,10 +19,13 @@ from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.adam import AdamLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
+from core.learner.adaptive_pgd import AdaptivePGDLearner
+from core.learner.adaptive_anti_pgd import AdaptiveAntiPGDLearner
 
 from core.learner.weight.upgd import UPGDv2LearnerFOAntiCorrNormalized, UPGDv2LearnerSOAntiCorrNormalized, UPGDv1LearnerFOAntiCorrNormalized, UPGDv1LearnerSOAntiCorrNormalized, UPGDv2LearnerFOAntiCorrMax, UPGDv2LearnerSOAntiCorrMax, UPGDv1LearnerFOAntiCorrMax, UPGDv1LearnerSOAntiCorrMax, UPGDv2LearnerFONormalNormalized, UPGDv2LearnerSONormalNormalized, UPGDv1LearnerFONormalNormalized, UPGDv1LearnerSONormalNormalized, UPGDv2LearnerFONormalMax, UPGDv2LearnerSONormalMax, UPGDv1LearnerFONormalMax, UPGDv1LearnerSONormalMax
 from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
 from core.learner.weight.random import RandomSearchLearnerNormal, RandomSearchLearnerAntiCorr
+from core.learner.weight.adaptive_first_order import AdaptiveUPGDAntiCorrLayerwiseFOLearner, AdaptiveUPGDNormalLayerwiseFOLearner
 
 from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrMax, FeatureUPGDv1LearnerFOAntiCorrMax, FeatureUPGDv2LearnerFONormalMax, FeatureUPGDv1LearnerFONormalMax, FeatureUPGDv1LearnerSOAntiCorrMax, FeatureUPGDv2LearnerSOAntiCorrMax, FeatureUPGDv1LearnerSONormalMax, FeatureUPGDv2LearnerSONormalMax, FeatureUPGDv1LearnerSOAntiCorrNormalized, FeatureUPGDv1LearnerSONormalNormalized, FeatureUPGDv2LearnerSOAntiCorrNormalized, FeatureUPGDv2LearnerSONormalNormalized
 from core.learner.feature.search import FeatureSearchLearnerAntiCorrFONormalized, FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFOMax, FeatureSearchLearnerNormalFOMax, FeatureSearchLearnerAntiCorrSONormalized, FeatureSearchLearnerNormalSONormalized, FeatureSearchLearnerAntiCorrSOMax, FeatureSearchLearnerNormalSOMax
@@ -105,6 +108,8 @@ learners = {
     "pgd": PGDLearner,
     "adam": AdamLearner,
     "shrink_and_perturb": ShrinkandPerturbLearner,
+    "adaptive_pgd": AdaptivePGDLearner,
+    "adaptive_anti_pgd": AdaptiveAntiPGDLearner,
 
     "upgd_v2_fo_anti_corr_normalized": UPGDv2LearnerFOAntiCorrNormalized,
     "upgd_v2_so_anti_corr_normalized": UPGDv2LearnerSOAntiCorrNormalized,
@@ -171,6 +176,9 @@ learners = {
 
     "feature_random_search_normal": FeatureRandomSearchLearnerNormal,
     "feature_random_search_anti_corr": FeatureRandomSearchLearnerAntiCorr,
+
+    "adaptive_upgd_v2_fo_anti_corr_layerwise": AdaptiveUPGDAntiCorrLayerwiseFOLearner,
+    "adaptive_upgd_v2_fo_normal_layerwise": AdaptiveUPGDNormalLayerwiseFOLearner,
 }
 
 criterions = {
