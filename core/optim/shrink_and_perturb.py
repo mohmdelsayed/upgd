@@ -1,7 +1,7 @@
 import torch
 
 class ExtendedShrinkandPerturb(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, decay=0.99, sigma=1.0):
+    def __init__(self, params, lr=1e-5, decay=0.01, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, sigma=sigma, decay=decay, names=names)
         super(ExtendedShrinkandPerturb, self).__init__(params, defaults)
@@ -11,7 +11,7 @@ class ExtendedShrinkandPerturb(torch.optim.Optimizer):
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
                     continue
-                p.data.add_(p.grad, alpha=-group["lr"]).mul_(group["decay"]).add_(torch.randn_like(p.grad) * group["sigma"])
+                p.data.mul_(1 - group["lr"] * group["decay"]).add_(p.grad + torch.randn_like(p.grad) * group["sigma"], alpha=-group["lr"])
 
 if __name__ == '__main__':
     # simple test
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     x = Variable(torch.randn(1, 2), requires_grad=True)
     y = Variable(torch.randn(1, 1), requires_grad=False)
     criterion = nn.MSELoss()
-    optimizer = ExtendedShrinkandPerturb(net.named_parameters(), lr=0.001, decay=0.1, sigma=0.1)
+    optimizer = ExtendedShrinkandPerturb(net.named_parameters(), lr=0.01, decay=0.1, sigma=.01)
 
     for i in range(1000):
         optimizer.zero_grad()
