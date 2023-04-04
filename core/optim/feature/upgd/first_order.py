@@ -2,10 +2,10 @@ import torch
 from torch.nn import functional as F
 
 class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -32,20 +32,20 @@ class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -72,20 +72,20 @@ class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1NormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -109,20 +109,20 @@ class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
                     noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-self.gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2NormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -146,19 +146,19 @@ class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
                     noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-self.gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-self.gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-self.gate_utility.T), alpha=-group["lr"])
                         self.gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -195,19 +195,19 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-gate_utility.T), alpha=-group["lr"])
                         gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -244,19 +244,19 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                     state["prev_noise"] = new_noise
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-gate_utility.T), alpha=-group["lr"])
                         gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -290,19 +290,19 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
                     noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_(p.grad.data + noise * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_(p.grad.data + noise * (1-gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data + noise * (1-gate_utility.T), alpha=-group["lr"])
                         gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])
 
 
 class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -336,10 +336,10 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
                     noise = torch.randn_like(p.grad) * group["sigma"]
                     if len(p.data.shape) == 1:
                         # handle bias term
-                        p.data.add_((p.grad.data + noise) * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-gate_utility.squeeze(0)), alpha=-group["lr"])
                     else:
                         # handle weight term
-                        p.data.add_((p.grad.data + noise) * (1-gate_utility.T), alpha=-group["lr"])
+                        p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_((p.grad.data + noise) * (1-gate_utility.T), alpha=-group["lr"])
                         gate_utility = None
                 else:
-                    p.data.add_(p.grad.data, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(p.grad.data, alpha=-group["lr"])

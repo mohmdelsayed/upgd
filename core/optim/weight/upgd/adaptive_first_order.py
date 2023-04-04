@@ -2,9 +2,9 @@ import torch, math
 from torch.nn import functional as F
 
 class AdaptiveUPGDAntiCorrLayerwiseFO(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0, beta1=0.9, beta2=0.999, damping=1e-8):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0, beta1=0.9, beta2=0.999, damping=1e-8):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, beta1=beta1, beta2=beta2, damping=damping, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, beta1=beta1, beta2=beta2, damping=damping, names=names)
         super(AdaptiveUPGDAntiCorrLayerwiseFO, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -51,14 +51,14 @@ class AdaptiveUPGDAntiCorrLayerwiseFO(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (exp_avg/denom/bias_correction1 + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 class AdaptiveUPGDNormalLayerwiseFO(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0, beta1=0.9, beta2=0.999, damping=1e-8):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0, beta1=0.9, beta2=0.999, damping=1e-8):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, beta1=beta1, beta2=beta2, damping=damping, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, beta1=beta1, beta2=beta2, damping=damping, names=names)
         super(AdaptiveUPGDNormalLayerwiseFO, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
@@ -100,6 +100,6 @@ class AdaptiveUPGDNormalLayerwiseFO(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (exp_avg/denom/bias_correction1 + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )

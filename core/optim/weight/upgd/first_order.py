@@ -3,9 +3,9 @@ from torch.nn import functional as F
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 (utility doesn't control gradient)
 class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -35,7 +35,7 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 noise = torch.randn_like(p.grad) * group["sigma"]
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     p.grad.data
                     + noise * (1 - scaled_utility),
                     alpha=-group["lr"],
@@ -44,9 +44,9 @@ class FirstOrderUPGDv1NormalMax(torch.optim.Optimizer):
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 with Anti-correlated noise
 class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -79,16 +79,16 @@ class FirstOrderUPGDv1AntiCorrMax(torch.optim.Optimizer):
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 1 with Anti-correlated noise
 class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -113,14 +113,14 @@ class FirstOrderUPGDv1AntiCorrNormalized(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv1NormalNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -142,15 +142,15 @@ class FirstOrderUPGDv1NormalNormalized(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     p.grad.data + noise * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 (utility controls gradient)
 class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2NormalMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -180,7 +180,7 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
                 bias_correction = 1 - group["beta_utility"] ** state["step"]
                 noise = torch.randn_like(p.grad) * group["sigma"]
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise)
                     * (1 - scaled_utility),
                     alpha=-group["lr"],
@@ -189,9 +189,9 @@ class FirstOrderUPGDv2NormalMax(torch.optim.Optimizer):
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2AntiCorrMax, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -224,16 +224,16 @@ class FirstOrderUPGDv2AntiCorrMax(torch.optim.Optimizer):
                 noise = new_noise - state["prev_noise"]
                 state["prev_noise"] = new_noise
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction) / global_max_util)
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 
 # UPGD: Utilited-based Perturbed Gradient Descent: variation 2 with Anti-correlated noise
 class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2AntiCorrNormalized, self).__init__(params, defaults)
 
     def step(self, loss):
@@ -258,14 +258,14 @@ class FirstOrderUPGDv2AntiCorrNormalized(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
 
 class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
+    def __init__(self, params, lr=1e-5, weight_decay=0.0, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
-        defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, names=names)
         super(FirstOrderUPGDv2NormalNormalized, self).__init__(params, defaults)
     def step(self, loss):
         for group in self.param_groups:
@@ -286,6 +286,6 @@ class FirstOrderUPGDv2NormalNormalized(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_(
                     F.normalize((avg_utility / bias_correction), dim=-1)
                 )
-                p.data.add_(
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise) * (1 - scaled_utility), alpha=-group["lr"]
                 )
