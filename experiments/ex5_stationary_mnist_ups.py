@@ -41,7 +41,7 @@ ups_weight_grids = GridSearch(
         seed=[i for i in range(0, 20)],
         lr=[1.0],
         beta_utility=[0.0, 0.9, 0.99, 0.999, 0.9999],
-        sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
         network=[FullyConnectedTanh(), FullyConnectedReLU()],
         n_samples=[1000000],
     )
@@ -50,7 +50,7 @@ ups_feature_grids = GridSearch(
         seed=[i for i in range(0, 20)],
         lr=[1.0],
         beta_utility=[0.0, 0.9, 0.99, 0.999, 0.9999],
-        sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
         network=[FullyConnectedTanhGates(), FullyConnectedReLUGates()],
         n_samples=[1000000],
     )
@@ -59,7 +59,7 @@ ups_feature_grids = GridSearch(
 random_weight_grids = GridSearch(
         seed=[i for i in range(0, 20)],
         lr=[1.0],
-        sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
         network=[FullyConnectedTanh(), FullyConnectedReLU()],
         n_samples=[1000000],
     )
@@ -67,13 +67,13 @@ random_weight_grids = GridSearch(
 random_feature_grids = GridSearch(
         seed=[i for i in range(0, 20)],
         lr=[1.0],
-        sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
         network=[FullyConnectedTanhGates(), FullyConnectedReLUGates()],
         n_samples=[1000000],
     )
 
 
-grids = [ups_weight_grids for _ in range(8)] + [ups_weight_grids for _ in range(8)] +  [random_weight_grids for _ in range(2)] +  [random_feature_grids for _ in range(2)]
+grids = [ups_weight_grids for _ in range(8)] + [ups_feature_grids for _ in range(8)] +  [random_weight_grids for _ in range(2)] +  [random_feature_grids for _ in range(2)]
 
 learners = [
     SearchLearnerAntiCorrFONormalized(),
