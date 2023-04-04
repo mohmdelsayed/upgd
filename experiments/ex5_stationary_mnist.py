@@ -1,13 +1,5 @@
 from core.grid_search import GridSearch
 from core.learner.weight.upgd import (
-    UPGDv2LearnerFOAntiCorrNormalized,
-    UPGDv2LearnerSOAntiCorrNormalized,
-    UPGDv1LearnerFOAntiCorrNormalized,
-    UPGDv1LearnerSOAntiCorrNormalized,
-    UPGDv2LearnerFOAntiCorrMax,
-    UPGDv2LearnerSOAntiCorrMax,
-    UPGDv1LearnerFOAntiCorrMax,
-    UPGDv1LearnerSOAntiCorrMax,
     UPGDv2LearnerFONormalNormalized,
     UPGDv2LearnerSONormalNormalized,
     UPGDv1LearnerFONormalNormalized,
@@ -18,22 +10,22 @@ from core.learner.weight.upgd import (
     UPGDv1LearnerSONormalMax,
 )
 
-from core.learner.weight.search import (
-    SearchLearnerAntiCorrFONormalized,
-    SearchLearnerAntiCorrSONormalized,
-    SearchLearnerAntiCorrFOMax,
-    SearchLearnerAntiCorrSOMax,
-    SearchLearnerNormalFONormalized,
-    SearchLearnerNormalSONormalized,
-    SearchLearnerNormalFOMax,
-    SearchLearnerNormalSOMax,
+from core.learner.feature.upgd import (
+    FeatureUPGDv2LearnerFONormalNormalized,
+    FeatureUPGDv2LearnerSONormalNormalized,
+    FeatureUPGDv1LearnerFONormalNormalized,
+    FeatureUPGDv1LearnerSONormalNormalized,
+    FeatureUPGDv2LearnerFONormalMax,
+    FeatureUPGDv2LearnerSONormalMax,
+    FeatureUPGDv1LearnerFONormalMax,
+    FeatureUPGDv1LearnerSONormalMax
 )
+
+
 from core.learner.sgd import SGDLearner
-from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
-from core.network.fcn_tanh import FullyConnectedTanh
-from core.network.fcn_relu import FullyConnectedReLU
-from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
+from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
+from core.network.fcn_relu import FullyConnectedReLU, FullyConnectedReLUGates
 from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner, tasks
@@ -41,51 +33,59 @@ from core.utils import create_script_generator, create_script_runner, tasks
 exp_name = "ex5_stationary_mnist"
 task = tasks[exp_name]()
 
-up_grids = GridSearch(
-        seed=[i for i in range(0, 30)],
-        lr=[10 ** -i for i in range(1, 6)],
-        beta_utility=[0.0],
-        temp=[1.0],
-        sigma=[1.0],
-        network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+ups_weight_grids = GridSearch(
+        seed=[i for i in range(0, 20)],
+        lr=[10 ** -i for i in range(1, 5)],
+        beta_utility=[0.0, 0.9, 0.99, 0.999, 0.9999],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
+        network=[FullyConnectedReLU()],
         n_samples=[1000000],
-        noise_damping=[0, 1],
+    )
+
+ups_feature_grids = GridSearch(
+        seed=[i for i in range(0, 20)],
+        lr=[10 ** -i for i in range(1, 5)],
+        beta_utility=[0.0, 0.9, 0.99, 0.999, 0.9999],
+        sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
+        network=[FullyConnectedReLUGates()],
+        n_samples=[1000000],
     )
 
 pgd_grids = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(1, 6)],
-               sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+               seed=[i for i in range(0, 20)],
+               lr=[10 ** -i for i in range(1, 5)],
+               sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
+               network=[FullyConnectedReLU()],
                n_samples=[1000000],
+    )
+
+sp_grids = GridSearch(
+                seed=[i for i in range(0, 20)],
+                lr=[10 ** -i for i in range(1, 5)],
+                sigma=[0.00001, 0.0001, 0.001, 0.01, 0.1],
+                decay=[0.0001, 0.001, 0.01, 0.1],
+                network=[FullyConnectedReLU()],
+                n_samples=[1000000],
     )
 
 sgd_grid = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(1, 6)],
-               network=[FullyConnectedTanh(), FullyConnectedReLU(), FullyConnectedLeakyReLU()],
+               seed=[i for i in range(0, 20)],
+               lr=[10 ** -i for i in range(1, 5)],
+               network=[FullyConnectedReLU()],
                n_samples=[1000000],
     )
 
-grids = [up_grids for _ in range(24)] + [sgd_grid] + [pgd_grids for _ in range(2)] 
+grids = [ups_feature_grids for _ in range(8)] + [ups_weight_grids for _ in range(8)] + [sgd_grid] + [pgd_grids] + [sp_grids]
 
 learners = [
-    SearchLearnerAntiCorrFONormalized(),
-    SearchLearnerAntiCorrSONormalized(),
-    SearchLearnerAntiCorrFOMax(),
-    SearchLearnerAntiCorrSOMax(),
-    SearchLearnerNormalFONormalized(),
-    SearchLearnerNormalSONormalized(),
-    SearchLearnerNormalFOMax(),
-    SearchLearnerNormalSOMax(),
-    UPGDv2LearnerFOAntiCorrNormalized(),
-    UPGDv2LearnerSOAntiCorrNormalized(),
-    UPGDv1LearnerFOAntiCorrNormalized(),
-    UPGDv1LearnerSOAntiCorrNormalized(),
-    UPGDv2LearnerFOAntiCorrMax(),
-    UPGDv2LearnerSOAntiCorrMax(),
-    UPGDv1LearnerFOAntiCorrMax(),
-    UPGDv1LearnerSOAntiCorrMax(),
+    FeatureUPGDv2LearnerFONormalNormalized(),
+    FeatureUPGDv2LearnerSONormalNormalized(),
+    FeatureUPGDv1LearnerFONormalNormalized(),
+    FeatureUPGDv1LearnerSONormalNormalized(),
+    FeatureUPGDv2LearnerFONormalMax(),
+    FeatureUPGDv2LearnerSONormalMax(),
+    FeatureUPGDv1LearnerFONormalMax(),
+    FeatureUPGDv1LearnerSONormalMax(),
     UPGDv2LearnerFONormalNormalized(),
     UPGDv2LearnerSONormalNormalized(),
     UPGDv1LearnerFONormalNormalized(),
@@ -95,8 +95,8 @@ learners = [
     UPGDv1LearnerFONormalMax(),
     UPGDv1LearnerSONormalMax(),
     SGDLearner(),
-    AntiPGDLearner(),
     PGDLearner(),
+    ShrinkandPerturbLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

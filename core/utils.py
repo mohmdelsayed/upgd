@@ -1,10 +1,7 @@
 from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.label_permuted_cifar100 import LabelPermutedCIFAR100
-from core.task.ten_label_change_cifar100 import TenLabelChangeCIFAR10O
-from core.task.two_label_change_mnist import TwoLabelChangeMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
-from core.task.binary_split_mnist import BinarySplitMNIST
 from core.task.changing_average import ChangingAverage
 from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
@@ -65,16 +62,9 @@ tasks = {
     "ex6_input_permuted_mnist": InputPermutedMNIST,
     "ex6_input_permuted_mnist_features": InputPermutedMNIST,
 
-    "ex7_binary_split_mnist": BinarySplitMNIST,
-    "ex7_binary_split_mnist_features": BinarySplitMNIST,
-
-    "ex8_two_label_change_mnist": TwoLabelChangeMNIST,
-    "ex8_two_label_change_mnist_features": TwoLabelChangeMNIST,
-
     "ex9_label_permuted_mnist" : LabelPermutedMNIST,
     "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
     "ex9_label_permuted_cifar100" : LabelPermutedCIFAR100,
-    "ex9_ten_label_change_cifar100" : TenLabelChangeCIFAR10O,
 
     "ex10_const_initialization": StationaryMNIST,
     "ex10_zero_initialization": StationaryMNIST,
