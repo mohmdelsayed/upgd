@@ -1,13 +1,5 @@
 from core.grid_search import GridSearch
 from core.learner.weight.upgd import (
-    UPGDv2LearnerFOAntiCorrNormalized,
-    UPGDv2LearnerSOAntiCorrNormalized,
-    UPGDv1LearnerFOAntiCorrNormalized,
-    UPGDv1LearnerSOAntiCorrNormalized,
-    UPGDv2LearnerFOAntiCorrMax,
-    UPGDv2LearnerSOAntiCorrMax,
-    UPGDv1LearnerFOAntiCorrMax,
-    UPGDv1LearnerSOAntiCorrMax,
     UPGDv2LearnerFONormalNormalized,
     UPGDv2LearnerSONormalNormalized,
     UPGDv1LearnerFONormalNormalized,
@@ -20,8 +12,8 @@ from core.learner.weight.upgd import (
 
 
 from core.learner.sgd import SGDLearner
-from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
+from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
 from core.network.fcn_tanh import FullyConnectedTanh
 from core.network.fcn_relu import FullyConnectedReLU
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU
@@ -34,54 +26,54 @@ exp_name = "ex6_input_permuted_mnist"
 task = tasks[exp_name]()
 
 up_grids = GridSearch(
-               seed=[i for i in range(0, 15)],
-               lr=[10 ** -i for i in range(1, 6)],
-               beta_utility=[0.0, 0.9, 0.99, 0.999],
-               temp=[1.0],
-               sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               seed=[i for i in range(0, 8)],
+               lr=[10 ** -i for i in range(2, 6)],
+               beta_utility=[0.999, 0.9999],
+               sigma=[0.01, 0.1, 1.0],
+               weight_decay=[0.0, 0.1, 0.01, 0.001, 0.0001],
+               network=[FullyConnectedReLU()],
                n_samples=[1000000],
-               noise_damping=[0],
     )
 
 pgd_grids = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(1, 6)],
-               sigma=[1.0],
-               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               seed=[i for i in range(0, 10)],
+               lr=[10 ** -i for i in range(2, 6)],
+               sigma=[0.005, 0.05, 0.5],
+               network=[FullyConnectedReLU()],
                n_samples=[1000000],
     )
 
 
 sgd_grid = GridSearch(
-               seed=[i for i in range(0, 30)],
-               lr=[10 ** -i for i in range(1, 6)],
-               network=[FullyConnectedTanh(), FullyConnectedReLU()],
+               seed=[i for i in range(0, 10)],
+               lr=[10 ** -i for i in range(2, 6)],
+               network=[FullyConnectedReLU()],
                n_samples=[1000000],
     )
 
-grids = [up_grids for _ in range(4)]+ [sgd_grid] +  [pgd_grids for _ in range(2)] 
+sp_grid = GridSearch(
+               seed=[i for i in range(0, 10)],
+               lr=[10 ** -i for i in range(2, 6)],
+               sigma=[0.005, 0.05, 0.5],
+               decay=[0.1, 0.01, 0.001, 0.0001],
+               network=[FullyConnectedReLU()],
+               n_samples=[1000000],
+    )
+
+grids = [up_grids for _ in range(8)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
 
 learners = [
-    UPGDv2LearnerFOAntiCorrNormalized(),
-    # UPGDv2LearnerSOAntiCorrNormalized(),
-    UPGDv1LearnerFOAntiCorrNormalized(),
-    # UPGDv1LearnerSOAntiCorrNormalized(),
-    UPGDv2LearnerFOAntiCorrMax(),
-    # UPGDv2LearnerSOAntiCorrMax(),
-    UPGDv1LearnerFOAntiCorrMax(),
-    # UPGDv1LearnerSOAntiCorrMax(),
-    # UPGDv2LearnerFONormalNormalized(),
-    # UPGDv2LearnerSONormalNormalized(),
-    # UPGDv1LearnerFONormalNormalized(),
-    # UPGDv1LearnerSONormalNormalized(),
-    # UPGDv2LearnerFONormalMax(),
-    # UPGDv2LearnerSONormalMax(),
-    # UPGDv1LearnerFONormalMax(),
-    # UPGDv1LearnerSONormalMax(),
+    UPGDv2LearnerFONormalNormalized(),
+    UPGDv2LearnerSONormalNormalized(),
+    UPGDv1LearnerFONormalNormalized(),
+    UPGDv1LearnerSONormalNormalized(),
+    UPGDv2LearnerFONormalMax(),
+    UPGDv2LearnerSONormalMax(),
+    UPGDv1LearnerFONormalMax(),
+    UPGDv1LearnerSONormalMax(),
     SGDLearner(),
-    AntiPGDLearner(),
     PGDLearner(),
+    ShrinkandPerturbLearner(),
 ]
 
 for learner, grid in zip(learners, grids):
