@@ -3,14 +3,14 @@ import torchvision
 from .task import Task
 
 
-class LabelPermutedCIFAR100(Task):
+class LabelPermutedCIFAR10(Task):
     """
     Iteratable MNIST task with permuted labels.
     Each sample is a 28x28 image and the label is a number between 0 and 9.
     The labels are permuted every 1000 steps.
     """
 
-    def __init__(self, name="label_permuted_cifar100", batch_size=1, change_freq=2500):
+    def __init__(self, name="label_permuted_cifar10", batch_size=1, change_freq=2500):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
@@ -61,7 +61,7 @@ class LabelPermutedCIFAR100(Task):
 
 
 if __name__ == "__main__":
-    task = LabelPermutedCIFAR100()
+    task = LabelPermutedCIFAR10()
     for i, (x, y) in enumerate(task):
         print(x.shape, y.shape)
         if i == 10:
