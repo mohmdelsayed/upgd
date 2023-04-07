@@ -13,7 +13,7 @@ matplotlib.rcParams["ps.fonttype"] = 42
 matplotlib.rcParams.update({'font.size': 12})
 
 class UtilityPlotter:
-    def __init__(self, best_runs_path, avg_interval=20):
+    def __init__(self, best_runs_path, avg_interval=10):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
 
@@ -51,7 +51,6 @@ class UtilityPlotter:
                 std_measure = np.array(util_correlations[measure]).std(axis=0) / np.sqrt(len(seeds))
                 plt.plot(mean_measure, label=f"{measure}")
                 plt.fill_between(range(len(mean_measure)), mean_measure - std_measure, mean_measure + std_measure, alpha=0.1)
-                # plt.title(corr_name)
                 plt.legend()
 
         

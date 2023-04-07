@@ -179,11 +179,11 @@ criterions = {
 utility_factory = {
     "first_order": FirstOrderUtility,
     "second_order": SecondOrderUtility,
+    "random": RandomUtility,
     "weight": WeightUtility,
     "oracle": OracleUtility,
     "nvidia_fo": NvidiaUtilityFO,
     "nvidia_so": NvidiaUtilitySO,
-    "random": RandomUtility,
 }
 
 feature_utility_factory = {
