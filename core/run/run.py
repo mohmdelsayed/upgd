@@ -21,6 +21,7 @@ class Run:
     name = 'run'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
         self.n_samples = int(n_samples)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.task = tasks[task]()
         self.task_name = task
         self.learner = learners[learner](networks[network], kwargs)
@@ -44,6 +45,7 @@ class Run:
 
         for _ in range(self.n_samples):
             input, target = next(self.task)
+            input, target = input.to(self.device), target.to(self.device)
             optimizer.zero_grad()
             output = self.learner.predict(input)
             loss = criterion(output, target)
