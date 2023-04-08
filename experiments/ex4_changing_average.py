@@ -33,7 +33,7 @@ exp_name = "ex4_changing_average"
 task = tasks[exp_name]()
 
 up_grids = GridSearch(
-               seed=[i for i in range(0, 10)],
+               seed=[i for i in range(0, 20)],
                lr=[10 ** -i for i in range(1, 5)],
                beta_utility=[0.0, 0.9, 0.99, 0.999],
                sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
@@ -42,7 +42,7 @@ up_grids = GridSearch(
     )
 
 feature_up_grids = GridSearch(
-               seed=[i for i in range(0, 10)],
+               seed=[i for i in range(0, 20)],
                lr=[10 ** -i for i in range(1, 5)],
                beta_utility=[0.0, 0.9, 0.99, 0.999],
                sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
@@ -51,7 +51,7 @@ feature_up_grids = GridSearch(
     )
 
 pgd_grids = GridSearch(
-               seed=[i for i in range(0, 30)],
+               seed=[i for i in range(0, 20)],
                lr=[10 ** -i for i in range(1, 5)],
                sigma=[0.00005, 0.0005, 0.005, 0.05, 0.5],
                network=[FullyConnectedLinear()],
@@ -60,14 +60,14 @@ pgd_grids = GridSearch(
 
 
 sgd_grid = GridSearch(
-               seed=[i for i in range(0, 30)],
+               seed=[i for i in range(0, 20)],
                lr=[10 ** -i for i in range(1, 5)],
                network=[FullyConnectedLinear(), LinearLayer()],
                n_samples=[1000000],
     )
 
 sp_grid = GridSearch(
-               seed=[i for i in range(0, 10)],
+               seed=[i for i in range(0, 20)],
                lr=[10 ** -i for i in range(1, 5)],
                decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.00005, 0.0005, 0.005, 0.05, 0.5],
