@@ -10,7 +10,7 @@ class ExtendedAdam(Optimizer):
         beta1=0.9,
         beta2=0.999,
         damping=1e-8,
-        weight_decay=0,
+        weight_decay=0.0,
     ):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))
@@ -49,8 +49,11 @@ class ExtendedAdam(Optimizer):
 
                 state["step"] += 1
 
+                # perform weight decay
+                p.data.add_(p.data, alpha=-group["weight_decay"] * group["lr"])
+
                 # Decay the first and second moment running average coefficient
-                exp_avg.mul_(beta1).add_(p.grad.data + group['weight_decay'] * p.data, alpha=1 - beta1)
+                exp_avg.mul_(beta1).add_(p.grad.data, alpha=1 - beta1)
                 exp_avg_sq.mul_(beta2).add_(
                     p.grad.data ** 2, alpha=1 - beta2
                 )
