@@ -9,6 +9,7 @@ from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU
+from core.network.mobilenetv2 import MobileNetV2
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 
@@ -91,6 +92,7 @@ networks = {
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
     "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
     "convolutional_network_relu": ConvolutionalNetworkReLU,
+    "mobilenetv2": MobileNetV2,
 }
 
 learners = {
