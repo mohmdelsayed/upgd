@@ -10,13 +10,17 @@ class LabelPermutedCIFAR100(Task):
     The labels are permuted every 10000 steps.
     """
 
-    def __init__(self, name="label_permuted_cifar100", batch_size=1, change_freq=10000):
+    def __init__(self, name="label_permuted_cifar100", batch_size=1, change_freq=5000):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
-        self.n_inputs = 3 * 32 * 32
+        self.n_inputs = 1000
         self.n_outputs = 100
         self.criterion = "cross_entropy"
+        self.feature_extractor = torchvision.models.resnet18(pretrained=True)
+        for param in self.feature_extractor.parameters():
+            param.requires_grad = False
+        self.feature_extractor.eval()
         super().__init__(name, batch_size)
 
     def __next__(self):
@@ -43,7 +47,7 @@ class LabelPermutedCIFAR100(Task):
             transform=torchvision.transforms.Compose(
                 [
                     torchvision.transforms.ToTensor(),
-                    torchvision.transforms.Normalize((0.5,), (0.5,)),
+                    torchvision.transforms.Lambda(lambda x: self.feature_extractor(x.unsqueeze(0)).squeeze(0)),
                 ]
             ),
         )
