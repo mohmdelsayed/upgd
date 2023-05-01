@@ -6,16 +6,19 @@ from PIL import Image
 import pickle
 
 class MiniImageNet(VisionDataset):
-    def __init__(self, dataset_file):
+    def __init__(self, root, file_name='mini_imagenet.pkl'):
         super(MiniImageNet).__init__()
+        self.root = root
         # load the dataset
-        with open(dataset_file, 'rb') as f:
+        with open(f'{root}/{file_name}', 'rb') as f:
             self.dataset = pickle.load(f)
         self.data = self.dataset['data']
         self.targets = self.dataset['labels']
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
         return img, target
+    def __len__(self):
+        return len(self.data)
 
 class LabelPermutedMiniImageNet(Task):
     """
@@ -50,7 +53,7 @@ class LabelPermutedMiniImageNet(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self):
-        dataset= MiniImageNet(dataset_file="dataset/mini-imagenet.pkl")
+        dataset= MiniImageNet(root='dataset', file_name="mini-imagenet.pkl")
         # check if the dataset is already processed
         file_name = 'processed_imagenet.pkl'
         try:
@@ -71,7 +74,13 @@ class LabelPermutedMiniImageNet(Task):
             for param in resnet.parameters():
                 param.requires_grad_(False)
             resnet.eval()
-            dataset.data = resnet(dataset.data)
+            # process the dataset with resnet50 by batches
+            processed_data = torch.zeros((dataset.data.shape[0], 1000))
+            batch_size = 500
+            for i in range(0, len(dataset.data), batch_size):
+                print(i, i+batch_size)
+                processed_data[i:i+batch_size] = resnet(dataset.data[i:i+batch_size])
+            dataset.data = processed_data
             # save the processed dataset
             with open(file_name, 'wb') as f:
                 pickle.dump(dataset.data, f)
