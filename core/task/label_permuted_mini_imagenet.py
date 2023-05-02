@@ -6,14 +6,18 @@ from PIL import Image
 import pickle
 
 class MiniImageNet(VisionDataset):
-    def __init__(self, root, file_name='mini_imagenet.pkl'):
+    def __init__(self, root, file_name='mini_imagenet', only_targets=True):
         super(MiniImageNet).__init__()
         self.root = root
-        # load the dataset
-        with open(f'{root}/{file_name}', 'rb') as f:
-            self.dataset = pickle.load(f)
-        self.data = self.dataset['data']
-        self.targets = self.dataset['labels']
+        # load the targets only
+        with open(f'{root}/{file_name}_targets.pkl', 'rb') as f:
+            self.targets = pickle.load(f)
+        if not only_targets:
+            # load the data only
+            with open(f'{root}/{file_name}_data.pkl', 'rb') as f:
+                self.data = pickle.load(f)
+        else:
+            self.data = None
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
         return img, target
@@ -53,7 +57,7 @@ class LabelPermutedMiniImageNet(Task):
         return iter(self.get_dataloader(self.dataset))
 
     def get_dataset(self):
-        dataset= MiniImageNet(root='dataset', file_name="mini-imagenet.pkl")
+        dataset= MiniImageNet(root='dataset', file_name="mini-imagenet", only_targets=True)
         # check if the dataset is already processed
         file_name = 'processed_imagenet.pkl'
         try:
