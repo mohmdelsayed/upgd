@@ -7,6 +7,7 @@ import pickle
 class CustomCIFAR100(torchvision.datasets.CIFAR100):
     def __init__(self, *args, **kwargs):
         super(CustomCIFAR100, self).__init__(*args, **kwargs)
+        self.data = None
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
         return img, target
