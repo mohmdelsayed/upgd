@@ -4,10 +4,23 @@ from .task import Task
 from PIL import Image
 import pickle
 
+def get_bottle_neck(model, x):
+    x = model.conv1(x)
+    x = model.bn1(x)
+    x = model.relu(x)
+    x = model.maxpool(x)
+    x = model.layer1(x)
+    x = model.layer2(x)
+    x = model.layer3(x)
+    x = model.layer4(x)
+    x = model.avgpool(x)
+    return torch.flatten(x, 1)
+
 class CustomCIFAR100(torchvision.datasets.CIFAR100):
-    def __init__(self, *args, **kwargs):
-        super(CustomCIFAR100, self).__init__(*args, **kwargs)
-        self.data = None
+    def __init__(self, root='dataset', train=True, download=True, only_targets=False):
+        super(CustomCIFAR100, self).__init__(root=root, train=train, download=download)
+        if only_targets:
+            self.data = None
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
         return img, target
@@ -23,7 +36,7 @@ class LabelPermutedCIFAR100(Task):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
-        self.n_inputs = 1000
+        self.n_inputs = 2048
         self.n_outputs = 100
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
@@ -48,7 +61,8 @@ class LabelPermutedCIFAR100(Task):
         dataset= CustomCIFAR100(
             "dataset",
             train=train,
-            download=True
+            download=True,
+            only_targets=True
         )
         # check if the dataset is already processed
         file_name = 'processed_cifar100.pkl'
@@ -70,7 +84,7 @@ class LabelPermutedCIFAR100(Task):
             for param in resnet.parameters():
                 param.requires_grad_(False)
             resnet.eval()
-            dataset.data = resnet(dataset.data)
+            dataset.data = get_bottle_neck(resnet, dataset.data)
             # save the processed dataset
             with open(file_name, 'wb') as f:
                 pickle.dump(dataset.data, f)

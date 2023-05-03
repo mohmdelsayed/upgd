@@ -5,6 +5,18 @@ from .task import Task
 from PIL import Image
 import pickle
 
+def get_bottle_neck(model, x):
+    x = model.conv1(x)
+    x = model.bn1(x)
+    x = model.relu(x)
+    x = model.maxpool(x)
+    x = model.layer1(x)
+    x = model.layer2(x)
+    x = model.layer3(x)
+    x = model.layer4(x)
+    x = model.avgpool(x)
+    return torch.flatten(x, 1)
+
 class MiniImageNet(VisionDataset):
     def __init__(self, root, file_name='mini_imagenet', only_targets=True):
         super(MiniImageNet).__init__()
@@ -35,7 +47,7 @@ class LabelPermutedMiniImageNet(Task):
         self.dataset = self.get_dataset()
         self.change_freq = change_freq
         self.step = 0
-        self.n_inputs = 1000
+        self.n_inputs = 2048
         self.n_outputs = 100
         self.criterion = "cross_entropy"
         super().__init__(name, batch_size)
@@ -79,11 +91,11 @@ class LabelPermutedMiniImageNet(Task):
                 param.requires_grad_(False)
             resnet.eval()
             # process the dataset with resnet50 by batches
-            processed_data = torch.zeros((dataset.data.shape[0], 1000))
+            processed_data = torch.zeros((dataset.data.shape[0], resnet.fc.in_features))
             batch_size = 500
             for i in range(0, len(dataset.data), batch_size):
                 print(i, i+batch_size)
-                processed_data[i:i+batch_size] = resnet(dataset.data[i:i+batch_size])
+                processed_data[i:i+batch_size] = get_bottle_neck(resnet, dataset.data[i:i+batch_size])
             dataset.data = processed_data
             # save the processed dataset
             with open(file_name, 'wb') as f:
