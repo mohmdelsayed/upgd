@@ -43,7 +43,7 @@ class LabelPermutedMiniImageNet(Task):
     The labels are permuted every 5000 steps.
     """
 
-    def __init__(self, name="label_permuted_mini_imagenet", batch_size=1, change_freq=5000):
+    def __init__(self, name="label_permuted_mini_imagenet", batch_size=1, change_freq=2500):
         self.dataset = self.get_dataset()
         self.change_freq = change_freq
         self.step = 0

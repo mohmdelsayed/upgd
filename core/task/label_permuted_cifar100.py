@@ -32,7 +32,7 @@ class LabelPermutedCIFAR100(Task):
     The labels are permuted every 5000 steps.
     """
 
-    def __init__(self, name="label_permuted_cifar100", batch_size=1, change_freq=5000):
+    def __init__(self, name="label_permuted_cifar100", batch_size=1, change_freq=2500):
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
         self.step = 0
