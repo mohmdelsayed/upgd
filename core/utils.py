@@ -4,6 +4,7 @@ from core.task.label_permuted_cifar10 import LabelPermutedCIFAR10
 from core.task.label_permuted_cifar100 import LabelPermutedCIFAR100
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.task.input_permuted_mnist import InputPermutedMNIST
+from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
 from core.task.changing_average import ChangingAverage
 from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
@@ -65,6 +66,7 @@ tasks = {
 
     "ex6_input_permuted_mnist": InputPermutedMNIST,
     "ex6_input_permuted_mnist_features": InputPermutedMNIST,
+    "ex6_input_permuted_mnist_restarts": InputPermutedMNISTRestarts,
 
     "ex9_label_permuted_mnist" : LabelPermutedMNIST,
     "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
