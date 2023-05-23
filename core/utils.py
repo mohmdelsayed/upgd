@@ -41,6 +41,7 @@ from core.utilities.weight.oracle_utility import OracleUtility
 from core.utilities.weight.fo_nvidia_utility import NvidiaUtilityFO
 from core.utilities.weight.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.weight.random_utility import RandomUtility
+from core.utilities.weight.grad2_utility import SquaredGradUtility
 from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
 from core.utilities.feature.so_utility import FeatureSecondOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
@@ -196,6 +197,7 @@ utility_factory = {
     "oracle": OracleUtility,
     "nvidia_fo": NvidiaUtilityFO,
     "nvidia_so": NvidiaUtilitySO,
+    "g2": SquaredGradUtility,
 }
 
 feature_utility_factory = {
