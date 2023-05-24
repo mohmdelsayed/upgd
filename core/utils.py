@@ -1,7 +1,6 @@
 from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.label_permuted_cifar10 import LabelPermutedCIFAR10
-from core.task.label_permuted_cifar100 import LabelPermutedCIFAR100
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
@@ -11,8 +10,6 @@ from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU
-from core.network.mobilenetv2 import MobileNetV2
-from core.network.squeezenet import SqueezeNet
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 
@@ -21,14 +18,11 @@ from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.adam import AdamLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
-from core.learner.adaptive_pgd import AdaptivePGDLearner
-from core.learner.adaptive_anti_pgd import AdaptiveAntiPGDLearner
 from core.learner.online_ewc import OnlineEWCLearner
 
 from core.learner.weight.upgd import FirstOrderLocalUPGDLearner, SecondOrderLocalUPGDLearner, FirstOrderNonprotectingLocalUPGDLearner, SecondOrderNonprotectingLocalUPGDLearner, FirstOrderGlobalUPGDLearner, SecondOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner, SecondOrderNonprotectingGlobalUPGDLearner
 from core.learner.weight.search import FirstOrderSearchLocalUncorrelatedLearner, SecondOrderSearchLocalUncorrelatedLearner, FirstOrderSearchLocalAnticorrelatedLearner, SecondOrderSearchLocalAnticorrelatedLearner, FirstOrderSearchGlobalUncorrelatedLearner, SecondOrderSearchGlobalUncorrelatedLearner, FirstOrderSearchGlobalAnticorrelatedLearner, SecondOrderSearchGlobalAnticorrelatedLearner
 from core.learner.weight.random import RandomSearchUncorrelatedLearner, RandomSearchAnticorrelatedLearner
-from core.learner.weight.adaptive_first_order import AdaptiveUPGDAntiCorrLayerwiseFOLearner, AdaptiveUPGDNormalLayerwiseFOLearner
 
 from core.learner.feature.upgd import FeatureFirstOrderNonprotectingLocalUPGDLearner, FeatureFirstOrderLocalUPGDLearner, FeatureFirstOrderGlobalUPGDLearner, FeatureFirstOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderGlobalUPGDLearner, FeatureSecondOrderNonprotectingLocalUPGDLearner, FeatureSecondOrderLocalUPGDLearner
 from core.learner.feature.search import FeatureFirstOrderSearchLocalAnticorrelatedLearner, FeatureFirstOrderSearchLocalUncorrelatedLearner, FeatureFirstOrderSearchGlobalAnticorrelatedLearner, FeatureFirstOrderSearchGlobalUncorrelatedLearner, FeatureSecondOrderSearchLocalAnticorrelatedLearner, FeatureSecondOrderSearchLocalUncorrelatedLearner, FeatureSecondOrderSearchGlobalAnticorrelatedLearner, FeatureSecondOrderSearchGlobalUncorrelatedLearner
@@ -92,8 +86,6 @@ networks = {
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
     "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
     "convolutional_network_relu": ConvolutionalNetworkReLU,
-    "mobilenetv2": MobileNetV2,
-    "squeezenet": SqueezeNet,
 }
 
 learners = {
@@ -103,10 +95,7 @@ learners = {
     "pgd": PGDLearner,
     "adam": AdamLearner,
     "shrink_and_perturb": ShrinkandPerturbLearner,
-    "adaptive_pgd": AdaptivePGDLearner,
-    "adaptive_anti_pgd": AdaptiveAntiPGDLearner,
     "online_ewc": OnlineEWCLearner,
-
 
     "upgd_v2_fo_normal_normalized": FirstOrderLocalUPGDLearner,
     "upgd_v2_so_normal_normalized": SecondOrderLocalUPGDLearner,
@@ -156,9 +145,6 @@ learners = {
 
     "feature_random_search_normal": FeatureRandomSearchUncorrelatedLearner,
     "feature_random_search_anti_corr": FeatureRandomSearchAnticorrelatedLearner,
-
-    "adaptive_upgd_v2_fo_anti_corr_layerwise": AdaptiveUPGDAntiCorrLayerwiseFOLearner,
-    "adaptive_upgd_v2_fo_normal_layerwise": AdaptiveUPGDNormalLayerwiseFOLearner,
 }
 
 criterions = {
