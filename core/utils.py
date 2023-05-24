@@ -32,16 +32,12 @@ from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
 from core.utilities.weight.weight_utility import WeightUtility
 from core.utilities.weight.oracle_utility import OracleUtility
-from core.utilities.weight.fo_nvidia_utility import NvidiaUtilityFO
-from core.utilities.weight.so_nvidia_utility import NvidiaUtilitySO
 from core.utilities.weight.random_utility import RandomUtility
 from core.utilities.weight.grad2_utility import SquaredGradUtility
 from core.utilities.feature.fo_utility import FeatureFirstOrderUtility
 from core.utilities.feature.so_utility import FeatureSecondOrderUtility
 from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
-from core.utilities.feature.fo_nvidia_utility import FeatureNvidiaUtilityFO
-from core.utilities.feature.so_nvidia_utility import FeatureNvidiaUtilitySO
 from core.utilities.feature.grad2_utility import FeatureSquaredGradUtility
 
 import torch
@@ -158,8 +154,6 @@ utility_factory = {
     "random": RandomUtility,
     "weight": WeightUtility,
     "oracle": OracleUtility,
-    "nvidia_fo": NvidiaUtilityFO,
-    "nvidia_so": NvidiaUtilitySO,
     "g2": SquaredGradUtility,
 }
 
@@ -169,8 +163,6 @@ feature_utility_factory = {
     "oracle": FeatureOracleUtility,
     "random": FeatureRandomUtility,
     "g2": FeatureSquaredGradUtility,
-    "nvidia_fo": FeatureNvidiaUtilityFO,
-    "nvidia_so": FeatureNvidiaUtilitySO,
 }
 
 def compute_spearman_rank_coefficient(approx_utility, oracle_utility):
