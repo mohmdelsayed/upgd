@@ -48,6 +48,7 @@ from core.utilities.feature.oracle_utility import FeatureOracleUtility
 from core.utilities.feature.random_utility import FeatureRandomUtility
 from core.utilities.feature.fo_nvidia_utility import FeatureNvidiaUtilityFO
 from core.utilities.feature.so_nvidia_utility import FeatureNvidiaUtilitySO
+from core.utilities.feature.grad2_utility import FeatureSquaredGradUtility
 
 import torch
 import numpy as np
@@ -205,6 +206,7 @@ feature_utility_factory = {
     "second_order": FeatureSecondOrderUtility,
     "oracle": FeatureOracleUtility,
     "random": FeatureRandomUtility,
+    "g2": FeatureSquaredGradUtility,
     "nvidia_fo": FeatureNvidiaUtilityFO,
     "nvidia_so": FeatureNvidiaUtilitySO,
 }
