@@ -4,7 +4,7 @@ from core.optim.weight.search.random import RandomSearchUncorrelated, RandomSear
 class RandomSearchUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = RandomSearchUncorrelated
-        name = "random_search_normal"
+        name = "random_search_uncorr"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class RandomSearchAnticorrelatedLearner(Learner):

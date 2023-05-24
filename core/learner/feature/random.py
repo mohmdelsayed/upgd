@@ -4,7 +4,7 @@ from core.optim.feature.search.random import RandomSearchUncorrelated, RandomSea
 class FeatureRandomSearchUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = RandomSearchUncorrelated
-        name = "feature_random_search_normal"
+        name = "feature_random_search_uncorr"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 class FeatureRandomSearchAnticorrelatedLearner(Learner):
