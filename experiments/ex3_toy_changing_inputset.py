@@ -29,7 +29,7 @@ from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex3_permuted_average"
+exp_name = "ex3_toy_changing_inputset"
 task = tasks[exp_name]()
 
 up_grids = GridSearch(

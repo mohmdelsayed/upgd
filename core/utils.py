@@ -25,14 +25,14 @@ from core.learner.adaptive_pgd import AdaptivePGDLearner
 from core.learner.adaptive_anti_pgd import AdaptiveAntiPGDLearner
 from core.learner.online_ewc import OnlineEWCLearner
 
-from core.learner.weight.upgd import UPGDv2LearnerFOAntiCorrNormalized, UPGDv2LearnerSOAntiCorrNormalized, UPGDv1LearnerFOAntiCorrNormalized, UPGDv1LearnerSOAntiCorrNormalized, UPGDv2LearnerFOAntiCorrMax, UPGDv2LearnerSOAntiCorrMax, UPGDv1LearnerFOAntiCorrMax, UPGDv1LearnerSOAntiCorrMax, UPGDv2LearnerFONormalNormalized, UPGDv2LearnerSONormalNormalized, UPGDv1LearnerFONormalNormalized, UPGDv1LearnerSONormalNormalized, UPGDv2LearnerFONormalMax, UPGDv2LearnerSONormalMax, UPGDv1LearnerFONormalMax, UPGDv1LearnerSONormalMax
-from core.learner.weight.search import SearchLearnerNormalFONormalized, SearchLearnerNormalSONormalized, SearchLearnerAntiCorrFONormalized, SearchLearnerAntiCorrSONormalized, SearchLearnerNormalFOMax, SearchLearnerNormalSOMax, SearchLearnerAntiCorrFOMax, SearchLearnerAntiCorrSOMax
-from core.learner.weight.random import RandomSearchLearnerNormal, RandomSearchLearnerAntiCorr
+from core.learner.weight.upgd import FirstOrderLocalUPGDLearner, SecondOrderLocalUPGDLearner, FirstOrderNonprotectingLocalUPGDLearner, SecondOrderNonprotectingLocalUPGDLearner, FirstOrderGlobalUPGDLearner, SecondOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner, SecondOrderNonprotectingGlobalUPGDLearner
+from core.learner.weight.search import FirstOrderSearchLocalUncorrelatedLearner, SecondOrderSearchLocalUncorrelatedLearner, FirstOrderSearchLocalAnticorrelatedLearner, SecondOrderSearchLocalAnticorrelatedLearner, FirstOrderSearchGlobalUncorrelatedLearner, SecondOrderSearchGlobalUncorrelatedLearner, FirstOrderSearchGlobalAnticorrelatedLearner, SecondOrderSearchGlobalAnticorrelatedLearner
+from core.learner.weight.random import RandomSearchUncorrelatedLearner, RandomSearchAnticorrelatedLearner
 from core.learner.weight.adaptive_first_order import AdaptiveUPGDAntiCorrLayerwiseFOLearner, AdaptiveUPGDNormalLayerwiseFOLearner
 
-from core.learner.feature.upgd import FeatureUPGDv1LearnerFOAntiCorrNormalized, FeatureUPGDv1LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrNormalized, FeatureUPGDv2LearnerFONormalNormalized, FeatureUPGDv2LearnerFOAntiCorrMax, FeatureUPGDv1LearnerFOAntiCorrMax, FeatureUPGDv2LearnerFONormalMax, FeatureUPGDv1LearnerFONormalMax, FeatureUPGDv1LearnerSOAntiCorrMax, FeatureUPGDv2LearnerSOAntiCorrMax, FeatureUPGDv1LearnerSONormalMax, FeatureUPGDv2LearnerSONormalMax, FeatureUPGDv1LearnerSOAntiCorrNormalized, FeatureUPGDv1LearnerSONormalNormalized, FeatureUPGDv2LearnerSOAntiCorrNormalized, FeatureUPGDv2LearnerSONormalNormalized
-from core.learner.feature.search import FeatureSearchLearnerAntiCorrFONormalized, FeatureSearchLearnerNormalFONormalized, FeatureSearchLearnerAntiCorrFOMax, FeatureSearchLearnerNormalFOMax, FeatureSearchLearnerAntiCorrSONormalized, FeatureSearchLearnerNormalSONormalized, FeatureSearchLearnerAntiCorrSOMax, FeatureSearchLearnerNormalSOMax
-from core.learner.feature.random import FeatureRandomSearchLearnerNormal, FeatureRandomSearchLearnerAntiCorr
+from core.learner.feature.upgd import FeatureFirstOrderNonprotectingLocalUPGDLearner, FeatureFirstOrderLocalUPGDLearner, FeatureFirstOrderGlobalUPGDLearner, FeatureFirstOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderGlobalUPGDLearner, FeatureSecondOrderNonprotectingLocalUPGDLearner, FeatureSecondOrderLocalUPGDLearner
+from core.learner.feature.search import FeatureFirstOrderSearchLocalAnticorrelatedLearner, FeatureFirstOrderSearchLocalUncorrelatedLearner, FeatureFirstOrderSearchGlobalAnticorrelatedLearner, FeatureFirstOrderSearchGlobalUncorrelatedLearner, FeatureSecondOrderSearchLocalAnticorrelatedLearner, FeatureSecondOrderSearchLocalUncorrelatedLearner, FeatureSecondOrderSearchGlobalAnticorrelatedLearner, FeatureSecondOrderSearchGlobalUncorrelatedLearner
+from core.learner.feature.random import FeatureRandomSearchUncorrelatedLearner, FeatureRandomSearchAnticorrelatedLearner
 
 from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
@@ -58,27 +58,19 @@ tasks = {
     "ex1_weight_utils": UtilityTask,
     "ex2_feature_utils": UtilityTask,
     
-    "ex3_permuted_average": PermutedAverage,
-    "ex3_permuted_average_features": PermutedAverage,
+    "ex3_toy_changing_inputset": PermutedAverage,
 
-    "ex4_changing_average": ChangingAverage,
-    "ex4_changing_average_features": ChangingAverage,
+    "ex4_toy_changing_outputs": ChangingAverage,
 
     "ex5_stationary_mnist" : StationaryMNIST,
-    "ex5_stationary_mnist_features" : StationaryMNIST,
 
     "ex6_input_permuted_mnist": InputPermutedMNIST,
-    "ex6_input_permuted_mnist_features": InputPermutedMNIST,
     "ex6_input_permuted_mnist_restarts": InputPermutedMNISTRestarts,
 
-    "ex9_label_permuted_mnist" : LabelPermutedMNIST,
-    "ex9_label_permuted_mnist_features" : LabelPermutedMNIST,
-    "ex9_label_permuted_cifar10" : LabelPermutedCIFAR10,
-    "ex9_label_permuted_cifar100" : LabelPermutedCIFAR100,
+    "ex7_label_permuted_mnist" : LabelPermutedMNIST,
+    "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 
-    "ex10_const_initialization": StationaryMNIST,
-    "ex10_zero_initialization": StationaryMNIST,
 }
 
 networks = {
@@ -115,71 +107,55 @@ learners = {
     "adaptive_anti_pgd": AdaptiveAntiPGDLearner,
     "online_ewc": OnlineEWCLearner,
 
-    "upgd_v2_fo_anti_corr_normalized": UPGDv2LearnerFOAntiCorrNormalized,
-    "upgd_v2_so_anti_corr_normalized": UPGDv2LearnerSOAntiCorrNormalized,
-    "upgd_v1_fo_anti_corr_normalized": UPGDv1LearnerFOAntiCorrNormalized,
-    "upgd_v1_so_anti_corr_normalized": UPGDv1LearnerSOAntiCorrNormalized,
-    "upgd_v2_fo_anti_corr_max": UPGDv2LearnerFOAntiCorrMax,
-    "upgd_v2_so_anti_corr_max": UPGDv2LearnerSOAntiCorrMax,
-    "upgd_v1_fo_anti_corr_max": UPGDv1LearnerFOAntiCorrMax,
-    "upgd_v1_so_anti_corr_max": UPGDv1LearnerSOAntiCorrMax,
 
-    "upgd_v2_fo_normal_normalized": UPGDv2LearnerFONormalNormalized,
-    "upgd_v2_so_normal_normalized": UPGDv2LearnerSONormalNormalized,
-    "upgd_v1_fo_normal_normalized": UPGDv1LearnerFONormalNormalized,
-    "upgd_v1_so_normal_normalized": UPGDv1LearnerSONormalNormalized,
-    "upgd_v2_fo_normal_max": UPGDv2LearnerFONormalMax,
-    "upgd_v2_so_normal_max": UPGDv2LearnerSONormalMax,
-    "upgd_v1_fo_normal_max": UPGDv1LearnerFONormalMax,
-    "upgd_v1_so_normal_max": UPGDv1LearnerSONormalMax,
+    "upgd_v2_fo_normal_normalized": FirstOrderLocalUPGDLearner,
+    "upgd_v2_so_normal_normalized": SecondOrderLocalUPGDLearner,
+    "upgd_v1_fo_normal_normalized": FirstOrderNonprotectingLocalUPGDLearner,
+    "upgd_v1_so_normal_normalized": SecondOrderNonprotectingLocalUPGDLearner,
+    "upgd_v2_fo_normal_max": FirstOrderGlobalUPGDLearner,
+    "upgd_v2_so_normal_max": SecondOrderGlobalUPGDLearner,
+    "upgd_v1_fo_normal_max": FirstOrderNonprotectingGlobalUPGDLearner,
+    "upgd_v1_so_normal_max": SecondOrderNonprotectingGlobalUPGDLearner,
 
-    "search_fo_anti_corr_normalized": SearchLearnerAntiCorrFONormalized,
-    "search_so_anti_corr_normalized": SearchLearnerAntiCorrSONormalized,
-    "search_fo_anti_corr_max": SearchLearnerAntiCorrFOMax,
-    "search_so_anti_corr_max": SearchLearnerAntiCorrSOMax,
+    "search_fo_anti_corr_normalized": FirstOrderSearchLocalAnticorrelatedLearner,
+    "search_so_anti_corr_normalized": SecondOrderSearchLocalAnticorrelatedLearner,
+    "search_fo_anti_corr_max": FirstOrderSearchGlobalAnticorrelatedLearner,
+    "search_so_anti_corr_max": SecondOrderSearchGlobalAnticorrelatedLearner,
 
-    "search_fo_normal_normalized": SearchLearnerNormalFONormalized,
-    "search_so_normal_normalized": SearchLearnerNormalSONormalized,
-    "search_fo_normal_max": SearchLearnerNormalFOMax,
-    "search_so_normal_max": SearchLearnerNormalSOMax,
+    "search_fo_normal_normalized": FirstOrderSearchLocalUncorrelatedLearner,
+    "search_so_normal_normalized": SecondOrderSearchLocalUncorrelatedLearner,
+    "search_fo_normal_max": FirstOrderSearchGlobalUncorrelatedLearner,
+    "search_so_normal_max": SecondOrderSearchGlobalUncorrelatedLearner,
 
-    "feature_upgd_v2_fo_normal_normalized": FeatureUPGDv2LearnerFONormalNormalized,
-    "feature_upgd_v1_fo_normal_normalized": FeatureUPGDv1LearnerFONormalNormalized,
-    "feature_upgd_v2_fo_normal_max": FeatureUPGDv2LearnerFONormalMax,
-    "feature_upgd_v1_fo_normal_max": FeatureUPGDv1LearnerFONormalMax,
+    "feature_upgd_v2_fo_normal_normalized": FeatureFirstOrderLocalUPGDLearner,
+    "feature_upgd_v1_fo_normal_normalized": FeatureFirstOrderNonprotectingLocalUPGDLearner,
+    "feature_upgd_v2_fo_normal_max": FeatureFirstOrderGlobalUPGDLearner,
+    "feature_upgd_v1_fo_normal_max": FeatureFirstOrderNonprotectingGlobalUPGDLearner,
 
-    "feature_upgd_v2_fo_anti_corr_normalized": FeatureUPGDv2LearnerFOAntiCorrNormalized,
-    "feature_upgd_v1_fo_anti_corr_normalized": FeatureUPGDv1LearnerFOAntiCorrNormalized,
-    "feature_upgd_v2_fo_anti_corr_max": FeatureUPGDv2LearnerFOAntiCorrMax,
-    "feature_upgd_v1_fo_anti_corr_max": FeatureUPGDv1LearnerFOAntiCorrMax,
 
-    "feature_search_fo_anti_corr_normalized": FeatureSearchLearnerAntiCorrFONormalized,
-    "feature_search_fo_anti_corr_max": FeatureSearchLearnerAntiCorrFOMax,
+    "feature_search_fo_anti_corr_normalized": FeatureFirstOrderSearchLocalAnticorrelatedLearner,
+    "feature_search_fo_anti_corr_max": FeatureFirstOrderSearchGlobalAnticorrelatedLearner,
 
-    "feature_search_fo_normal_normalized": FeatureSearchLearnerNormalFONormalized,
-    "feature_search_fo_normal_max": FeatureSearchLearnerNormalFOMax,
+    "feature_search_fo_normal_normalized": FeatureFirstOrderSearchLocalUncorrelatedLearner,
+    "feature_search_fo_normal_max": FeatureFirstOrderSearchGlobalUncorrelatedLearner,
 
-    "feature_upgd_v2_so_normal_normalized": FeatureUPGDv2LearnerSONormalNormalized,
-    "feature_upgd_v1_so_normal_normalized": FeatureUPGDv1LearnerSONormalNormalized,
-    "feature_upgd_v2_so_normal_max": FeatureUPGDv2LearnerSONormalMax,
-    "feature_upgd_v1_so_normal_max": FeatureUPGDv1LearnerSONormalMax,
+    "feature_upgd_v2_so_normal_normalized": FeatureSecondOrderLocalUPGDLearner,
+    "feature_upgd_v1_so_normal_normalized": FeatureSecondOrderNonprotectingLocalUPGDLearner,
+    "feature_upgd_v2_so_normal_max": FeatureSecondOrderGlobalUPGDLearner,
+    "feature_upgd_v1_so_normal_max": FeatureSecondOrderNonprotectingGlobalUPGDLearner,
     
-    "feature_upgd_v2_so_anti_corr_normalized": FeatureUPGDv2LearnerSOAntiCorrNormalized,    
-    "feature_upgd_v1_so_anti_corr_normalized": FeatureUPGDv1LearnerSOAntiCorrNormalized,
-    "feature_upgd_v2_so_anti_corr_max": FeatureUPGDv2LearnerSOAntiCorrMax,
-    "feature_upgd_v1_so_anti_corr_max": FeatureUPGDv1LearnerSOAntiCorrMax,
 
-    "feature_search_so_anti_corr_normalized": FeatureSearchLearnerAntiCorrSONormalized,
-    "feature_search_so_anti_corr_max": FeatureSearchLearnerAntiCorrSOMax,
+    "feature_search_so_anti_corr_normalized": FeatureSecondOrderSearchLocalAnticorrelatedLearner,
+    "feature_search_so_anti_corr_max": FeatureSecondOrderSearchGlobalAnticorrelatedLearner,
 
-    "feature_search_so_normal_normalized": FeatureSearchLearnerNormalSONormalized,
-    "feature_search_so_normal_max": FeatureSearchLearnerNormalSOMax,
+    "feature_search_so_normal_normalized": FeatureSecondOrderSearchLocalUncorrelatedLearner,
+    "feature_search_so_normal_max": FeatureSecondOrderSearchGlobalUncorrelatedLearner,
 
-    "random_search_normal": RandomSearchLearnerNormal,
-    "random_search_anti_corr": RandomSearchLearnerAntiCorr,
+    "random_search_normal": RandomSearchUncorrelatedLearner,
+    "random_search_anti_corr": RandomSearchAnticorrelatedLearner,
 
-    "feature_random_search_normal": FeatureRandomSearchLearnerNormal,
-    "feature_random_search_anti_corr": FeatureRandomSearchLearnerAntiCorr,
+    "feature_random_search_normal": FeatureRandomSearchUncorrelatedLearner,
+    "feature_random_search_anti_corr": FeatureRandomSearchAnticorrelatedLearner,
 
     "adaptive_upgd_v2_fo_anti_corr_layerwise": AdaptiveUPGDAntiCorrLayerwiseFOLearner,
     "adaptive_upgd_v2_fo_normal_layerwise": AdaptiveUPGDNormalLayerwiseFOLearner,
