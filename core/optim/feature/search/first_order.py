@@ -1,12 +1,12 @@
 import torch
 from torch.nn import functional as F
 
-class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
+class FirstOrderSearchLocalAnticorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
-        super(FirstOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
+        super(FirstOrderSearchLocalAnticorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -41,11 +41,11 @@ class FirstOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
+class FirstOrderSearchGlobalAnticorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
-        super(FirstOrderSearchAntiCorrMax, self).__init__(params, defaults)
+        super(FirstOrderSearchGlobalAnticorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         gate_utility = None
@@ -90,12 +90,12 @@ class FirstOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
+class FirstOrderSearchLocalUncorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
-        super(FirstOrderSearchNormalNormalized, self).__init__(params, defaults)
+        super(FirstOrderSearchLocalUncorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -127,11 +127,11 @@ class FirstOrderSearchNormalNormalized(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class FirstOrderSearchNormalMax(torch.optim.Optimizer):
+class FirstOrderSearchGlobalUncorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names)
-        super(FirstOrderSearchNormalMax, self).__init__(params, defaults)
+        super(FirstOrderSearchGlobalUncorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         gate_utility = None

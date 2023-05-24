@@ -1,9 +1,9 @@
 from core.grid_search import GridSearch
 from core.learner.weight.upgd import (
-    UPGDv2LearnerFONormalNormalized,
-    UPGDv1LearnerFONormalNormalized,
-    UPGDv2LearnerFONormalMax,
-    UPGDv1LearnerFONormalMax,
+    FirstOrderLocalUPGDLearner,
+    FirstOrderNonprotectingLocalUPGDLearner,
+    FirstOrderGlobalUPGDLearner,
+    FirstOrderNonprotectingGlobalUPGDLearner,
 )
 
 
@@ -53,20 +53,16 @@ sp_grid = GridSearch(
                n_samples=[1000000],
     )
 
-grids =  [sgd_grid]
+grids = [up_grids for _ in range(4)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
 
 learners = [
-    # UPGDv2LearnerFONormalNormalized(),
-    # UPGDv2LearnerSONormalNormalized(),
-    # UPGDv1LearnerFONormalNormalized(),
-    # UPGDv1LearnerSONormalNormalized(),
-    # UPGDv2LearnerFONormalMax(),
-    # UPGDv2LearnerSONormalMax(),
-    # UPGDv1LearnerFONormalMax(),
-    # UPGDv1LearnerSONormalMax(),
+    FirstOrderLocalUPGDLearner,
+    FirstOrderNonprotectingLocalUPGDLearner,
+    FirstOrderGlobalUPGDLearner,
+    FirstOrderNonprotectingGlobalUPGDLearner,
     SGDLearner(),
-    # PGDLearner(),
-    # ShrinkandPerturbLearner(),
+    PGDLearner(),
+    ShrinkandPerturbLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

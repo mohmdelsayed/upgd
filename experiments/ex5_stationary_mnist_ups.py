@@ -1,29 +1,29 @@
 from core.grid_search import GridSearch
 from core.learner.weight.search import (
-    SearchLearnerAntiCorrFONormalized,
-    SearchLearnerAntiCorrSONormalized,
-    SearchLearnerAntiCorrFOMax,
-    SearchLearnerAntiCorrSOMax,
-    SearchLearnerNormalFONormalized,
-    SearchLearnerNormalSONormalized,
-    SearchLearnerNormalFOMax,
-    SearchLearnerNormalSOMax,
+    FirstOrderSearchLocalAnticorrelatedLearner,
+    SecondOrderSearchLocalAnticorrelatedLearner,
+    FirstOrderSearchGlobalAnticorrelatedLearner,
+    SecondOrderSearchGlobalAnticorrelatedLearner,
+    FirstOrderSearchLocalUncorrelatedLearner,
+    SecondOrderSearchLocalUncorrelatedLearner,
+    FirstOrderSearchGlobalUncorrelatedLearner,
+    SecondOrderSearchGlobalUncorrelatedLearner,
 )
 
-from core.learner.weight.random import RandomSearchLearnerNormal, RandomSearchLearnerAntiCorr
+from core.learner.weight.random import RandomSearchUncorrelatedLearner, RandomSearchAnticorrelatedLearner
 
 from core.learner.feature.search import (
-    FeatureSearchLearnerAntiCorrFONormalized,
-    FeatureSearchLearnerAntiCorrSONormalized,
-    FeatureSearchLearnerAntiCorrFOMax,
-    FeatureSearchLearnerAntiCorrSOMax,
-    FeatureSearchLearnerNormalFONormalized,
-    FeatureSearchLearnerNormalSONormalized,
-    FeatureSearchLearnerNormalFOMax,
-    FeatureSearchLearnerNormalSOMax,
+    FeatureFirstOrderSearchLocalAnticorrelatedLearner,
+    FeatureSecondOrderSearchLocalAnticorrelatedLearner,
+    FeatureFirstOrderSearchGlobalAnticorrelatedLearner,
+    FeatureSecondOrderSearchGlobalAnticorrelatedLearner,
+    FeatureFirstOrderSearchLocalUncorrelatedLearner,
+    FeatureSecondOrderSearchLocalUncorrelatedLearner,
+    FeatureFirstOrderSearchGlobalUncorrelatedLearner,
+    FeatureSecondOrderSearchGlobalUncorrelatedLearner,
 )
 
-from core.learner.feature.random import FeatureRandomSearchLearnerNormal, FeatureRandomSearchLearnerAntiCorr
+from core.learner.feature.random import FeatureRandomSearchUncorrelatedLearner, FeatureRandomSearchAnticorrelatedLearner
 
 from core.learner.sgd import SGDLearner
 from core.learner.anti_pgd import AntiPGDLearner
@@ -76,29 +76,29 @@ random_feature_grids = GridSearch(
 grids = [ups_weight_grids for _ in range(8)] + [ups_feature_grids for _ in range(8)] +  [random_weight_grids for _ in range(2)] +  [random_feature_grids for _ in range(2)]
 
 learners = [
-    SearchLearnerAntiCorrFONormalized(),
-    SearchLearnerAntiCorrSONormalized(),
-    SearchLearnerAntiCorrFOMax(),
-    SearchLearnerAntiCorrSOMax(),
-    SearchLearnerNormalFONormalized(),
-    SearchLearnerNormalSONormalized(),
-    SearchLearnerNormalFOMax(),
-    SearchLearnerNormalSOMax(),
+    FirstOrderSearchLocalAnticorrelatedLearner(),
+    SecondOrderSearchLocalAnticorrelatedLearner(),
+    FirstOrderSearchGlobalAnticorrelatedLearner(),
+    SecondOrderSearchGlobalAnticorrelatedLearner(),
+    FirstOrderSearchLocalUncorrelatedLearner(),
+    SecondOrderSearchLocalUncorrelatedLearner(),
+    FirstOrderSearchGlobalUncorrelatedLearner(),
+    SecondOrderSearchGlobalUncorrelatedLearner(),
 
-    FeatureSearchLearnerAntiCorrFONormalized(),
-    FeatureSearchLearnerAntiCorrSONormalized(),
-    FeatureSearchLearnerAntiCorrFOMax(),
-    FeatureSearchLearnerAntiCorrSOMax(),
-    FeatureSearchLearnerNormalFONormalized(),
-    FeatureSearchLearnerNormalSONormalized(),
-    FeatureSearchLearnerNormalFOMax(),
-    FeatureSearchLearnerNormalSOMax(),
+    FeatureFirstOrderSearchLocalAnticorrelatedLearner(),
+    FeatureSecondOrderSearchLocalAnticorrelatedLearner(),
+    FeatureFirstOrderSearchGlobalAnticorrelatedLearner(),
+    FeatureSecondOrderSearchGlobalAnticorrelatedLearner(),
+    FeatureFirstOrderSearchLocalUncorrelatedLearner(),
+    FeatureSecondOrderSearchLocalUncorrelatedLearner(),
+    FeatureFirstOrderSearchGlobalUncorrelatedLearner(),
+    FeatureSecondOrderSearchGlobalUncorrelatedLearner(),
 
-    RandomSearchLearnerNormal(),
-    RandomSearchLearnerAntiCorr(),
+    RandomSearchUncorrelatedLearner(),
+    RandomSearchAnticorrelatedLearner(),
 
-    FeatureRandomSearchLearnerNormal(),
-    FeatureRandomSearchLearnerAntiCorr(),
+    FeatureRandomSearchUncorrelatedLearner(),
+    FeatureRandomSearchAnticorrelatedLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

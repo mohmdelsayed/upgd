@@ -1,98 +1,51 @@
 from core.learner.learner import Learner
-from core.optim.feature.upgd.first_order import FirstOrderUPGDv2AntiCorrNormalized, FirstOrderUPGDv1AntiCorrNormalized, FirstOrderUPGDv1NormalNormalized, FirstOrderUPGDv2NormalNormalized, FirstOrderUPGDv1NormalMax, FirstOrderUPGDv2NormalMax, FirstOrderUPGDv1AntiCorrMax, FirstOrderUPGDv2AntiCorrMax
-from core.optim.feature.upgd.second_order import SecondOrderUPGDv2AntiCorrNormalized, SecondOrderUPGDv1AntiCorrNormalized, SecondOrderUPGDv1NormalNormalized, SecondOrderUPGDv2NormalNormalized, SecondOrderUPGDv1NormalMax, SecondOrderUPGDv2NormalMax, SecondOrderUPGDv1AntiCorrMax, SecondOrderUPGDv2AntiCorrMax
-class FeatureUPGDv2LearnerFOAntiCorrNormalized(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv2AntiCorrNormalized
-        name = "feature_upgd_v2_fo_anti_corr_normalized"
-        super().__init__(name, network, optimizer, optim_kwargs)
+from core.optim.feature.upgd.first_order import FirstOrderNonprotectingLocalUPGD, FirstOrderLocalUPGD, FirstOrderNonprotectingGlobalUPGD, FirstOrderGlobalUPGD
+from core.optim.feature.upgd.second_order import SecondOrderNonprotectingLocalUPGD, SecondOrderLocalUPGD, SecondOrderNonprotectingGlobalUPGD, SecondOrderGlobalUPGD
 
-class FeatureUPGDv1LearnerFOAntiCorrNormalized(Learner):
+class FeatureFirstOrderLocalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv1AntiCorrNormalized
-        name = "feature_upgd_v1_fo_anti_corr_normalized"
-        super().__init__(name, network, optimizer, optim_kwargs)
-
-class FeatureUPGDv2LearnerFONormalNormalized(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv2NormalNormalized
+        optimizer = FirstOrderLocalUPGD
         name = "feature_upgd_v2_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureUPGDv1LearnerFONormalNormalized(Learner):
+class FeatureFirstOrderNonprotectingLocalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv1NormalNormalized
+        optimizer = FirstOrderNonprotectingLocalUPGD
         name = "feature_upgd_v1_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureUPGDv2LearnerFOAntiCorrMax(Learner):
+class FeatureFirstOrderGlobalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv2AntiCorrMax
-        name = "feature_upgd_v2_fo_anti_corr_max"
-        super().__init__(name, network, optimizer, optim_kwargs)
-
-class FeatureUPGDv1LearnerFOAntiCorrMax(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv1AntiCorrMax
-        name = "feature_upgd_v1_fo_anti_corr_max"
-        super().__init__(name, network, optimizer, optim_kwargs)
-
-class FeatureUPGDv2LearnerFONormalMax(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv2NormalMax
+        optimizer = FirstOrderGlobalUPGD
         name = "feature_upgd_v2_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureUPGDv1LearnerFONormalMax(Learner):
+class FeatureFirstOrderNonprotectingGlobalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderUPGDv1NormalMax
+        optimizer = FirstOrderNonprotectingGlobalUPGD
         name = "feature_upgd_v1_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureUPGDv2LearnerSOAntiCorrNormalized(Learner):
+class FeatureSecondOrderLocalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv2AntiCorrNormalized
-        name = "feature_upgd_v2_so_anti_corr_normalized"
-        super().__init__(name, network, optimizer, optim_kwargs, extend=True)
-
-class FeatureUPGDv1LearnerSOAntiCorrNormalized(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv1AntiCorrNormalized
-        name = "feature_upgd_v1_so_anti_corr_normalized"
-        super().__init__(name, network, optimizer, optim_kwargs, extend=True)
-
-class FeatureUPGDv2LearnerSONormalNormalized(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv2NormalNormalized
+        optimizer = SecondOrderLocalUPGD
         name = "feature_upgd_v2_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureUPGDv1LearnerSONormalNormalized(Learner):
+class FeatureSecondOrderNonprotectingLocalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv1NormalNormalized
+        optimizer = SecondOrderNonprotectingLocalUPGD
         name = "feature_upgd_v1_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureUPGDv2LearnerSOAntiCorrMax(Learner):
+class FeatureSecondOrderGlobalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv2AntiCorrMax
-        name = "feature_upgd_v2_so_anti_corr_max"
-        super().__init__(name, network, optimizer, optim_kwargs, extend=True)
-
-class FeatureUPGDv1LearnerSOAntiCorrMax(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv1AntiCorrMax
-        name = "feature_upgd_v1_so_anti_corr_max"
-        super().__init__(name, network, optimizer, optim_kwargs, extend=True)
-
-class FeatureUPGDv2LearnerSONormalMax(Learner):
-    def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv2NormalMax
+        optimizer = SecondOrderGlobalUPGD
         name = "feature_upgd_v2_so_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureUPGDv1LearnerSONormalMax(Learner):
+class FeatureSecondOrderNonprotectingGlobalUPGDLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderUPGDv1NormalMax
+        optimizer = SecondOrderNonprotectingGlobalUPGD
         name = "feature_upgd_v1_so_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)

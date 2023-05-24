@@ -1,51 +1,51 @@
 from core.learner.learner import Learner
-from core.optim.feature.search.first_order import FirstOrderSearchAntiCorrNormalized, FirstOrderSearchNormalNormalized, FirstOrderSearchAntiCorrMax, FirstOrderSearchNormalMax
-from core.optim.feature.search.second_order import SecondOrderSearchAntiCorrNormalized, SecondOrderSearchNormalNormalized, SecondOrderSearchAntiCorrMax, SecondOrderSearchNormalMax
+from core.optim.feature.search.first_order import FirstOrderSearchLocalAnticorrelated, FirstOrderSearchLocalUncorrelated, FirstOrderSearchGlobalAnticorrelated, FirstOrderSearchGlobalUncorrelated
+from core.optim.feature.search.second_order import SecondOrderSearchLocalAnticorrelated, SecondOrderSearchLocalUncorrelated, SecondOrderSearchGlobalAnticorrelated, SecondOrderSearchGlobalUncorrelated
 
-class FeatureSearchLearnerAntiCorrFONormalized(Learner):
+class FeatureFirstOrderSearchLocalAnticorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderSearchAntiCorrNormalized
+        optimizer = FirstOrderSearchLocalAnticorrelated
         name = "feature_search_fo_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureSearchLearnerNormalFONormalized(Learner):
+class FeatureFirstOrderSearchLocalUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderSearchNormalNormalized
+        optimizer = FirstOrderSearchLocalUncorrelated
         name = "feature_search_fo_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureSearchLearnerAntiCorrFOMax(Learner):
+class FeatureFirstOrderSearchGlobalAnticorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderSearchAntiCorrMax
+        optimizer = FirstOrderSearchGlobalAnticorrelated
         name = "feature_search_fo_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureSearchLearnerNormalFOMax(Learner):
+class FeatureFirstOrderSearchGlobalUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = FirstOrderSearchNormalMax
+        optimizer = FirstOrderSearchGlobalUncorrelated
         name = "feature_search_fo_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs)
 
-class FeatureSearchLearnerAntiCorrSONormalized(Learner):
+class FeatureSecondOrderSearchLocalAnticorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderSearchAntiCorrNormalized
+        optimizer = SecondOrderSearchLocalAnticorrelated
         name = "feature_search_so_anti_corr_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureSearchLearnerNormalSONormalized(Learner):
+class FeatureSecondOrderSearchLocalUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderSearchNormalNormalized
+        optimizer = SecondOrderSearchLocalUncorrelated
         name = "feature_search_so_normal_normalized"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureSearchLearnerAntiCorrSOMax(Learner):
+class FeatureSecondOrderSearchGlobalAnticorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderSearchAntiCorrMax
+        optimizer = SecondOrderSearchGlobalAnticorrelated
         name = "feature_search_so_anti_corr_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)
 
-class FeatureSearchLearnerNormalSOMax(Learner):
+class FeatureSecondOrderSearchGlobalUncorrelatedLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = SecondOrderSearchNormalMax
+        optimizer = SecondOrderSearchGlobalUncorrelated
         name = "feature_search_so_normal_max"
         super().__init__(name, network, optimizer, optim_kwargs, extend=True)

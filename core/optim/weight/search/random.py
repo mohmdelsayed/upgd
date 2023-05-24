@@ -1,11 +1,11 @@
 import torch
 from torch.nn import functional as F
 
-class RandomSearchNormal(torch.optim.Optimizer):
+class RandomSearchUncorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, sigma=sigma, names=names)
-        super(RandomSearchNormal, self).__init__(params, defaults)
+        super(RandomSearchUncorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -16,11 +16,11 @@ class RandomSearchNormal(torch.optim.Optimizer):
                 p.data.add_(noise, alpha=-group["lr"])
 
 
-class RandomSearchAntiCorr(torch.optim.Optimizer):
+class RandomSearchAnticorrelated(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, sigma=sigma, names=names)
-        super(RandomSearchAntiCorr, self).__init__(params, defaults)
+        super(RandomSearchAnticorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:

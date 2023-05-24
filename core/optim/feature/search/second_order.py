@@ -3,13 +3,13 @@ from torch.nn import functional as F
 sys.path.insert(1, os.getcwd())
 from HesScale.hesscale import HesScale
 
-class SecondOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
+class SecondOrderSearchLocalAnticorrelated(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names, method_field=type(self).method.savefield)
-        super(SecondOrderSearchAntiCorrNormalized, self).__init__(params, defaults)
+        super(SecondOrderSearchLocalAnticorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -45,13 +45,13 @@ class SecondOrderSearchAntiCorrNormalized(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):
+class SecondOrderSearchLocalUncorrelated(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names, method_field=type(self).method.savefield)
-        super(SecondOrderSearchNormalNormalized, self).__init__(params, defaults)
+        super(SecondOrderSearchLocalUncorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         for group in self.param_groups:
@@ -84,13 +84,13 @@ class SecondOrderSearchNormalNormalized(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
+class SecondOrderSearchGlobalAnticorrelated(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names, method_field=type(self).method.savefield)
-        super(SecondOrderSearchAntiCorrMax, self).__init__(params, defaults)
+        super(SecondOrderSearchGlobalAnticorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         gate_utility = None
@@ -136,13 +136,13 @@ class SecondOrderSearchAntiCorrMax(torch.optim.Optimizer):
                     p.data.add_(p.grad.data, alpha=-group["lr"])
 
 
-class SecondOrderSearchNormalMax(torch.optim.Optimizer):
+class SecondOrderSearchGlobalUncorrelated(torch.optim.Optimizer):
     method = HesScale()
     def __init__(self, params, lr=1e-5, beta_utility=0.0, sigma=1.0):
         names, params = zip(*params)
         self.gate_utility= None
         defaults = dict(lr=lr, beta_utility=beta_utility, sigma=sigma, names=names, method_field=type(self).method.savefield)
-        super(SecondOrderSearchNormalMax, self).__init__(params, defaults)
+        super(SecondOrderSearchGlobalUncorrelated, self).__init__(params, defaults)
 
     def step(self, loss):
         gate_utility = None

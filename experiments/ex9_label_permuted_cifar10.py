@@ -1,21 +1,9 @@
 from core.grid_search import GridSearch
 from core.learner.weight.upgd import (
-    UPGDv2LearnerFOAntiCorrNormalized,
-    UPGDv2LearnerSOAntiCorrNormalized,
-    UPGDv1LearnerFOAntiCorrNormalized,
-    UPGDv1LearnerSOAntiCorrNormalized,
-    UPGDv2LearnerFOAntiCorrMax,
-    UPGDv2LearnerSOAntiCorrMax,
-    UPGDv1LearnerFOAntiCorrMax,
-    UPGDv1LearnerSOAntiCorrMax,
-    UPGDv2LearnerFONormalNormalized,
-    UPGDv2LearnerSONormalNormalized,
-    UPGDv1LearnerFONormalNormalized,
-    UPGDv1LearnerSONormalNormalized,
-    UPGDv2LearnerFONormalMax,
-    UPGDv2LearnerSONormalMax,
-    UPGDv1LearnerFONormalMax,
-    UPGDv1LearnerSONormalMax,
+    FirstOrderLocalUPGDLearner,
+    FirstOrderNonprotectingLocalUPGDLearner,
+    FirstOrderGlobalUPGDLearner,
+    FirstOrderNonprotectingGlobalUPGDLearner,
 )
 
 
@@ -68,14 +56,10 @@ sp_grid = GridSearch(
 grids = [up_grids for _ in range(4)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
 
 learners = [
-    UPGDv2LearnerFONormalNormalized(),
-    # UPGDv2LearnerSONormalNormalized(),
-    UPGDv1LearnerFONormalNormalized(),
-    # UPGDv1LearnerSONormalNormalized(),
-    UPGDv2LearnerFONormalMax(),
-    # UPGDv2LearnerSONormalMax(),
-    UPGDv1LearnerFONormalMax(),
-    # UPGDv1LearnerSONormalMax(),
+    FirstOrderLocalUPGDLearner(),
+    FirstOrderNonprotectingLocalUPGDLearner(),
+    FirstOrderGlobalUPGDLearner(),
+    FirstOrderNonprotectingGlobalUPGDLearner(),
     SGDLearner(),
     PGDLearner(),
     ShrinkandPerturbLearner(),
