@@ -18,7 +18,11 @@ from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.adam import AdamLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
-from core.learner.online_ewc import OnlineEWCLearner
+from core.learner.online_ewc import OnlineEWCLearner, NoisyOnlineEWCLearner
+from core.learner.online_ewc_plus import OnlineEWCLearnerPlus, NoisyOnlineEWCLearnerPlus
+from core.learner.bgd import BGDLearner
+from core.learner.mas import MASLearner, NoisyMASLearner
+from core.learner.synaptic_intelligence import SynapticIntelligenceLearner, NoisySynapticIntelligenceLearner
 
 from core.learner.weight.upgd import FirstOrderLocalUPGDLearner, SecondOrderLocalUPGDLearner, FirstOrderNonprotectingLocalUPGDLearner, SecondOrderNonprotectingLocalUPGDLearner, FirstOrderGlobalUPGDLearner, SecondOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner, SecondOrderNonprotectingGlobalUPGDLearner
 from core.learner.weight.search import FirstOrderSearchLocalUncorrelatedLearner, SecondOrderSearchLocalUncorrelatedLearner, FirstOrderSearchLocalAnticorrelatedLearner, SecondOrderSearchLocalAnticorrelatedLearner, FirstOrderSearchGlobalUncorrelatedLearner, SecondOrderSearchGlobalUncorrelatedLearner, FirstOrderSearchGlobalAnticorrelatedLearner, SecondOrderSearchGlobalAnticorrelatedLearner
@@ -60,6 +64,8 @@ tasks = {
     "ex7_label_permuted_mnist" : LabelPermutedMNIST,
     "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
+    "ex10_split_stanford_cars" : SplitStanfordCarsTask,
+    "ex11_split_cub" : SplitCUBTask,
 
 }
 
@@ -92,6 +98,15 @@ learners = {
     "adam": AdamLearner,
     "shrink_and_perturb": ShrinkandPerturbLearner,
     "online_ewc": OnlineEWCLearner,
+    "noisy_online_ewc": NoisyOnlineEWCLearner,
+    "online_ewc_plus": OnlineEWCLearnerPlus,
+    "noisy_online_ewc_plus": NoisyOnlineEWCLearnerPlus,
+    "bgd": BGDLearner,
+    "noisy_mas": NoisyMASLearner,
+    "mas": MASLearner,
+    "noisy_mas": NoisyMASLearner,
+    "si": SynapticIntelligenceLearner,
+    "noisy_si": NoisySynapticIntelligenceLearner,
 
     "upgd_fo_local": FirstOrderLocalUPGDLearner,
     "upgd_so_local": SecondOrderLocalUPGDLearner,
