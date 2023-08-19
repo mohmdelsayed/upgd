@@ -34,6 +34,28 @@ class FullyConnectedReLUGates(nn.Sequential):
                 if m.bias is not None:
                     torch.nn.init.constant_(m.bias, const)
 
+class TwoHeadedNetwork(nn.Module):
+    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=64):
+        super().__init__()
+        self.name = "two_headed_network"
+        self.shared_layer1 = nn.Linear(n_obs, n_hidden_units)
+        self.shared_layer2 = nn.Linear(n_hidden_units, n_hidden_units // 2)
+        self.head1 = nn.Linear(n_hidden_units // 2, 1)
+        self.head2 = nn.Linear(n_hidden_units // 2, 1)
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                m.reset_parameters()
+
+    def forward(self, x):
+        x = self.shared_layer1(x)
+        x = self.shared_layer2(x)
+        output1 = self.head1(x)
+        # output2 = self.head2(x)
+        return output1, output1
+
+    def __str__(self):
+        return self.name
+
 class FullyConnectedReLU(nn.Sequential):
     def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
         super(FullyConnectedReLU, self).__init__()
