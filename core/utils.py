@@ -64,8 +64,6 @@ tasks = {
     "ex7_label_permuted_mnist" : LabelPermutedMNIST,
     "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
-    "ex10_split_stanford_cars" : SplitStanfordCarsTask,
-    "ex11_split_cub" : SplitCUBTask,
 
 }
 
