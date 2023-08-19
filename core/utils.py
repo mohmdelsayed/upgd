@@ -7,11 +7,13 @@ from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
 from core.task.changing_average import ChangingAverage
 from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
+from core.task.changing_average_offline import ChangingAverageOffline
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
+from core.network.fcn_relu import TwoHeadedNetwork
 
 from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
 from core.learner.anti_pgd import AntiPGDLearner
@@ -55,6 +57,7 @@ tasks = {
     "ex3_toy_changing_inputset": PermutedAverage,
 
     "ex4_toy_changing_outputs": ChangingAverage,
+    "ex4_toy_changing_outputs_offline": ChangingAverageOffline,
 
     "ex5_stationary_mnist" : StationaryMNIST,
 
@@ -64,8 +67,6 @@ tasks = {
     "ex7_label_permuted_mnist" : LabelPermutedMNIST,
     "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
-    "ex10_split_stanford_cars" : SplitStanfordCarsTask,
-    "ex11_split_cub" : SplitCUBTask,
 
 }
 
@@ -88,6 +89,7 @@ networks = {
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
     "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
     "convolutional_network_relu": ConvolutionalNetworkReLU,
+    "two_headed_network": TwoHeadedNetwork,
 }
 
 learners = {
