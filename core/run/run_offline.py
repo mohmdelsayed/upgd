@@ -33,11 +33,7 @@ class RunOffline:
         torch.manual_seed(self.seed)
         losses_per_step_size = []
         held_out_averages = []
-        held_out_averages1 = []
-        held_out_averages2 = []
         held_out_accuracies = []
-        held_out_accuracies1 = []
-        held_out_accuracies2 = []
 
         if self.task.criterion == 'cross_entropy':
             accuracy_per_step_size = []
@@ -50,12 +46,11 @@ class RunOffline:
             self.learner.parameters, **self.learner.optim_kwargs
         )
 
-        for _ in range(self.n_samples):
-            (input, target), context = next(self.task)
+        for i in range(self.n_samples):
+            (input, target), new_task = next(self.task)
             input, target = input.to(self.device), target.to(self.device)
             optimizer.zero_grad()
-            output1, output2 = self.learner.predict(input)
-            output = output1 if context else output2
+            output = self.learner.predict(input)
             loss = criterion(output, target)
             if self.learner.extend:
                 with backpack(extension):
@@ -66,42 +61,22 @@ class RunOffline:
             losses_per_step_size.append(loss.item())
             if self.task.criterion == 'cross_entropy':
                 accuracy_per_step_size.append((output.argmax(dim=1) == target).float().mean().item())
-
-            # evaluate on held out set with no grad
-            held_out_losses = []
-            held_out_losses1 = []
-            held_out_losses2 = []
-            held_out_accuracy = []
-            held_out_accuracy1 = []
-            held_out_accuracy2 = []
-            for sample in range(100):
-                sample = next(self.task.held_out)
+            if new_task and i != 0:
+                # evaluate on held out set with no grad
+                held_out_losses = []
+                held_out_accuracy = []
+                input, target = next(iter(self.task.held_out(batch_size=250, shuffle=True)))
                 with torch.no_grad():
-                    (input, target), context = sample
                     input, target = input.to(self.device), target.to(self.device)
-                    output1, output2 = self.learner.predict(input)
-                    output = output1 if context else output2
+                    output = self.learner.predict(input)
                     loss = criterion(output, target)
-                if context:
-                    held_out_losses1.append(loss.item())
-                    if self.task.criterion == 'cross_entropy':
-                        held_out_accuracy1.append((output.argmax(dim=1) == target).float().mean().item())
-                else:
-                    held_out_losses2.append(loss.item())
-                    if self.task.criterion == 'cross_entropy':
-                        held_out_accuracy2.append((output.argmax(dim=1) == target).float().mean().item())
                 held_out_losses.append(loss.item())
                 if self.task.criterion == 'cross_entropy':
                     held_out_accuracy.append((output.argmax(dim=1) == target).float().mean().item())
-            # compute the average loss on the held out set using numpy
-            held_out_averages.append(sum(held_out_losses) / len(held_out_losses))
-            held_out_averages1.append(sum(held_out_losses1) / len(held_out_losses1))
-            held_out_averages2.append(sum(held_out_losses2) / len(held_out_losses2))
-            
-            if self.task.criterion == 'cross_entropy':
-                held_out_accuracies.append(sum(held_out_accuracy) / len(held_out_accuracy))
-                held_out_accuracies1.append(sum(held_out_accuracy1) / len(held_out_accuracy1))
-                held_out_accuracies2.append(sum(held_out_accuracy2) / len(held_out_accuracy2))
+                # compute the average loss on the held out set using numpy
+                held_out_averages.append(sum(held_out_losses) / len(held_out_losses))
+                if self.task.criterion == 'cross_entropy':
+                    held_out_accuracies.append(sum(held_out_accuracy) / len(held_out_accuracy))
 
         if self.task.criterion == 'cross_entropy':
             self.logger.log(losses=losses_per_step_size,
@@ -113,11 +88,7 @@ class RunOffline:
                             n_samples=self.n_samples,
                             seed=self.seed,
                             held_out_averages=held_out_averages,
-                            held_out_averages1=held_out_averages1,
-                            held_out_averages2=held_out_averages2,
                             held_out_accuracies=held_out_accuracies,
-                            held_out_accuracies1=held_out_accuracies1,
-                            held_out_accuracies2=held_out_accuracies2,
             )
         else:
             self.logger.log(losses=losses_per_step_size,
@@ -128,8 +99,6 @@ class RunOffline:
                             n_samples=self.n_samples,
                             seed=self.seed,
                             held_out_averages=held_out_averages,
-                            held_out_averages1=held_out_averages1,
-                            held_out_averages2=held_out_averages2,
             )
 
 if __name__ == "__main__":
