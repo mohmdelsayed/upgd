@@ -11,8 +11,9 @@ class LabelPermutedMNISTOffline(Task):
     """
 
     def __init__(self, name="label_permuted_mnist_offline", batch_size=1, change_freq=2500):
-        self.dataset = self.get_dataset(True)
+        self.dataset = self.get_dataset(train=True)
         self.original_targets = self.dataset.targets.clone()
+        self.test_targets = self.get_dataset(train=False).targets.clone()
         self.change_freq = change_freq
         self.step = 0
         self.n_inputs = 784
@@ -22,8 +23,8 @@ class LabelPermutedMNISTOffline(Task):
         self.new_task = False
 
     def held_out(self, batch_size=1000, shuffle=False):
-        test_dataloader = self.get_dataloader(self.get_dataset(True), batch_size=batch_size, shuffle=shuffle)
-        test_dataloader.dataset.targets = self.old_permutation[self.original_targets]
+        test_dataloader = self.get_dataloader(self.get_dataset(train=False), batch_size=batch_size, shuffle=shuffle)
+        test_dataloader.dataset.targets = self.old_permutation[self.test_targets]
         return test_dataloader
 
     def __next__(self):
@@ -60,7 +61,7 @@ class LabelPermutedMNISTOffline(Task):
             ),
         )
 
-    def get_dataloader(self, dataset, batch_size=100, shuffle=True):
+    def get_dataloader(self, dataset, batch_size=1, shuffle=True):
         return torch.utils.data.DataLoader(
             dataset,
             batch_size=batch_size,
@@ -75,7 +76,7 @@ class LabelPermutedMNISTOffline(Task):
 
 if __name__ == "__main__":
     task = LabelPermutedMNISTOffline()
-    for i, (x, y) in enumerate(task):
+    for i, ((x, y), new_task) in enumerate(task):
         print(x.shape, y.shape)
         if i == 10:
             break
