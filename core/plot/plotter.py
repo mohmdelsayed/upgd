@@ -4,37 +4,22 @@ from core.best_run import BestRun
 import os
 import numpy as np
 import matplotlib
-matplotlib.rc('figure', figsize=(8, 4))
 matplotlib.rcParams['axes.spines.right'] = False
 matplotlib.rcParams['axes.spines.top'] = False
 matplotlib.rcParams["axes.spines.right"] = False
 matplotlib.rcParams["axes.spines.top"] = False
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
-matplotlib.rcParams.update({'font.size': 14})
+matplotlib.rcParams.update({'font.size': 12})
 
 class Plotter:
-    def __init__(self, best_runs_path, metric, task_length=2500, n_aggregate_tasks=1):
+    def __init__(self, best_runs_path, metric, avg_interval=200):
         self.best_runs_path = best_runs_path
-        self.task_length = task_length
-        self.avg_interval = task_length * n_aggregate_tasks
-        self.n_aggregate_tasks = n_aggregate_tasks
+        self.avg_interval = avg_interval
         self.metric = metric
 
     def plot(self):
-        colors = [
-                  'tab:blue',
-                  'tab:orange',
-                  'tab:green',
-                  'tab:red',
-                  'tab:purple',
-                  'tab:brown',
-                  'tab:pink',
-                  'tab:gray',
-                  'tab:olive',
-                  'tab:cyan',
-                  ]
-        for color, subdir in zip(colors, self.best_runs_path):
+        for subdir in self.best_runs_path:
             seeds = os.listdir(f'{subdir}')
             configuration_list = []
             for seed in seeds:
@@ -42,10 +27,8 @@ class Plotter:
                     data = json.load(json_file)
                     if self.metric == "accuracy":
                         configuration_list.append(data["accuracies"])
-                        # configuration_list.append(data["held_out_accuracies"])
                     elif self.metric == "loss":
                         configuration_list.append(data["losses"])
-                        # configuration_list.append(data["held_out_averages"])
                     else:
                         raise Exception("metric must be loss or accuracy")
                     learner_name = data["learner"]
@@ -53,28 +36,94 @@ class Plotter:
             configuration_list = np.array(configuration_list).reshape(len(seeds), len(configuration_list[0]) // self.avg_interval, self.avg_interval).mean(axis=-1)
             mean_list = np.array(configuration_list).mean(axis=0)
             std_list = np.array(configuration_list).std(axis=0) / np.sqrt(len(seeds))
-            x = [self.n_aggregate_tasks * i for i in range(len(mean_list))]
-            plt.plot(x, mean_list, label=learner_name, color=color)
-            plt.fill_between(x, mean_list - std_list, mean_list + std_list, alpha=0.1, color=color)
+            plt.plot(mean_list, label=learner_name)
+            plt.fill_between(range(len(mean_list)), mean_list - std_list, mean_list + std_list, alpha=0.1)
             plt.legend()
-
-        plt.xlabel(f"Task Number", fontsize=20)
+        
+        plt.xlabel(f"Number of tasks")
         if self.metric == "accuracy":
-            plt.ylabel("Accuracy", fontsize=20)
+            plt.ylabel("Accuracy")
         elif self.metric == "loss":
-            plt.ylabel("Loss", fontsize=20)
+            plt.ylabel("Loss")
         else:
             raise Exception("metric must be loss or accuracy")
+        # plt.ylim(bottom=0.0)
         plt.savefig("ss.pdf", bbox_inches='tight')
+        plt.clf()
+
+    def plot_1st_n_tasks(self, n_tasks=5):
+        for subdir in self.best_runs_path:
+            seeds = os.listdir(f'{subdir}')
+            configuration_list = []
+            for seed in seeds:
+                with open(f"{subdir}/{seed}") as json_file:
+                    data = json.load(json_file)
+                    if self.metric == "accuracy":
+                        configuration_list.append(data["accuracies"])
+                    elif self.metric == "loss":
+                        configuration_list.append(data["losses"])
+                    else:
+                        raise Exception("metric must be loss or accuracy")
+                    learner_name = data["learner"]
+
+            mean_list = np.array(configuration_list).mean(axis=0)[0:n_tasks * self.avg_interval-1]
+            std_list = np.array(configuration_list).std(axis=0)[0:n_tasks * self.avg_interval-1] / np.sqrt(len(seeds))
+            plt.plot(mean_list, label=learner_name)
+            plt.fill_between(range(len(mean_list)), mean_list - std_list, mean_list + std_list, alpha=0.1)
+            plt.legend()
+        
+        plt.xlabel(f"Sample")
+        if self.metric == "accuracy":
+            plt.ylabel("Accuracy")
+        elif self.metric == "loss":
+            plt.ylabel("Loss")
+        else:
+            raise Exception("metric must be loss or accuracy")
+        plt.ylim(bottom=0.0, top=1.0)
+        plt.savefig("first_n_tasks.pdf", bbox_inches='tight')
+        plt.clf()
+
+    def plot_last_n_tasks(self, n_tasks=5):
+        for subdir in self.best_runs_path:
+            seeds = os.listdir(f'{subdir}')
+            configuration_list = []
+            for seed in seeds:
+                with open(f"{subdir}/{seed}") as json_file:
+                    data = json.load(json_file)
+                    if self.metric == "accuracy":
+                        configuration_list.append(data["accuracies"])
+                    elif self.metric == "loss":
+                        configuration_list.append(data["losses"])
+                    else:
+                        raise Exception("metric must be loss or accuracy")
+                    learner_name = data["learner"]
+
+            all_mean_list = np.array(configuration_list).mean(axis=0)
+            mean_list = all_mean_list[(-n_tasks * self.avg_interval):]
+            std_list = np.array(configuration_list).std(axis=0)[(-n_tasks * self.avg_interval):] / np.sqrt(len(seeds))
+            plt.plot(np.arange(n_tasks * self.avg_interval) + len(np.array(all_mean_list))  - n_tasks * self.avg_interval, mean_list, label=learner_name)
+            plt.ylim(bottom=0.0, top=1.0)
+            plt.fill_between(np.arange(n_tasks * self.avg_interval) + len(np.array(all_mean_list))  - n_tasks * self.avg_interval, mean_list - std_list, mean_list + std_list, alpha=0.1)
+            plt.legend()
+        
+        plt.xlabel(f"Sample")
+        if self.metric == "accuracy":
+            plt.ylabel("Accuracy")
+        elif self.metric == "loss":
+            plt.ylabel("Loss")
+        else:
+            raise Exception("metric must be loss or accuracy")
+        plt.ylim(bottom=0.0, top=1.0)
+        plt.savefig("last_n_tasks.pdf", bbox_inches='tight')
         plt.clf()
 
 
 if __name__ == "__main__":
+    best_runs1 = BestRun("ex3_permuted_average", "area", "fully_connected_linear", ["sgd", "anti_pgd", "pgd"]).get_best_run(measure="losses")
+    best_runs2 = BestRun("ex3_permuted_average", "area", "linear_layer", ["sgd"]).get_best_run(measure="losses")
 
-    # best_runs1 = BestRun("ex7_label_permuted_mnist_offline", "area", "fully_connected_relu", ["sgd", "upgd_fo_global"]).get_best_run(measure="losses")
-    best_runs1 = BestRun("ex7_label_permuted_mnist_offline", "area", "fully_connected_relu", ["sgd"]).get_best_run(measure="accuracies")
-
-    print(best_runs1)
-    # plotter = Plotter(best_runs1, metric="loss")
-    plotter = Plotter(best_runs1, metric="accuracy")
+    print(best_runs1+best_runs2)
+    plotter = Plotter(best_runs1+best_runs2, metric="loss")
     plotter.plot()
+    plotter.plot_1st_n_tasks(n_tasks=5)
+    plotter.plot_last_n_tasks(n_tasks=5)
