@@ -11,7 +11,7 @@ from core.task.utility_task import UtilityTask
 from core.task.changing_average_offline import ChangingAverageOffline
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
-from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU
+from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU, FullyConnectedReLUWithHooks
 from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, FullyConnectedTanhGates, SmallFullyConnectedTanhGates
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 from core.network.fcn_relu import TwoHeadedNetwork
@@ -91,7 +91,7 @@ networks = {
     "small_fully_connected_relu_gates": SmallFullyConnectedReLUGates,
     "small_fully_connected_linear_gates": SmallFullyConnectedLinearGates,
     "convolutional_network_relu": ConvolutionalNetworkReLU,
-    "two_headed_network": TwoHeadedNetwork,
+    "fully_connected_relu_with_hooks": FullyConnectedReLUWithHooks,
 }
 
 learners = {

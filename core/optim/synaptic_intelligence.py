@@ -21,7 +21,7 @@ class SynapticIntelligence(torch.optim.Optimizer):
                 delta_grad_trace = state["delta_grad_trace"]
                 delta_trace = state["delta_trace"]
                 weight_trace.mul_(group["beta_weight"]).add_(p.data, alpha=1 - group["beta_weight"])
-                delta_grad_trace.mul_(group["beta_importance"]).add_(-p.grad.data * (state["init_weights"] - p.data), alpha=1 - group["beta_importance"])
+                delta_grad_trace.mul_(group["beta_importance"]).add_(p.grad.data * (state["init_weights"] - p.data), alpha=1 - group["beta_importance"])
                 delta_trace.mul_(group["beta_importance"]).add_(state["init_weights"] - p.data, alpha=1 - group["beta_importance"])
                 bias_correction_weight = 1 - group["beta_weight"] ** state["step"]
                 bias_correction_importance = 1 - group["beta_importance"] ** state["step"]
