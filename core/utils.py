@@ -56,7 +56,6 @@ tasks = {
     "ex3_toy_changing_inputset": PermutedAverage,
 
     "ex4_toy_changing_outputs": ChangingAverage,
-    "ex4_toy_changing_outputs_offline": ChangingAverageOffline,
 
     "ex5_stationary_mnist" : StationaryMNIST,
 
