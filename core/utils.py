@@ -8,7 +8,6 @@ from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
 from core.task.changing_average import ChangingAverage
 from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
-from core.task.changing_average_offline import ChangingAverageOffline
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
 from core.network.fcn_relu import FullyConnectedReLU, SmallFullyConnectedReLU, FullyConnectedReLUGates, SmallFullyConnectedReLUGates, ConvolutionalNetworkReLU, FullyConnectedReLUWithHooks
