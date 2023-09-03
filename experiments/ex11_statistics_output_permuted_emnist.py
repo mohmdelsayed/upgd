@@ -18,8 +18,8 @@ from core.utils import create_script_generator, create_script_runner, tasks
 exp_name = "ex7_label_permuted_mnist"
 task = tasks[exp_name]()
 
-n_steps = 20
-n_seeds = 1000000
+n_steps = 1000000
+n_seeds = 20
 
 upgd1_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
