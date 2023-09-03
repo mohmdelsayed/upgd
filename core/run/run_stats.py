@@ -101,9 +101,12 @@ class RunStats:
 
             for name, param in self.learner.network.named_parameters():
                 if 'weight' in name:
-                    sample_weight_rank += torch.linalg.matrix_rank(param.data)
-                    sample_max_rank += torch.min(torch.tensor(param.data.shape))
-
+                    if 'conv' in name:
+                        sample_weight_rank += torch.torch.linalg.matrix_rank(param.data).float().mean()
+                        sample_max_rank += torch.min(torch.tensor(param.data.shape)[-2:])
+                    else:
+                        sample_weight_rank += torch.linalg.matrix_rank(param.data)
+                        sample_max_rank += torch.min(torch.tensor(param.data.shape))
                     sample_weight_l2 += torch.norm(param.data, p=2) ** 2
                     sample_weight_l1 += torch.norm(param.data, p=1)
 
