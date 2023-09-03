@@ -65,7 +65,7 @@ class RunOffline:
                 # evaluate on held out set with no grad
                 held_out_losses = []
                 held_out_accuracy = []
-                input, target = next(iter(self.task.held_out(batch_size=250, shuffle=True)))
+                input, target = next(iter(self.task.held_out(batch_size=250, shuffle=False)))
                 with torch.no_grad():
                     input, target = input.to(self.device), target.to(self.device)
                     output = self.learner.predict(input)

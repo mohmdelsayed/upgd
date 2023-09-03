@@ -17,8 +17,8 @@ def signal_handler(msg, signal, frame):
         f.write(f"{cmd} \n")
     exit(0)
 
-class Run:
-    name = 'run'
+class RunStats:
+    name = 'run_stats'
     def __init__(self, n_samples=10000, task=None, learner=None, save_path="logs", seed=0, network=None, **kwargs):
         self.n_samples = int(n_samples)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -79,9 +79,6 @@ class Run:
             losses_per_step.append(loss.item())
             if self.task.criterion == 'cross_entropy':
                 accuracy_per_step.append((output.argmax(dim=1) == target).float().mean().item())
-
-            if i % 500 == 0:
-                print(f"Step {i} of {self.n_samples} done")
 
             # compute some statistics after each task change
             with torch.no_grad():
@@ -189,7 +186,7 @@ if __name__ == "__main__":
     # start the run using the command line arguments
     ll = sys.argv[1:]
     args = {k[2:]:v for k,v in zip(ll[::2], ll[1::2])}
-    run = Run(**args)
+    run = RunStats(**args)
     cmd = f"python3 {' '.join(sys.argv)}"
     signal.signal(signal.SIGUSR1, partial(signal_handler, (cmd, args['learner'])))
     current_time = time.time()
