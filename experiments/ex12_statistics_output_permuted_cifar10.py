@@ -24,147 +24,172 @@ n_seeds = 20
 upgd1_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
-               beta_utility=[0.9999],
-               sigma=[0.1],
-               weight_decay=[0.01],
-               network=[ConvolutionalNetworkReLUWithHooks()],
-               n_samples=[n_steps],
-    )
-
-upgd2_grid = GridSearch(
-               seed=[i for i in range(0, n_seeds)],
-               lr=[0.001],
-               beta_utility=[0.9],
-               sigma=[0.1],
-               weight_decay=[0.01],
-               network=[ConvolutionalNetworkReLUWithHooks()],
-               n_samples=[n_steps],
-    )
-
-
-pgd_grid = GridSearch(
-               seed=[i for i in range(0, n_seeds)],
-               lr=[0.001],
-               sigma=[0.05],
-               network=[ConvolutionalNetworkReLUWithHooks()],
-               n_samples=[n_steps],
-    )
-
-
-sgd_grid = GridSearch(
-               seed=[i for i in range(0, n_seeds)],
-               lr=[0.001],
+               beta_utility=[0.99],
+               sigma=[0.01],
                weight_decay=[0.001],
                network=[ConvolutionalNetworkReLUWithHooks()],
                n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/upgd_v1_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.99_sigma_0.01_weight_decay_0.001',
 
-sp_grid = GridSearch(
+upgd2_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
-               lr=[0.001],
-               sigma=[0.05],
-               decay=[0.01],
+               lr=[0.01],
+               beta_utility=[0.999],
+               sigma=[0.001],
+               weight_decay=[0.0],
                network=[ConvolutionalNetworkReLUWithHooks()],
                n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/upgd_v2_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.001_weight_decay_0.0',
+
+pgd_grid = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.001],
+               sigma=[0.005],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
+    )
+
+# 'logs/ex9_label_permuted_cifar10/pgd/convolutional_network_relu/lr_0.001_sigma_0.005',
+
+sgd_grid = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               weight_decay=[0.001],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
+    )
+
+# 'logs/ex9_label_permuted_cifar10/sgd/convolutional_network_relu/lr_0.01_weight_decay_0.001',
+
+sp_grid = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               sigma=[0.005],
+               decay=[0.001],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
+    )
+
+# 'logs/ex9_label_permuted_cifar10/shrink_and_perturb/convolutional_network_relu/lr_0.01_sigma_0.005_decay_0.001',
+
 adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
-               lr=[0.0001],
-               weight_decay=[0.0],
+               lr=[0.001],
+               weight_decay=[0.01],
                beta1=[0.0],
-               beta2=[0.99],
+               beta2=[0.9999],
                damping=[1e-8],
                network=[ConvolutionalNetworkReLUWithHooks()],
                n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/adam/convolutional_network_relu/lr_0.001_weight_decay_0.01_beta1_0.0_beta2_0.9999_damping_1e-08',
+
 ewc_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
-               lr=[0.001],
-               beta_weight=[0.9999],
-               beta_fisher=[0.999],
-               lamda=[1.0],
+               lr=[0.01],
+               beta_weight=[0.999],
+               beta_fisher=[0.9999],
+               lamda=[10.0],
                network=[ConvolutionalNetworkReLUWithHooks()],
                n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999'
+
 noisy_ewc_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
-                beta_weight=[0.9999],
+                lr=[0.01],
+                beta_weight=[0.999],
                 beta_fisher=[0.9999],
-                lamda=[1.0],
+                lamda=[10.0],
                 sigma=[0.01],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
+
+# 'logs/ex9_label_permuted_cifar10/noisy_online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999_sigma_0.01',
 
 mas_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
-                beta_weight=[0.9999],
-                beta_fisher=[0.999],
-                lamda=[0.1],
+                lr=[0.01],
+                beta_weight=[0.999],
+                beta_fisher=[0.9999],
+                lamda=[10.0],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
+
 noisy_mas_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
-                beta_weight=[0.9999],
+                lr=[0.01],
+                beta_weight=[0.999],
                 beta_fisher=[0.9999],
-                lamda=[1.0],
+                lamda=[10.0],
                 sigma=[0.01],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
+
+# 'logs/ex9_label_permuted_cifar10/noisy_mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999_sigma_0.01',
 
 si_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.001],
-                beta_weight=[0.9999],
-                beta_importance=[0.99],
-                lamda=[0.1],
+                beta_weight=[0.999],
+                beta_importance=[0.9],
+                lamda=[1.0],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
+
+# 'logs/ex9_label_permuted_cifar10/si/convolutional_network_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9',
 
 noisy_si_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.001],
-                beta_weight=[0.99],
-                beta_importance=[0.999],
-                lamda=[0.1],
-                sigma=[0.01],
+                beta_weight=[0.999],
+                beta_importance=[0.9],
+                lamda=[1.0],
+                sigma=[0.1],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
+
+# 'logs/ex9_label_permuted_cifar10/noisy_si/convolutional_network_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9_sigma_0.1'
 
 bgd_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                mean_eta=[100.0],
-                std_init=[0.001],
-                beta=[0.9],
+                mean_eta=[10.0],
+                std_init=[0.01],
+                beta=[0.0],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/bgd/convolutional_network_relu/mean_eta_10.0_std_init_0.01_beta_0.0',
+
 ewc_plus_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
+                lr=[0.01],
                 beta_weight=[0.9999],
-                beta_importance=[0.99],
+                beta_importance=[0.999],
                 lamda=[0.1],
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
 
+# 'logs/ex9_label_permuted_cifar10/online_ewc_plus/convolutional_network_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
+
 noisy_ewc_plus_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
+                lr=[0.01],
                 beta_weight=[0.9999],
                 beta_importance=[0.999],
                 lamda=[0.1],
@@ -172,6 +197,8 @@ noisy_ewc_plus_grid = GridSearch(
                 network=[ConvolutionalNetworkReLUWithHooks()],
                 n_samples=[n_steps],
     )
+
+# 'logs/ex9_label_permuted_cifar10/noisy_online_ewc_plus/convolutional_network_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01'
 
 grids = [
          upgd1_grid,
