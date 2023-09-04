@@ -84,7 +84,8 @@ class RunStats:
             with torch.no_grad():
                 output_new = self.learner.predict(input)
                 loss_after = criterion(output_new, target)
-                plasticity_per_step.append(torch.clamp((1-loss_after/loss), min=0.0, max=1.0).item())
+                loss_before = torch.clamp(loss, min=1e-8)
+                plasticity_per_step.append(torch.clamp((1-loss_after/loss_before), min=0.0, max=1.0).item())
             n_dead_units = 0
             for _, value in self.learner.network.activations.items():
                 n_dead_units += value
@@ -138,6 +139,8 @@ class RunStats:
                 grad_l0_per_task.append(sum(grad_l0_per_step) / len(grad_l0_per_step))
 
                 losses_per_step = []
+                if self.task.criterion == 'cross_entropy':
+                    accuracy_per_step = []
                 plasticity_per_step = []
                 n_dead_units_per_step = []
                 weight_rank_per_step = []
