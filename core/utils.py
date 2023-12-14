@@ -2,6 +2,7 @@ from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.label_permuted_mnist_offline import LabelPermutedMNISTOffline
 from core.task.label_permuted_cifar10 import LabelPermutedCIFAR10
+from core.task.label_permuted_cifar10_offline import LabelPermutedCIFAR10Offline
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
@@ -65,6 +66,7 @@ tasks = {
     "ex7_label_permuted_mnist" : LabelPermutedMNIST,
     "ex7_label_permuted_mnist_offline" : LabelPermutedMNISTOffline,
     "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
+    "ex8_label_permuted_cifar10_offline" : LabelPermutedCIFAR10Offline,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 
 }
