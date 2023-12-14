@@ -5,7 +5,7 @@ from core.optim.noisy_online_ewc_plus import NoisyOnlineEWCPlus
 class OnlineEWCLearnerPlus(Learner):
     def __init__(self, network=None, optim_kwargs={}):
         optimizer = OnlineEWCPlus
-        name = "online_ewc_plus"
+        name = "rwalk"
         super().__init__(name, network, optimizer, optim_kwargs)
 
 
