@@ -1,0 +1,23 @@
+# mini ImageNet
+[
+'logs/ex9_label_permuted_mini_imagenet/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mini_imagenet/mas/fully_connected_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mini_imagenet/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.99',
+'logs/ex9_label_permuted_mini_imagenet/si_new/fully_connected_relu/lr_0.01_lamda_0.01_beta_weight_0.99_beta_importance_0.9',
+]
+
+# input-permuted mnist:
+[
+'logs/ex6_input_permuted_mnist/online_ewc/fully_connected_relu/lr_0.001_lamda_0.001_beta_weight_0.99_beta_fisher_0.9999',
+'logs/ex6_input_permuted_mnist/mas/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.999_beta_fisher_0.9999',
+'logs/ex6_input_permuted_mnist/rwalk/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.999_beta_importance_0.99',
+'logs/ex6_input_permuted_mnist/si_new/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.999_beta_importance_0.9999'
+]
+
+# ouput-permuted emnist
+[
+'logs/ex9_label_permuted_mnist/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mnist/mas/fully_connected_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex7_label_permuted_mnist/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.9',
+'logs/ex7_label_permuted_mnist/si_new/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9_beta_importance_0.9'
+]

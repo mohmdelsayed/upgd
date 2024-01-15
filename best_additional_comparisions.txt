@@ -1,0 +1,44 @@
+[
+'logs/ex6_input_permuted_mnist/mas/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.9999_beta_fisher_0.999',
+'logs/ex6_input_permuted_mnist/noisy_mas/fully_connected_relu/lr_0.001_lamda_1.0_beta_weight_0.9999_beta_fisher_0.9999_sigma_0.01',
+'logs/ex6_input_permuted_mnist/si/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.99_beta_importance_0.99',
+'logs/ex6_input_permuted_mnist/noisy_si/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.99_beta_importance_0.99_sigma_0.01',
+'logs/ex6_input_permuted_mnist/noisy_online_ewc/fully_connected_relu/lr_0.001_lamda_1.0_beta_weight_0.9999_beta_fisher_0.9999_sigma_0.01',
+'logs/ex6_input_permuted_mnist/bgd/fully_connected_relu/mean_eta_100.0_std_init_0.001_beta_0.9',
+'logs/ex6_input_permuted_mnist/online_ewc_plus/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.9999_beta_importance_0.99',
+'logs/ex6_input_permuted_mnist/noisy_online_ewc_plus/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01',
+]
+
+[
+'logs/ex9_label_permuted_mnist/noisy_online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.9999_sigma_0.01',
+'logs/ex9_label_permuted_mnist/bgd/fully_connected_relu/mean_eta_100.0_std_init_0.01_beta_0.0',
+'logs/ex9_label_permuted_mnist/mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mnist/noisy_mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999_sigma_0.01',
+'logs/ex9_label_permuted_mnist/si/fully_connected_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9',
+'logs/ex9_label_permuted_mnist/noisy_si/fully_connected_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9_sigma_0.01',
+'logs/ex9_label_permuted_mnist/online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
+'logs/ex9_label_permuted_mnist/noisy_online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01'
+]
+
+[
+'logs/ex9_label_permuted_mini_imagenet/mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mini_imagenet/noisy_mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999_sigma_0.01',
+'logs/ex9_label_permuted_mini_imagenet/si/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.999',
+'logs/ex9_label_permuted_mini_imagenet/noisy_si/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01',
+'logs/ex9_label_permuted_mini_imagenet/noisy_online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999_sigma_0.01',
+'logs/ex9_label_permuted_mini_imagenet/bgd/fully_connected_relu/mean_eta_100.0_std_init_0.01_beta_0.0',
+'logs/ex9_label_permuted_mini_imagenet/online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
+'logs/ex9_label_permuted_mini_imagenet/noisy_online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01',
+]
+
+
+# correct si and rwalk:
+
+    ['logs/ex6_input_permuted_mnist/rwalk/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.9999_beta_importance_0.99',
+    'logs/ex6_input_permuted_mnist/si_new/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.999_beta_importance_0.9999']
+
+    ['logs/ex7_label_permuted_mnist/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.99',
+    'logs/ex7_label_permuted_mnist/si_new/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9_beta_importance_0.9']
+
+    ['logs/ex9_label_permuted_mini_imagenet/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.9',
+    'logs/ex9_label_permuted_mini_imagenet/si_new/fully_connected_relu/lr_0.01_lamda_0.01_beta_weight_0.99_beta_importance_0.9']

@@ -1,0 +1,44 @@
+#############################
+##### Zero Weight Decay #####
+#############################
+[
+'logs/ex6_input_permuted_mnist/upgd_fo_global/fully_connected_relu/lr_0.001_beta_utility_0.999_sigma_0.01_weight_decay_0.0',
+'logs/ex6_input_permuted_mnist/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.001_beta_utility_0.99_sigma_0.1_weight_decay_0.0',
+]
+[
+'logs/ex7_label_permuted_mnist/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+'logs/ex7_label_permuted_mnist/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.99_sigma_0.01_weight_decay_0.0'
+]
+[
+'logs/ex9_label_permuted_mini_imagenet/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.0_weight_decay_0.0',
+'logs/ex9_label_permuted_mini_imagenet/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.01_weight_decay_0.0'
+]
+#############################
+###### Zero perturbation ####
+#############################
+[
+'logs/ex6_input_permuted_mnist/upgd_fo_global/fully_connected_relu/lr_0.001_beta_utility_0.999_sigma_0.0_weight_decay_0.0',
+'logs/ex6_input_permuted_mnist/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.001_beta_utility_0.999_sigma_0.0_weight_decay_0.001',
+]
+[
+'logs/ex7_label_permuted_mnist/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.0_weight_decay_0.0',
+'logs/ex7_label_permuted_mnist/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.0001'
+]
+[
+'logs/ex9_label_permuted_mini_imagenet/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.0_weight_decay_0.0',
+'logs/ex9_label_permuted_mini_imagenet/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.99_sigma_0.0_weight_decay_0.001'
+]
+
+
+############################################
+# Zero weight decay and Zero perturbation ##
+############################################
+
+
+######################################
+# With weight decay and perturbation #
+######################################
+[
+'logs/ex6_input_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.01',
+'logs/ex6_input_permuted_mnist/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.001_beta_utility_0.9_sigma_0.1_weight_decay_0.01',
+]

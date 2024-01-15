@@ -1,0 +1,54 @@
+# Input-Permuted MNIST
+[
+'logs/ex6_input_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.01',
+'logs/ex6_input_permuted_mnist/sgd/fully_connected_relu/lr_0.001_weight_decay_0.001',
+'logs/ex6_input_permuted_mnist/pgd/fully_connected_relu/lr_0.001_sigma_0.05',
+'logs/ex6_input_permuted_mnist/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.001_beta_utility_0.9_sigma_0.1_weight_decay_0.01',
+'logs/ex6_input_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.0_beta1_0.0_beta2_0.99_damping_1e-08',
+'logs/ex6_input_permuted_mnist/shrink_and_perturb/fully_connected_relu/lr_0.001_sigma_0.05_decay_0.01',
+
+'logs/ex6_input_permuted_mnist/online_ewc/fully_connected_relu/lr_0.001_lamda_0.001_beta_weight_0.99_beta_fisher_0.9999',
+'logs/ex6_input_permuted_mnist/mas/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.999_beta_fisher_0.9999',
+'logs/ex6_input_permuted_mnist/rwalk/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.999_beta_importance_0.99',
+'logs/ex6_input_permuted_mnist/si_new/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.999_beta_importance_0.9999'
+
+'logs/ex6_input_permuted_mnist/feature_upgd_v2_fo_normal_max/fully_connected_relu_gates/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.01',
+'logs/ex6_input_permuted_mnist/feature_upgd_v1_fo_normal_max/fully_connected_relu_gates/lr_0.001_beta_utility_0.9_sigma_0.1_weight_decay_0.01'
+]
+
+# Output-permuted EMNIST
+[
+'logs/ex9_label_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+'logs/ex9_label_permuted_mnist/sgd/fully_connected_relu/lr_0.01_weight_decay_0.0001',
+'logs/ex9_label_permuted_mnist/pgd/fully_connected_relu/lr_0.01_sigma_0.005',
+'logs/ex9_label_permuted_mnist/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.01_weight_decay_0.001',
+'logs/ex9_label_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.0_beta2_0.9999_damping_1e-08',
+'logs/ex9_label_permuted_mnist/shrink_and_perturb/fully_connected_relu/lr_0.01_sigma_0.005_decay_0.001',
+
+'logs/ex9_label_permuted_mnist/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mnist/mas/fully_connected_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex7_label_permuted_mnist/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.9',
+'logs/ex7_label_permuted_mnist/si_new/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9_beta_importance_0.9'
+]
+
+# Output-permuted mini-ImageNet
+[
+'logs/ex9_label_permuted_mini_imagenet/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+'logs/ex9_label_permuted_mini_imagenet/sgd/fully_connected_relu/lr_0.01_weight_decay_0.001',
+'logs/ex9_label_permuted_mini_imagenet/pgd/fully_connected_relu/lr_0.01_sigma_0.005',
+'logs/ex9_label_permuted_mini_imagenet/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.0001',
+'logs/ex9_label_permuted_mini_imagenet/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.9_beta2_0.9999_damping_1e-08',
+'logs/ex9_label_permuted_mini_imagenet/shrink_and_perturb/fully_connected_relu/lr_0.01_sigma_0.005_decay_0.001',
+
+'logs/ex9_label_permuted_mini_imagenet/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mini_imagenet/mas/fully_connected_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.999',
+'logs/ex9_label_permuted_mini_imagenet/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.99',
+'logs/ex9_label_permuted_mini_imagenet/si_new/fully_connected_relu/lr_0.01_lamda_0.01_beta_weight_0.99_beta_importance_0.9',
+
+]
+
+
+# Story
+best_runs1 = ['logs/ex6_input_permuted_mnist_restarts/adam/fully_connected_relu/lr_0.0001_beta1_0.0_beta2_0.99_damping_1e-08']
+best_runs2 = ['logs/ex6_input_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.0_beta1_0.0_beta2_0.99_damping_1e-08', 
+               'logs/ex6_input_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.01']

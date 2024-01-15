@@ -1,0 +1,29 @@
+best_weight = [
+        'logs/ex9_label_permuted_mnist/sgd/fully_connected_relu/lr_0.01_weight_decay_0.0001',
+
+        'logs/ex9_label_permuted_mnist/pgd/fully_connected_relu/lr_0.01_sigma_0.005',
+        'logs/ex9_label_permuted_mnist/shrink_and_perturb/fully_connected_relu/lr_0.01_sigma_0.005_decay_0.001',
+        'logs/ex9_label_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+        'logs/ex9_label_permuted_mnist/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.01_weight_decay_0.001',
+
+        'logs/ex9_label_permuted_mnist/upgd_v2_fo_normal_normalized/fully_connected_relu/lr_0.01_beta_utility_0.99_sigma_0.01_weight_decay_0.0',
+        'logs/ex9_label_permuted_mnist/upgd_v1_fo_normal_normalized/fully_connected_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.001',
+
+        'logs/ex9_label_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.0_beta2_0.9999_damping_1e-08',
+
+        'logs/ex9_label_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+]
+
+
+best_feature = [
+        'logs/ex9_label_permuted_mnist/sgd/fully_connected_relu/lr_0.01_weight_decay_0.0001',
+        'logs/ex9_label_permuted_mnist/pgd/fully_connected_relu/lr_0.01_sigma_0.005',
+        'logs/ex9_label_permuted_mnist/shrink_and_perturb/fully_connected_relu/lr_0.01_sigma_0.005_decay_0.001',
+        'logs/ex9_label_permuted_mnist/feature_upgd_v2_fo_normal_max/fully_connected_relu_gates/lr_0.01_beta_utility_0.9999_sigma_0.01_weight_decay_0.001',
+        'logs/ex9_label_permuted_mnist/feature_upgd_v1_fo_normal_max/fully_connected_relu_gates/lr_0.01_beta_utility_0.99_sigma_0.1_weight_decay_0.001',
+        
+        'logs/ex9_label_permuted_mnist/feature_upgd_v2_fo_normal_normalized/fully_connected_relu_gates/lr_0.01_beta_utility_0.9999_sigma_0.01_weight_decay_0.001',
+        'logs/ex9_label_permuted_mnist/feature_upgd_v1_fo_normal_normalized/fully_connected_relu_gates/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.001',
+        'logs/ex9_label_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.0_beta2_0.9999_damping_1e-08',
+
+]
