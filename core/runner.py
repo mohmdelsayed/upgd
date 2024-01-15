@@ -30,5 +30,5 @@ class Runner:
         if not os.path.exists(dir):
             os.makedirs(dir)
 
-        with open(f"{dir}/{self.file_name}.txt", "w") as f:
+        with open(f"{dir}/{self.file_name}.txt", "a") as f:
             f.write(cmd)

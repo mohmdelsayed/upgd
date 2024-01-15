@@ -21,67 +21,62 @@ task = tasks[exp_name]()
 n_steps = 1000000
 n_seeds = 20
 
-# 'logs/ex9_label_permuted_mini_imagenet/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.999_beta_fisher_0.999',
+# 'logs/ex9_label_permuted_mini_imagenet/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
 
-ewc_grid = GridSearch(
+upgd_grid_no_decay = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
-               beta_weight=[0.999],
-               beta_fisher=[0.999],
-               lamda=[1.0],
+               beta_utility=[0.9],
+               sigma=[0.001],
+               weight_decay=[0.0],
                network=[FullyConnectedReLUWithHooks()],
                n_samples=[n_steps],
     )
 
-# 'logs/ex9_label_permuted_mini_imagenet/mas/fully_connected_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.999',
+# 'logs/ex9_label_permuted_mini_imagenet/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.0_weight_decay_0.0',
 
-mas_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.999],
-                beta_fisher=[0.999],
-                lamda=[10.0],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/si_new/fully_connected_relu/lr_0.01_lamda_0.01_beta_weight_0.99_beta_importance_0.9',
-
-si_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.99],
-                beta_importance=[0.9],
-                lamda=[0.01],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.99',
-
-ewc_plus_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.999],
-                beta_importance=[0.99],
-                lamda=[0.1],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
+upgd_grid_no_perturb = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               beta_utility=[0.9],
+               sigma=[0.0],
+               weight_decay=[0.0],
+               network=[FullyConnectedReLUWithHooks()],
+               n_samples=[n_steps],
     )
 
 
-grids = [
-        ewc_grid,
-        mas_grid,
-        si_grid,
-        ewc_plus_grid,
-]
+# 'logs/ex9_label_permuted_mini_imagenet/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.01_weight_decay_0.0'
+
+n_upgd_grid_no_decay = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               beta_utility=[0.9],
+               sigma=[0.01],
+               weight_decay=[0.0],
+               network=[FullyConnectedReLUWithHooks()],
+               n_samples=[n_steps],
+    )
+
+# 'logs/ex9_label_permuted_mini_imagenet/upgd_nonprotecting_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.99_sigma_0.0_weight_decay_0.001'
+
+n_upgd_grid_no_perturb = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               beta_utility=[0.99],
+               sigma=[0.0],
+               weight_decay=[0.001],
+               network=[FullyConnectedReLUWithHooks()],
+               n_samples=[n_steps],
+    )
+
+grids = [upgd_grid_no_decay, upgd_grid_no_perturb, n_upgd_grid_no_decay, n_upgd_grid_no_perturb]
 
 learners = [
-    OnlineEWCLearner(),
-    MASLearner(),
-    SynapticIntelligenceLearner(),
-    OnlineEWCLearnerPlus(),
+    FirstOrderGlobalUPGDLearner(),
+    FirstOrderGlobalUPGDLearner(),
+    FirstOrderNonprotectingGlobalUPGDLearner(),
+    FirstOrderNonprotectingGlobalUPGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):
