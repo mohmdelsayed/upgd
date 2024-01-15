@@ -1,0 +1,22 @@
+'logs/ex9_label_permuted_cifar10/sgd/convolutional_network_relu/lr_0.01_weight_decay_0.001',
+'logs/ex9_label_permuted_cifar10/pgd/convolutional_network_relu/lr_0.001_sigma_0.005',
+'logs/ex9_label_permuted_cifar10/shrink_and_perturb/convolutional_network_relu/lr_0.01_sigma_0.005_decay_0.001',
+'logs/ex9_label_permuted_cifar10/upgd_v2_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.001_weight_decay_0.0',
+'logs/ex9_label_permuted_cifar10/upgd_v1_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.99_sigma_0.01_weight_decay_0.001',
+'logs/ex9_label_permuted_cifar10/adam/convolutional_network_relu/lr_0.001_weight_decay_0.01_beta1_0.0_beta2_0.9999_damping_1e-08',
+'logs/ex9_label_permuted_cifar10/online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999'
+'logs/ex9_label_permuted_cifar10/noisy_online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999_sigma_0.01',
+'logs/ex9_label_permuted_cifar10/bgd/convolutional_network_relu/mean_eta_10.0_std_init_0.01_beta_0.0',
+'logs/ex9_label_permuted_cifar10/mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
+'logs/ex9_label_permuted_cifar10/noisy_mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999_sigma_0.01',
+'logs/ex9_label_permuted_cifar10/si/convolutional_network_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9',
+'logs/ex9_label_permuted_cifar10/noisy_si/convolutional_network_relu/lr_0.001_lamda_1.0_beta_weight_0.999_beta_importance_0.9_sigma_0.1'
+'logs/ex9_label_permuted_cifar10/online_ewc_plus/convolutional_network_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
+'logs/ex9_label_permuted_cifar10/noisy_online_ewc_plus/convolutional_network_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01'
+
+
+
+
+# correct plots
+'logs/ex8_label_permuted_cifar10/rwalk/convolutional_network_relu/lr_0.001_lamda_10.0_beta_weight_0.9999_beta_importance_0.9',
+'logs/ex8_label_permuted_cifar10/si_new/convolutional_network_relu/lr_0.001_lamda_0.01_beta_weight_0.99_beta_importance_0.99'

@@ -1,0 +1,12 @@
+# Weight Decay
+[
+'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.0',
+'logs/ex8_label_permuted_cifar10/upgd_nonprotecting_fo_global/convolutional_network_relu/lr_0.001_beta_utility_0.9999_sigma_0.001_weight_decay_0.0'
+]
+
+# Weight Perturbation
+
+[
+'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.0001',
+'logs/ex8_label_permuted_cifar10/upgd_nonprotecting_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.001'
+]
