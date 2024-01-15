@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+import re
 class BestRun:
     def __init__(self, task_name, metric, network_name, learners):
         self.task_name = task_name
@@ -17,6 +18,15 @@ class BestRun:
             configs = {}
             # loop over all hyperparameters configurations
             for subdirectory in subdirectories:
+                # if 'beta_weight_0.9999' in subdirectory:
+                #     continue
+                # pattern = r'(\w+)_([\d.]+)'
+                # matches = re.findall(pattern, subdirectory)
+                # result_dict = {key: float(value) for key, value in matches}
+                # # if not result_dict["_weight_decay"] == 0.0:
+                # if not result_dict["_sigma"] == 0.0:
+                if "beta_weight_0.9999" in subdirectory:
+                    continue
                 configs[subdirectory] = {}
                 seeds = os.listdir(f'{subdirectory}')
                 configuration_list = []

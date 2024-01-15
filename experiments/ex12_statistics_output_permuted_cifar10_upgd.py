@@ -21,66 +21,63 @@ task = tasks[exp_name]()
 n_steps = 1000000
 n_seeds = 20
 
-# 'logs/ex9_label_permuted_cifar10/online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
+# 'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.0',
 
-ewc_grid = GridSearch(
+upgd_grid_no_decay = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
-               beta_weight=[0.999],
-               beta_fisher=[0.9999],
-               lamda=[10.0],
+               beta_utility=[0.999],
+               sigma=[0.01],
+               weight_decay=[0.0],
                network=[ConvolutionalNetworkReLUWithHooks()],
                n_samples=[n_steps],
     )
 
-# 'logs/ex9_label_permuted_cifar10/mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
 
-mas_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.999],
-                beta_fisher=[0.9999],
-                lamda=[10.0],
-                network=[ConvolutionalNetworkReLUWithHooks()],
-                n_samples=[n_steps],
+# 'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.0001',
+
+upgd_grid_no_perturb = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               beta_utility=[0.999],
+               sigma=[0.0],
+               weight_decay=[0.0001],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
     )
 
-# 'logs/ex8_label_permuted_cifar10/si_new/convolutional_network_relu/lr_0.001_lamda_0.01_beta_weight_0.99_beta_importance_0.99',
 
-si_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
-                beta_weight=[0.99],
-                beta_importance=[0.99],
-                lamda=[0.01],
-                network=[ConvolutionalNetworkReLUWithHooks()],
-                n_samples=[n_steps],
+# 'logs/ex8_label_permuted_cifar10/upgd_nonprotecting_fo_global/convolutional_network_relu/lr_0.001_beta_utility_0.9999_sigma_0.001_weight_decay_0.0'
+
+n_upgd_grid_no_decay = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.001],
+               beta_utility=[0.9999],
+               sigma=[0.001],
+               weight_decay=[0.0],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
     )
 
-# 'logs/ex8_label_permuted_cifar10/rwalk/convolutional_network_relu/lr_0.001_lamda_10.0_beta_weight_0.999_beta_importance_0.9',
+# 'logs/ex8_label_permuted_cifar10/upgd_nonprotecting_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.001'
 
-ewc_plus_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.001],
-                beta_weight=[0.999],
-                beta_importance=[0.9],
-                lamda=[10.0],
-                network=[ConvolutionalNetworkReLUWithHooks()],
-                n_samples=[n_steps],
+n_upgd_grid_no_perturb = GridSearch(
+               seed=[i for i in range(0, n_seeds)],
+               lr=[0.01],
+               beta_utility=[0.999],
+               sigma=[0.0],
+               weight_decay=[0.001],
+               network=[ConvolutionalNetworkReLUWithHooks()],
+               n_samples=[n_steps],
     )
 
-grids = [
-        ewc_grid,
-        mas_grid,
-        si_grid,
-        ewc_plus_grid,
-]
+grids = [upgd_grid_no_decay, upgd_grid_no_perturb, n_upgd_grid_no_decay, n_upgd_grid_no_perturb]
 
 learners = [
-    OnlineEWCLearner(),
-    MASLearner(),
-    SynapticIntelligenceLearner(),
-    OnlineEWCLearnerPlus(),
+    FirstOrderGlobalUPGDLearner(),
+    FirstOrderGlobalUPGDLearner(),
+    FirstOrderNonprotectingGlobalUPGDLearner(),
+    FirstOrderNonprotectingGlobalUPGDLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

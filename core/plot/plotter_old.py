@@ -12,21 +12,29 @@ matplotlib.rcParams['text.usetex'] = True
 matplotlib.rcParams.update({'font.size': 18})
 
 class Plotter:
-    def __init__(self, best_runs_path, metric, avg_interval=4):
+    def __init__(self, best_runs_path, metric, avg_interval=10000):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
         self.metric = metric
+        self.n_tasks = 100
 
     def plot(self):
-        # what_to_plot = "losses"
+        # colors = [
+        #             'tab:red',
+        #             'tab:blue',
+        #             'tab:blue',
+        #             'tab:blue',
+        #             'tab:blue',
+        # ]
+        # styles = [
+        #             '-',
+        #             ':',
+        #             '--',
+        #             '-.',
+        #             '-',
+        # ]
         what_to_plot = "accuracies"
-        # what_to_plot = "plasticity_per_task"
-        # what_to_plot = "n_dead_units_per_task"
-        # what_to_plot = "grad_l0_per_task"
-        # what_to_plot = "grad_l1_per_task"
-        # what_to_plot = "grad_l2_per_task"
-        # what_to_plot = "weight_l1_per_task"
-        # what_to_plot = "weight_l2_per_task"
+        # for style, color, subdir in zip(styles, colors, self.best_runs_path):
         for subdir in self.best_runs_path:
             seeds = os.listdir(f'{subdir}')
             configuration_list = []
@@ -44,32 +52,21 @@ class Plotter:
             configuration_list = np.array(configuration_list).reshape(len(seeds), len(configuration_list[0]) // self.avg_interval, self.avg_interval).mean(axis=-1)
             mean_list = np.array(configuration_list).mean(axis=0)
             std_list = np.array(configuration_list).std(axis=0) / np.sqrt(len(seeds))
-            xs = [i * self.avg_interval  for i in range(len(mean_list))]
-            if learner_name == "bgd":
-                color = "black"
-                plt.plot(xs, mean_list, label=learner_name, linewidth=3, color=color)
-                plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1, color=color)
-            else:
-                plt.plot(xs, mean_list, label=learner_name, linewidth=3)
-                plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1)
+            xs = [i * 4 for i in range(self.n_tasks)]
+            # plt.plot(xs, mean_list, style, label=learner_name, linewidth=2, color=color)
+            # plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1, color=color)
+            plt.plot(xs, mean_list, label=learner_name, linewidth=2)
+            plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1)
         plt.xlabel(f"Task Number", fontsize=24)
         if self.metric == "accuracy":
-            # plt.ylabel("Average Online Loss", fontsize=24)
             plt.ylabel("Average Online Accuracy", fontsize=24)
-            # plt.ylabel("Average Online Plasticity", fontsize=24)
-            # plt.ylabel("\% of Zero Activations", fontsize=24)
-            # plt.ylabel(r"$\ell_0$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_1$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_2$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_1$ Norm of Weights", fontsize=24)
-            # plt.ylabel(r"$\ell_2$ Norm of Weights", fontsize=24)
         elif self.metric == "loss":
             plt.ylabel("Loss")
         else:
             raise Exception("metric must be loss or accuracy")
         # plt.legend()
         # for input-permuted mnist
-        # plt.ylim(bottom=0.68, top=0.80)
+        # plt.ylim(bottom=0.68, top=0.79)
         # plt.ylim(bottom=0.27, top=0.51)
 
         # for output-permuted emnist
@@ -86,9 +83,10 @@ class Plotter:
         # for l0 norm:
         # plt.ylim(bottom=0.0)
 
+
         # plt.ylim(bottom=.64, top=0.97)
 
-        plt.savefig(f"{what_to_plot}.pdf", bbox_inches='tight')
+        plt.savefig("ss.pdf", bbox_inches='tight')
         plt.clf()
 
     def plot_1st_n_tasks(self, n_tasks=5):
@@ -159,18 +157,32 @@ class Plotter:
 
 
 if __name__ == "__main__":
-    best_runs1 = BestRun("ex8_label_permuted_cifar10", "area", "convolutional_network_relu_with_hooks", [
-                                                                                                 "upgd_fo_global",
-                                                                                                 "sgd", 
-                                                                                                 "pgd",
-                                                                                                 "adam",
-                                                                                                 "upgd_nonprotecting_fo_global", 
-                                                                                                 "shrink_and_perturb",
-                                                                                                 "online_ewc",
-                                                                                                 "mas",
-                                                                                                 "si_new",
-                                                                                                 "rwalk",
-                                                                                                 ]).get_best_run(measure="accuracies")
+
+    best_runs1 = [
+        # 'logs/ex9_label_permuted_cifar10/upgd_v2_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.001_weight_decay_0.0',
+        'logs/ex9_label_permuted_cifar10/upgd_v2_fo_normal_normalized/convolutional_network_relu/lr_0.01_beta_utility_0.9999_sigma_0.001_weight_decay_0.0',
+        'logs/ex9_label_permuted_cifar10/sgd/convolutional_network_relu/lr_0.01_weight_decay_0.001',
+        'logs/ex9_label_permuted_cifar10/pgd/convolutional_network_relu/lr_0.001_sigma_0.005',
+        'logs/ex9_label_permuted_cifar10/adam/convolutional_network_relu/lr_0.001_weight_decay_0.01_beta1_0.0_beta2_0.9999_damping_1e-08',
+        # 'logs/ex9_label_permuted_cifar10/upgd_v1_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.99_sigma_0.01_weight_decay_0.001',
+        'logs/ex9_label_permuted_cifar10/upgd_v1_fo_normal_normalized/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.001', 
+        'logs/ex9_label_permuted_cifar10/shrink_and_perturb/convolutional_network_relu/lr_0.01_sigma_0.005_decay_0.001',
+
+        'logs/ex9_label_permuted_cifar10/online_ewc/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
+        'logs/ex9_label_permuted_cifar10/mas/convolutional_network_relu/lr_0.01_lamda_10.0_beta_weight_0.999_beta_fisher_0.9999',
+        'logs/ex8_label_permuted_cifar10/si_new/convolutional_network_relu/lr_0.001_lamda_0.01_beta_weight_0.99_beta_importance_0.99',
+        'logs/ex8_label_permuted_cifar10/rwalk/convolutional_network_relu/lr_0.001_lamda_10.0_beta_weight_0.999_beta_importance_0.9',
+    ]
+
+
+
+    # ablation = [
+    #         'logs/ex9_label_permuted_cifar10/sgd/convolutional_network_relu/lr_0.001',
+    #         'logs/ex9_label_permuted_cifar10/sgd/convolutional_network_relu/lr_0.01_weight_decay_0.001',
+    #         'logs/ex9_label_permuted_cifar10/pgd/convolutional_network_relu/lr_0.001_sigma_0.005',
+    #         'logs/ex9_label_permuted_cifar10/shrink_and_perturb/convolutional_network_relu/lr_0.01_sigma_0.005_decay_0.001',
+    #         'logs/ex9_label_permuted_cifar10/upgd_v2_fo_normal_max/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.001_weight_decay_0.0',
+    # ]
 
 
     print(best_runs1)

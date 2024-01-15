@@ -12,10 +12,11 @@ matplotlib.rcParams['text.usetex'] = True
 matplotlib.rcParams.update({'font.size': 18})
 
 class Plotter:
-    def __init__(self, best_runs_path, metric, avg_interval=4):
+    def __init__(self, best_runs_path, metric, avg_interval=10000):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
         self.metric = metric
+        self.n_tasks = 100
 
     def plot(self):
         # what_to_plot = "losses"
@@ -44,25 +45,21 @@ class Plotter:
             configuration_list = np.array(configuration_list).reshape(len(seeds), len(configuration_list[0]) // self.avg_interval, self.avg_interval).mean(axis=-1)
             mean_list = np.array(configuration_list).mean(axis=0)
             std_list = np.array(configuration_list).std(axis=0) / np.sqrt(len(seeds))
-            xs = [i * self.avg_interval  for i in range(len(mean_list))]
-            if learner_name == "bgd":
-                color = "black"
-                plt.plot(xs, mean_list, label=learner_name, linewidth=3, color=color)
-                plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1, color=color)
-            else:
-                plt.plot(xs, mean_list, label=learner_name, linewidth=3)
-                plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1)
-        plt.xlabel(f"Task Number", fontsize=24)
+            # xs = [i * self.avg_interval  for i in range(len(mean_list))]
+            xs = [i * 4 for i in range(self.n_tasks)]
+            plt.plot(xs, mean_list, label=learner_name, linewidth=2)
+            plt.fill_between(xs, mean_list - std_list, mean_list + std_list, alpha=0.1)
+        plt.xlabel(f"Task Number", fontsize=22)
         if self.metric == "accuracy":
-            # plt.ylabel("Average Online Loss", fontsize=24)
-            plt.ylabel("Average Online Accuracy", fontsize=24)
-            # plt.ylabel("Average Online Plasticity", fontsize=24)
-            # plt.ylabel("\% of Zero Activations", fontsize=24)
-            # plt.ylabel(r"$\ell_0$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_1$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_2$ Norm of Gradients", fontsize=24)
-            # plt.ylabel(r"$\ell_1$ Norm of Weights", fontsize=24)
-            # plt.ylabel(r"$\ell_2$ Norm of Weights", fontsize=24)
+            # plt.ylabel("Averaged Online Loss", fontsize=22)
+            plt.ylabel("Averaged Online Accuracy", fontsize=22)
+            # plt.ylabel("Averaged Plasticity", fontsize=22)
+            # plt.ylabel("% of Zero Activations", fontsize=22)
+            # plt.ylabel(r"$\ell_0$ Norm of Gradients", fontsize=22)
+            # plt.ylabel(r"$\ell_1$ Norm of Gradients", fontsize=22)
+            # plt.ylabel(r"$\ell_2$ Norm of Gradients", fontsize=22)
+            # plt.ylabel(r"$\ell_1$ Norm of Weights", fontsize=22)
+            # plt.ylabel(r"$\ell_2$ Norm of Weights", fontsize=22)
         elif self.metric == "loss":
             plt.ylabel("Loss")
         else:
@@ -86,9 +83,10 @@ class Plotter:
         # for l0 norm:
         # plt.ylim(bottom=0.0)
 
+
         # plt.ylim(bottom=.64, top=0.97)
 
-        plt.savefig(f"{what_to_plot}.pdf", bbox_inches='tight')
+        plt.savefig("ss.pdf", bbox_inches='tight')
         plt.clf()
 
     def plot_1st_n_tasks(self, n_tasks=5):
@@ -159,18 +157,19 @@ class Plotter:
 
 
 if __name__ == "__main__":
-    best_runs1 = BestRun("ex8_label_permuted_cifar10", "area", "convolutional_network_relu_with_hooks", [
-                                                                                                 "upgd_fo_global",
-                                                                                                 "sgd", 
-                                                                                                 "pgd",
-                                                                                                 "adam",
-                                                                                                 "upgd_nonprotecting_fo_global", 
-                                                                                                 "shrink_and_perturb",
-                                                                                                 "online_ewc",
-                                                                                                 "mas",
-                                                                                                 "si_new",
-                                                                                                 "rwalk",
-                                                                                                 ]).get_best_run(measure="accuracies")
+
+    # best_runs1 = BestRun("ex8_label_permuted_cifar10", "area", "convolutional_network_relu", [
+    #                                                                                             "upgd_fo_global",
+    #                                                                                             "upgd_nonprotecting_fo_global",
+    #                                                                                              ]).get_best_run(measure="accuracies")
+
+    best_runs1 = [
+    'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.0',
+    'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.0_weight_decay_0.0001',
+    'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu/lr_0.01_beta_utility_0.999_sigma_0.01_weight_decay_0.0',
+    'logs/ex8_label_permuted_cifar10/upgd_fo_global/convolutional_network_relu_with_hooks/lr_0.01_beta_utility_0.999_sigma_0.001_weight_decay_0.0',
+
+    ]
 
 
     print(best_runs1)
