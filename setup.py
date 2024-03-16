@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="UPGD",
     version="1.0.0",
-    description="Continual Perturbation with Utility Propagation",
+    description="Addressing Loss of Plasticity and Catastrophic Forgetting in Neural Networks",
     url="https://github.com/mohmdelsayed",
     author="Mohamed Elsayed",
     author_email="mohamedelsayed@ualberta.ca",
