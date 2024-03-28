@@ -1,7 +1,6 @@
 import os
 import json
 import numpy as np
-
 class BestRun:
     def __init__(self, task_name, metric, network_name, learners):
         self.task_name = task_name
