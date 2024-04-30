@@ -131,4 +131,4 @@ plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
 
 plt.savefig('heat_map.pdf', bbox_inches='tight')
 # Show the plot
-plt.show()
+# plt.show()

@@ -2,20 +2,20 @@ from torch.optim.optimizer import Optimizer
 import torch, math
 
 
-class ExtendedAdam(Optimizer):
+class Adam(Optimizer):
     def __init__(
         self,
         params,
         lr=0.15,
         beta1=0.9,
         beta2=0.999,
-        damping=1e-8,
+        eps=1e-8,
         weight_decay=0.0,
     ):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))
-        if not 0.0 <= damping:
-            raise ValueError("Invalid damping value: {}".format(damping))
+        if not 0.0 <= eps:
+            raise ValueError("Invalid eps value: {}".format(eps))
         if not 0.0 <= beta1 < 1.0:
             raise ValueError("Invalid beta parameter at index 0: {}".format(beta1))
         if not 0.0 <= beta2 < 1.0:
@@ -24,12 +24,12 @@ class ExtendedAdam(Optimizer):
         names, params = zip(*params)
         
         defaults = dict(
-            lr=lr, beta1=beta1, beta2=beta2, damping=damping, weight_decay=weight_decay, names=names
+            lr=lr, beta1=beta1, beta2=beta2, eps=eps, weight_decay=weight_decay, names=names
         )
 
-        super(ExtendedAdam, self).__init__(params, defaults)
+        super(Adam, self).__init__(params, defaults)
 
-    def step(self, loss):
+    def step(self):
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:
@@ -61,7 +61,7 @@ class ExtendedAdam(Optimizer):
                 bias_correction2 = 1 - beta2 ** state["step"]
 
                 denom = ((exp_avg_sq.sqrt()) / math.sqrt(bias_correction2)).add_(
-                    group["damping"]
+                    group["eps"]
                 )
 
                 step_size = group["lr"] / bias_correction1

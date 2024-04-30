@@ -1,8 +1,7 @@
 from core.task.stationary_mnist import StationaryMNIST
-from core.task.label_permuted_mnist import LabelPermutedMNIST
+from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.label_permuted_mnist_offline import LabelPermutedMNISTOffline
 from core.task.label_permuted_cifar10 import LabelPermutedCIFAR10
-from core.task.label_permuted_cifar10_offline import LabelPermutedCIFAR10Offline
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
@@ -16,23 +15,16 @@ from core.network.fcn_tanh import FullyConnectedTanh, SmallFullyConnectedTanh, F
 from core.network.fcn_linear import FullyConnectedLinear, FullyConnectedLinearGates, LinearLayer, SmallFullyConnectedLinear, SmallFullyConnectedLinearGates
 
 from core.learner.sgd import SGDLearner, SGDLearnerWithHesScale
-from core.learner.anti_pgd import AntiPGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.adam import AdamLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
-from core.learner.online_ewc import OnlineEWCLearner, NoisyOnlineEWCLearner
-from core.learner.online_ewc_plus import OnlineEWCLearnerPlus, NoisyOnlineEWCLearnerPlus
-from core.learner.bgd import BGDLearner
-from core.learner.mas import MASLearner, NoisyMASLearner
-from core.learner.synaptic_intelligence import SynapticIntelligenceLearner, NoisySynapticIntelligenceLearner
+from core.learner.ewc import EWCLearner
+from core.learner.rwalk import RWalkLearner
+from core.learner.mas import MASLearner
+from core.learner.synaptic_intelligence import SynapticIntelligenceLearner
 
-from core.learner.weight.upgd import FirstOrderLocalUPGDLearner, SecondOrderLocalUPGDLearner, FirstOrderNonprotectingLocalUPGDLearner, SecondOrderNonprotectingLocalUPGDLearner, FirstOrderGlobalUPGDLearner, SecondOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner, SecondOrderNonprotectingGlobalUPGDLearner
-from core.learner.weight.search import FirstOrderSearchLocalUncorrelatedLearner, SecondOrderSearchLocalUncorrelatedLearner, FirstOrderSearchLocalAnticorrelatedLearner, SecondOrderSearchLocalAnticorrelatedLearner, FirstOrderSearchGlobalUncorrelatedLearner, SecondOrderSearchGlobalUncorrelatedLearner, FirstOrderSearchGlobalAnticorrelatedLearner, SecondOrderSearchGlobalAnticorrelatedLearner
-from core.learner.weight.random import RandomSearchUncorrelatedLearner, RandomSearchAnticorrelatedLearner
-
-from core.learner.feature.upgd import FeatureFirstOrderNonprotectingLocalUPGDLearner, FeatureFirstOrderLocalUPGDLearner, FeatureFirstOrderGlobalUPGDLearner, FeatureFirstOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderGlobalUPGDLearner, FeatureSecondOrderNonprotectingLocalUPGDLearner, FeatureSecondOrderLocalUPGDLearner
-from core.learner.feature.search import FeatureFirstOrderSearchLocalAnticorrelatedLearner, FeatureFirstOrderSearchLocalUncorrelatedLearner, FeatureFirstOrderSearchGlobalAnticorrelatedLearner, FeatureFirstOrderSearchGlobalUncorrelatedLearner, FeatureSecondOrderSearchLocalAnticorrelatedLearner, FeatureSecondOrderSearchLocalUncorrelatedLearner, FeatureSecondOrderSearchGlobalAnticorrelatedLearner, FeatureSecondOrderSearchGlobalUncorrelatedLearner
-from core.learner.feature.random import FeatureRandomSearchUncorrelatedLearner, FeatureRandomSearchAnticorrelatedLearner
+from core.learner.weight_upgd import FirstOrderLocalUPGDLearner, SecondOrderLocalUPGDLearner, FirstOrderNonprotectingLocalUPGDLearner, SecondOrderNonprotectingLocalUPGDLearner, FirstOrderGlobalUPGDLearner, SecondOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner, SecondOrderNonprotectingGlobalUPGDLearner
+from core.learner.feature_upgd import FeatureFirstOrderNonprotectingLocalUPGDLearner, FeatureFirstOrderLocalUPGDLearner, FeatureFirstOrderGlobalUPGDLearner, FeatureFirstOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderNonprotectingGlobalUPGDLearner, FeatureSecondOrderGlobalUPGDLearner, FeatureSecondOrderNonprotectingLocalUPGDLearner, FeatureSecondOrderLocalUPGDLearner
 
 from core.utilities.weight.fo_utility import FirstOrderUtility
 from core.utilities.weight.so_utility import SecondOrderUtility
@@ -63,10 +55,9 @@ tasks = {
     "ex6_input_permuted_mnist": InputPermutedMNIST,
     "ex6_input_permuted_mnist_restarts": InputPermutedMNISTRestarts,
 
-    "ex7_label_permuted_mnist" : LabelPermutedMNIST,
-    "ex7_label_permuted_mnist_offline" : LabelPermutedMNISTOffline,
+    "ex7_label_permuted_emnist" : LabelPermutedEMNIST,
+    "ex7_label_permuted_emnist_offline" : LabelPermutedMNISTOffline,
     "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
-    "ex8_label_permuted_cifar10_offline" : LabelPermutedCIFAR10Offline,
     "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 
 }
@@ -97,20 +88,13 @@ networks = {
 learners = {
     "sgd": SGDLearner,
     "sgd_with_hesscale": SGDLearnerWithHesScale,
-    "anti_pgd": AntiPGDLearner,
     "pgd": PGDLearner,
     "adam": AdamLearner,
     "shrink_and_perturb": ShrinkandPerturbLearner,
-    "online_ewc": OnlineEWCLearner,
-    "noisy_online_ewc": NoisyOnlineEWCLearner,
-    "rwalk": OnlineEWCLearnerPlus,
-    "noisy_online_ewc_plus": NoisyOnlineEWCLearnerPlus,
-    "bgd": BGDLearner,
-    "noisy_mas": NoisyMASLearner,
+    "ewc": EWCLearner,
+    "rwalk": RWalkLearner,
     "mas": MASLearner,
-    "noisy_mas": NoisyMASLearner,
-    "si_new": SynapticIntelligenceLearner,
-    "noisy_si": NoisySynapticIntelligenceLearner,
+    "si": SynapticIntelligenceLearner,
 
     "upgd_fo_local": FirstOrderLocalUPGDLearner,
     "upgd_so_local": SecondOrderLocalUPGDLearner,
@@ -121,45 +105,16 @@ learners = {
     "upgd_nonprotecting_fo_global": FirstOrderNonprotectingGlobalUPGDLearner,
     "upgd_nonprotecting_so_global": SecondOrderNonprotectingGlobalUPGDLearner,
 
-    "search_fo_anti_corr_local": FirstOrderSearchLocalAnticorrelatedLearner,
-    "search_so_anti_corr_local": SecondOrderSearchLocalAnticorrelatedLearner,
-    "search_fo_anti_corr_global": FirstOrderSearchGlobalAnticorrelatedLearner,
-    "search_so_anti_corr_global": SecondOrderSearchGlobalAnticorrelatedLearner,
-
-    "search_fo_uncorr_local": FirstOrderSearchLocalUncorrelatedLearner,
-    "search_so_uncorr_local": SecondOrderSearchLocalUncorrelatedLearner,
-    "search_fo_uncorr_global": FirstOrderSearchGlobalUncorrelatedLearner,
-    "search_so_uncorr_global": SecondOrderSearchGlobalUncorrelatedLearner,
-
     "feature_upgd_fo_local": FeatureFirstOrderLocalUPGDLearner,
     "feature_upgd_nonprotecting_fo_local": FeatureFirstOrderNonprotectingLocalUPGDLearner,
     "feature_upgd_fo_global": FeatureFirstOrderGlobalUPGDLearner,
     "feature_upgd_nonprotecting_fo_global": FeatureFirstOrderNonprotectingGlobalUPGDLearner,
 
-
-    "feature_search_fo_anti_corr_local": FeatureFirstOrderSearchLocalAnticorrelatedLearner,
-    "feature_search_fo_anti_corr_global": FeatureFirstOrderSearchGlobalAnticorrelatedLearner,
-
-    "feature_search_fo_uncorr_local": FeatureFirstOrderSearchLocalUncorrelatedLearner,
-    "feature_search_fo_uncorr_global": FeatureFirstOrderSearchGlobalUncorrelatedLearner,
-
     "feature_upgd_so_local": FeatureSecondOrderLocalUPGDLearner,
     "feature_upgd_nonprotecting_so_local": FeatureSecondOrderNonprotectingLocalUPGDLearner,
     "feature_upgd_so_global": FeatureSecondOrderGlobalUPGDLearner,
     "feature_upgd_nonprotecting_so_global": FeatureSecondOrderNonprotectingGlobalUPGDLearner,
-    
 
-    "feature_search_so_anti_corr_local": FeatureSecondOrderSearchLocalAnticorrelatedLearner,
-    "feature_search_so_anti_corr_global": FeatureSecondOrderSearchGlobalAnticorrelatedLearner,
-
-    "feature_search_so_uncorr_local": FeatureSecondOrderSearchLocalUncorrelatedLearner,
-    "feature_search_so_uncorr_global": FeatureSecondOrderSearchGlobalUncorrelatedLearner,
-
-    "random_search_uncorr": RandomSearchUncorrelatedLearner,
-    "random_search_anti_corr": RandomSearchAnticorrelatedLearner,
-
-    "feature_random_search_uncorr": FeatureRandomSearchUncorrelatedLearner,
-    "feature_random_search_anti_corr": FeatureRandomSearchAnticorrelatedLearner,
 }
 
 criterions = {
@@ -277,10 +232,10 @@ echo \"#SBATCH --array=1-240\" >> ${{f%.*}}.sh
 echo -e \"#SBATCH --account=def-ashique\" >> ${{f%.*}}.sh
 
 echo "cd \"../../\"" >> ${{f%.*}}.sh
-echo \"FILE=\\"\$SCRATCH/GT-learners/generated_cmds/{exp_name}/${{f%.*}}.txt\\"\"  >> ${{f%.*}}.sh
+echo \"FILE=\\"\$SCRATCH/upgd/generated_cmds/{exp_name}/${{f%.*}}.txt\\"\"  >> ${{f%.*}}.sh
 echo \"SCRIPT=\$(sed -n \\"\${{SLURM_ARRAY_TASK_ID}}p\\" \$FILE)\"  >> ${{f%.*}}.sh
 echo \"module load python/3.7.9\" >> ${{f%.*}}.sh
-echo \"source \$SCRATCH/GT-learners/.gt-learners/bin/activate\" >> ${{f%.*}}.sh
+echo \"source \$SCRATCH/upgd/.upgd/bin/activate\" >> ${{f%.*}}.sh
 echo \"srun \$SCRIPT\" >> ${{f%.*}}.sh
 done'''
 

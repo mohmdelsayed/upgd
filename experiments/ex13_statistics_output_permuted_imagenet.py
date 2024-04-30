@@ -1,14 +1,13 @@
 from core.grid_search import GridSearch
-from core.learner.weight.upgd import FirstOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner
+from core.learner.weight_upgd import FirstOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner
 from core.learner.sgd import SGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
 from core.learner.adam import AdamLearner
-from core.learner.bgd import BGDLearner
-from core.learner.online_ewc import OnlineEWCLearner, NoisyOnlineEWCLearner
-from core.learner.online_ewc_plus import OnlineEWCLearnerPlus, NoisyOnlineEWCLearnerPlus
-from core.learner.synaptic_intelligence import SynapticIntelligenceLearner, NoisySynapticIntelligenceLearner 
-from core.learner.mas import MASLearner, NoisyMASLearner
+from core.learner.ewc import EWCLearner
+from core.learner.rwalk import RWalkLearner
+from core.learner.synaptic_intelligence import SynapticIntelligenceLearner 
+from core.learner.mas import MASLearner
 
 from core.network.fcn_relu import FullyConnectedReLUWithHooks
 from core.runner import Runner
@@ -82,12 +81,12 @@ adam_grid = GridSearch(
                weight_decay=[0.1],
                beta1=[0.9],
                beta2=[0.9999],
-               damping=[1e-8],
+               eps=[1e-8],
                network=[FullyConnectedReLUWithHooks()],
                n_samples=[n_steps],
     )
 
-# 'logs/ex9_label_permuted_mini_imagenet/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.9_beta2_0.9999_damping_1e-08',
+# 'logs/ex9_label_permuted_mini_imagenet/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.9_beta2_0.9999_eps_1e-08',
 
 ewc_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
@@ -101,19 +100,6 @@ ewc_grid = GridSearch(
 
 # 'logs/ex9_label_permuted_mini_imagenet/online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999'
 
-noisy_ewc_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.9999],
-                beta_fisher=[0.999],
-                lamda=[1.0],
-                sigma=[0.01],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/noisy_online_ewc/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999_sigma_0.01',
-
 mas_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.01],
@@ -125,19 +111,6 @@ mas_grid = GridSearch(
     )
 
 # 'logs/ex9_label_permuted_mini_imagenet/mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999',
-
-noisy_mas_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.9999],
-                beta_fisher=[0.999],
-                lamda=[1.0],
-                sigma=[0.01],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/noisy_mas/fully_connected_relu/lr_0.01_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999_sigma_0.01',
 
 si_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
@@ -151,31 +124,7 @@ si_grid = GridSearch(
 
 # 'logs/ex9_label_permuted_mini_imagenet/si/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.999_beta_importance_0.999',
 
-noisy_si_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.9999],
-                beta_importance=[0.999],
-                lamda=[0.1],
-                sigma=[0.01],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/noisy_si/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01',
-
-bgd_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                mean_eta=[100.0],
-                std_init=[0.01],
-                beta=[0.0],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/bgd/fully_connected_relu/mean_eta_100.0_std_init_0.01_beta_0.0',
-
-ewc_plus_grid = GridSearch(
+rwalk_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.01],
                 beta_weight=[0.9999],
@@ -185,20 +134,7 @@ ewc_plus_grid = GridSearch(
                 n_samples=[n_steps],
     )
 
-# 'logs/ex9_label_permuted_mini_imagenet/online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
-
-noisy_ewc_plus_grid = GridSearch(
-                seed=[i for i in range(0, n_seeds)],
-                lr=[0.01],
-                beta_weight=[0.9999],
-                beta_importance=[0.999],
-                lamda=[0.1],
-                sigma=[0.01],
-                network=[FullyConnectedReLUWithHooks()],
-                n_samples=[n_steps],
-    )
-
-# 'logs/ex9_label_permuted_mini_imagenet/noisy_online_ewc_plus/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999_sigma_0.01',
+# 'logs/ex9_label_permuted_mini_imagenet/rwalk/fully_connected_relu/lr_0.01_lamda_0.1_beta_weight_0.9999_beta_importance_0.999',
 
 grids = [
          upgd1_grid,
@@ -208,14 +144,9 @@ grids = [
          sp_grid,
          adam_grid,
          ewc_grid,
-         noisy_ewc_grid,
          mas_grid,
-         noisy_mas_grid,
          si_grid,
-         noisy_si_grid,
-         bgd_grid,
-         ewc_plus_grid,
-         noisy_ewc_plus_grid
+         rwalk_grid,
 ]
 
 learners = [
@@ -225,15 +156,10 @@ learners = [
     SGDLearner(),
     ShrinkandPerturbLearner(),
     AdamLearner(),
-    OnlineEWCLearner(),
-    NoisyOnlineEWCLearner(),
+    EWCLearner(),
     MASLearner(),
-    NoisyMASLearner(),
     SynapticIntelligenceLearner(),
-    NoisySynapticIntelligenceLearner(),
-    BGDLearner(),
-    OnlineEWCLearnerPlus(),
-    NoisyOnlineEWCLearnerPlus(),
+    RWalkLearner(),
 ]
 
 for learner, grid in zip(learners, grids):

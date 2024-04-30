@@ -56,7 +56,7 @@ class RunWithRestarts:
                     loss.backward()
             else:
                 loss.backward()
-            optimizer.step(loss)
+            optimizer.step()
             if done:
                 for m in self.learner.network.modules():
                     if isinstance(m, nn.Linear):

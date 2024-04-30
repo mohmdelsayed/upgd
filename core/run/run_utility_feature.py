@@ -62,7 +62,7 @@ class FeatureRunUtility(Run):
                     loss.backward()
             else:
                 loss.backward()
-            optimizer.step(loss)
+            optimizer.step()
             losses_per_step_size.append(loss.item())
 
             oracle_util = oracle_factory.compute_utility(loss, input, target) 

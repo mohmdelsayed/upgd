@@ -1,13 +1,13 @@
 import torch
 
 
-class ExtendedPGD(torch.optim.Optimizer):
+class PGD(torch.optim.Optimizer):
     def __init__(self, params, lr=1e-5, sigma=1.0):
         names, params = zip(*params)
         defaults = dict(lr=lr, sigma=sigma, names=names)
-        super(ExtendedPGD, self).__init__(params, defaults)
+        super(PGD, self).__init__(params, defaults)
 
-    def step(self, loss):
+    def step(self):
         for group in self.param_groups:
             for name, p in zip(group["names"], group["params"]):
                 if 'gate' in name:

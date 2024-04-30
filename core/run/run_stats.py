@@ -75,7 +75,7 @@ class RunStats:
                     loss.backward()
             else:
                 loss.backward()
-            optimizer.step(loss)
+            optimizer.step()
             losses_per_step.append(loss.item())
             if self.task.criterion == 'cross_entropy':
                 accuracy_per_step.append((output.argmax(dim=1) == target).float().mean().item())

@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.weight.upgd import (
+from core.learner.weight_upgd import (
     FirstOrderLocalUPGDLearner,
     SecondOrderLocalUPGDLearner,
     FirstOrderNonprotectingLocalUPGDLearner,
@@ -10,7 +10,7 @@ from core.learner.weight.upgd import (
     SecondOrderNonprotectingGlobalUPGDLearner,
 )
 
-from core.learner.feature.upgd import (
+from core.learner.feature_upgd import (
     FeatureFirstOrderLocalUPGDLearner,
     FeatureSecondOrderLocalUPGDLearner,
     FeatureFirstOrderNonprotectingLocalUPGDLearner,
@@ -31,48 +31,50 @@ from core.utils import create_script_generator, create_script_runner, tasks
 
 exp_name = "ex3_toy_changing_inputset"
 task = tasks[exp_name]()
+n_steps = 1000000
+n_seeds = 20
 
 up_grids = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(1, 5)],
                beta_utility=[0.0, 0.9, 0.99, 0.999],
                sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
                network=[FullyConnectedLinear()],
-               n_samples=[1000000],
+               n_samples=[n_steps],
     )
 
 feature_up_grids = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(1, 5)],
                beta_utility=[0.0, 0.9, 0.99, 0.999],
                sigma=[0.0001, 0.001, 0.01, 0.1, 1.0],
                network=[FullyConnectedLinearGates()],
-               n_samples=[1000000],
+               n_samples=[n_steps],
     )
 
 pgd_grids = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(1, 5)],
                sigma=[0.00005, 0.0005, 0.005, 0.05, 0.5],
                network=[FullyConnectedLinear()],
-               n_samples=[1000000],
+               n_samples=[n_steps],
     )
 
 
 sgd_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(1, 5)],
                network=[FullyConnectedLinear(), LinearLayer()],
-               n_samples=[1000000],
+               n_samples=[n_steps],
     )
 
 sp_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(1, 5)],
                decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.00005, 0.0005, 0.005, 0.05, 0.5],
                network=[FullyConnectedLinear()],
-               n_samples=[1000000],
+               n_samples=[n_steps],
     )
 
 grids =   [feature_up_grids for _ in range(8)] +  [up_grids for _ in range(8)] + [sgd_grid] + [pgd_grids] + [sp_grid]
