@@ -1,9 +1,44 @@
-# Addressing Loss of Plasticity and Catastrophic Forgetting in Neural Networks
+# Addressing Loss of Plasticity and Catastrophic Forgetting in Continual Learning
 
-The official repo for reproducing the experiments. You can find the paper from [here](https://openreview.net/forum?id=sKPzAXoylB). If you want to check the implementation for UPGD go [here](https://github.com/mohmdelsayed/upgd/blob/main/core/optim/weight/upgd/first_order.py#L74).
+The official repo for reproducing the experiments and UPGD implementation. You can find the paper from [here](https://openreview.net/forum?id=sKPzAXoylB). Here, we provide a minimal implementation of UPGD.
 
-## Installation:
-#### 1. You need to have environemnt with python 3.7:
+```python
+import torch
+
+class UPGD(torch.optim.Optimizer):
+    def __init__(self, params, lr=1e-5, weight_decay=0.001, beta_utility=0.999, sigma=0.001):
+        defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma)
+        super(UPGD, self).__init__(params, defaults)
+    def step(self):
+        global_max_util = torch.tensor(-torch.inf)
+        for group in self.param_groups:
+            for p in group["params"]:
+                state = self.state[p]
+                if len(state) == 0:
+                    state["step"] = 0
+                    state["avg_utility"] = torch.zeros_like(p.data)
+                state["step"] += 1
+                avg_utility = state["avg_utility"]
+                avg_utility.mul_(group["beta_utility"]).add_(
+                    -p.grad.data * p.data, alpha=1 - group["beta_utility"]
+                )
+                current_util_max = avg_utility.max()
+                if current_util_max > global_max_util:
+                    global_max_util = current_util_max
+        for group in self.param_groups:
+            for p in group["params"]:
+                state = self.state[p]
+                bias_correction_utility = 1 - group["beta_utility"] ** state["step"]
+                noise = torch.randn_like(p.grad) * group["sigma"]
+                scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction_utility) / global_max_util)
+                p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
+                    (p.grad.data + noise) * (1-scaled_utility),
+                    alpha=-2.0*group["lr"],
+                )
+```
+
+## Reproducing the results:
+#### 1. You need to have an environment with python 3.7:
 ``` sh
 git clone  --recursive git@github.com:mohmdelsayed/upgd.git
 python3.7 -m venv .upgd
@@ -21,4 +56,5 @@ pip install .
 TBD
 
 ## How to cite
-Elsayed, M., & Mahmood, A. R. (2023). Addressing Loss of Plasticity and Catastrophic Forgetting in Neural Networks. <em>In Proceedings of the 12th International Conference on Learning Representations (ICLR)</em>.
+
+Elsayed, M., Mahmood, A. R. (2024). Addressing loss of plasticity and catastrophic forgetting in continual learning. <em>In Proceedings of International Conference on Learning Representations</em>
