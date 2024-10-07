@@ -1,12 +1,9 @@
-from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.label_permuted_mnist_offline import LabelPermutedMNISTOffline
 from core.task.label_permuted_cifar10 import LabelPermutedCIFAR10
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.input_permuted_mnist_restarts import InputPermutedMNISTRestarts
-from core.task.changing_average import ChangingAverage
-from core.task.permuted_average import PermutedAverage
 from core.task.utility_task import UtilityTask
 
 from core.network.fcn_leakyrelu import FullyConnectedLeakyReLU, SmallFullyConnectedLeakyReLU, FullyConnectedLeakyReLUGates, SmallFullyConnectedLeakyReLUGates
