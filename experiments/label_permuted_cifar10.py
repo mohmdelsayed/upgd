@@ -1,12 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.weight_upgd import (
-    FirstOrderLocalUPGDLearner,
-    FirstOrderNonprotectingLocalUPGDLearner,
-    FirstOrderGlobalUPGDLearner,
-    FirstOrderNonprotectingGlobalUPGDLearner,
-)
-
-
+from core.learner.weight_upgd import FirstOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner
 from core.learner.sgd import SGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
@@ -55,11 +48,9 @@ sp_grid = GridSearch(
                n_samples=[n_steps],
     )
 
-grids = [up_grids for _ in range(4)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
+grids = [up_grids for _ in range(2)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
 
 learners = [
-    FirstOrderLocalUPGDLearner(),
-    FirstOrderNonprotectingLocalUPGDLearner(),
     FirstOrderGlobalUPGDLearner(),
     FirstOrderNonprotectingGlobalUPGDLearner(),
     SGDLearner(),
