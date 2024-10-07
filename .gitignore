@@ -1,0 +1,6 @@
+.*/
+build/
+*egg*
+generated_cmds/
+logs/
+dataset/
