@@ -5,7 +5,7 @@ from core.runner import Runner
 from core.run.run_restarts import RunWithRestarts
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex6_input_permuted_mnist_restarts"
+exp_name = "input_permuted_mnist_restarts"
 task = tasks[exp_name]()
 n_steps = 1000000
 n_seeds = 20
