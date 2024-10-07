@@ -21,4 +21,16 @@ pip install .
 TBD
 
 ## How to cite
+
+#### Bibtex:
+```bibtex
+@inproceedings{elsayed2024addressing,
+    title={Addressing Loss of Plasticity and Catastrophic Forgetting in Continual Learning},
+    author={Mohamed Elsayed and A. Rupam Mahmood},
+    booktitle={The Twelfth International Conference on Learning Representations},
+    year={2024}
+}
+```
+
+#### APA:
 Elsayed, M., & Mahmood, A. R. (2023). Addressing Loss of Plasticity and Catastrophic Forgetting in Continual Learning. <em>In Proceedings of the 12th International Conference on Learning Representations (ICLR)</em>.
