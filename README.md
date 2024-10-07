@@ -18,7 +18,14 @@ pip install .
 ```
 
 #### 3. Run experiment:
-TBD
+##### Weight utility experiment (Figure 2):
+```sh
+python experiments/weight_utility.py
+```
+To plot, use the following:
+```sh
+python core/plot/plotter_utility.py
+```
 
 ## How to cite
 

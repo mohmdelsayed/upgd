@@ -43,8 +43,8 @@ import numpy as np
 
 
 tasks = {
-    "ex1_weight_utils": UtilityTask,
-    "ex2_feature_utils": UtilityTask,
+    "weight_utils": UtilityTask,
+    "feature_utils": UtilityTask,
     
     "ex3_toy_changing_inputset": PermutedAverage,
 

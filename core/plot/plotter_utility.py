@@ -60,7 +60,7 @@ class UtilityPlotter:
         plt.clf()
 
 if __name__ == "__main__":
-    best_runs = BestRun("ex1_weight_utils", "area", "small_fully_connected_tanh", ["sgd_with_hesscale"]).get_best_run()
+    best_runs = BestRun("weight_utils", "area", "small_fully_connected_relu", ["sgd_with_hesscale"]).get_best_run()
     print(best_runs)
     plotter = UtilityPlotter(best_runs)
     plotter.plot("global_correlations")
