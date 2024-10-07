@@ -8,7 +8,7 @@ from core.runner import Runner
 from core.run.run_offline import RunOffline
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex7_label_permuted_emnist_offline"
+exp_name = "label_permuted_emnist_offline"
 task = tasks[exp_name]()
 
 n_steps = 1000000

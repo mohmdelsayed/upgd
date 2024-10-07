@@ -14,7 +14,7 @@ from core.runner import Runner
 from core.run.run_stats import RunStats
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex9_label_permuted_mini_imagenet"
+exp_name = "label_permuted_mini_imagenet_stats"
 task = tasks[exp_name]()
 
 n_steps = 1000000

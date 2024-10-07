@@ -1,11 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.weight_upgd import (
-    FirstOrderLocalUPGDLearner,
-    FirstOrderNonprotectingLocalUPGDLearner,
-    FirstOrderGlobalUPGDLearner,
-    FirstOrderNonprotectingGlobalUPGDLearner,
-)
-
+from core.learner.weight_upgd import FirstOrderGlobalUPGDLearner, FirstOrderNonprotectingGlobalUPGDLearner
 from core.learner.sgd import SGDLearner
 from core.learner.pgd import PGDLearner
 from core.learner.shrink_and_perturb import ShrinkandPerturbLearner
@@ -14,7 +8,7 @@ from core.runner import Runner
 from core.run.run import Run
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "ex6_input_permuted_mnist"
+exp_name = "input_permuted_mnist"
 task = tasks[exp_name]()
 n_steps = 1000000
 n_seeds = 20
@@ -32,7 +26,7 @@ up_grids = GridSearch(
 pgd_grids = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(2, 6)],
-               sigma=[0.005, 0.05, 0.5],
+               sigma=[0.001, 0.01, 0.1],
                network=[FullyConnectedReLU()],
                n_samples=[n_steps],
     )
@@ -48,17 +42,15 @@ sgd_grid = GridSearch(
 sp_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[10 ** -i for i in range(2, 6)],
-               sigma=[0.005, 0.05, 0.5],
+               sigma=[0.001, 0.01, 0.1],
                decay=[0.1, 0.01, 0.001, 0.0001],
                network=[FullyConnectedReLU()],
                n_samples=[n_steps],
     )
 
-grids = [up_grids for _ in range(4)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
+grids = [up_grids for _ in range(2)] + [sgd_grid] +  [pgd_grids] + [sp_grid]
 
 learners = [
-    FirstOrderLocalUPGDLearner(),
-    FirstOrderNonprotectingLocalUPGDLearner(),
     FirstOrderGlobalUPGDLearner(),
     FirstOrderNonprotectingGlobalUPGDLearner(),
     SGDLearner(),

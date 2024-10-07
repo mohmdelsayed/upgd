@@ -46,19 +46,22 @@ tasks = {
     "weight_utils": UtilityTask,
     "feature_utils": UtilityTask,
     
-    "ex3_toy_changing_inputset": PermutedAverage,
+    "input_permuted_mnist": InputPermutedMNIST,
+    "input_permuted_mnist_restarts": InputPermutedMNISTRestarts,
 
-    "ex4_toy_changing_outputs": ChangingAverage,
+    "label_permuted_emnist" : LabelPermutedEMNIST,
+    "label_permuted_emnist_offline" : LabelPermutedMNISTOffline,
+    "label_permuted_cifar10" : LabelPermutedCIFAR10,
+    "label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 
-    "ex5_stationary_mnist" : StationaryMNIST,
+    "input_permuted_mnist_stats": InputPermutedMNIST,
+    "label_permuted_emnist_stats" : LabelPermutedEMNIST,
+    "label_permuted_cifar10_stats" : LabelPermutedCIFAR10,
+    "label_permuted_mini_imagenet_stats" : LabelPermutedMiniImageNet,
 
-    "ex6_input_permuted_mnist": InputPermutedMNIST,
-    "ex6_input_permuted_mnist_restarts": InputPermutedMNISTRestarts,
-
-    "ex7_label_permuted_emnist" : LabelPermutedEMNIST,
-    "ex7_label_permuted_emnist_offline" : LabelPermutedMNISTOffline,
-    "ex8_label_permuted_cifar10" : LabelPermutedCIFAR10,
-    "ex9_label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
+    "toy_changing_inputset": PermutedAverage,
+    "toy_changing_outputs": ChangingAverage,
+    "stationary_mnist" : StationaryMNIST,
 
 }
 
