@@ -40,7 +40,7 @@ class LabelPermutedMiniImageNet(Task):
     """
     Iteratable MiniImageNet-100 task with permuted labels.
     Each sample is a 1000-dimensional resnet50-processed image and the label is a number between 0 and 99.
-    The labels are permuted every 5000 steps.
+    The labels are permuted every 2500 steps.
     """
 
     def __init__(self, name="label_permuted_mini_imagenet", batch_size=1, change_freq=2500):
