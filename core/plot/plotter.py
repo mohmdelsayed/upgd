@@ -13,7 +13,7 @@ matplotlib.rcParams["ps.fonttype"] = 42
 matplotlib.rcParams.update({'font.size': 12})
 
 class Plotter:
-    def __init__(self, best_runs_path, metric, avg_interval=200):
+    def __init__(self, best_runs_path, metric, avg_interval=5000):
         self.best_runs_path = best_runs_path
         self.avg_interval = avg_interval
         self.metric = metric
@@ -48,7 +48,7 @@ class Plotter:
         else:
             raise Exception("metric must be loss or accuracy")
         # plt.ylim(bottom=0.0)
-        plt.savefig("ss.pdf", bbox_inches='tight')
+        plt.savefig("plot.pdf", bbox_inches='tight')
         plt.clf()
 
     def plot_1st_n_tasks(self, n_tasks=5):
@@ -119,11 +119,7 @@ class Plotter:
 
 
 if __name__ == "__main__":
-    best_runs1 = BestRun("ex3_permuted_average", "area", "fully_connected_linear", ["sgd", "anti_pgd", "pgd"]).get_best_run(measure="losses")
-    best_runs2 = BestRun("ex3_permuted_average", "area", "linear_layer", ["sgd"]).get_best_run(measure="losses")
-
-    print(best_runs1+best_runs2)
-    plotter = Plotter(best_runs1+best_runs2, metric="loss")
+    best_runs = BestRun("input_permuted_mnist", "area", "fully_connected_relu", ["sgd"]).get_best_run(measure="accuracies")
+    print(best_runs)
+    plotter = Plotter(best_runs, metric="accuracy")
     plotter.plot()
-    plotter.plot_1st_n_tasks(n_tasks=5)
-    plotter.plot_last_n_tasks(n_tasks=5)
