@@ -30,8 +30,6 @@ upgd1_grid = GridSearch(
                n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/upgd_v1_fo_normal_max/fully_connected_relu/lr_0.001_beta_utility_0.9_sigma_0.1_weight_decay_0.01',
-
 upgd2_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
@@ -42,8 +40,6 @@ upgd2_grid = GridSearch(
                n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/upgd_v2_fo_normal_max/fully_connected_relu/lr_0.01_beta_utility_0.9999_sigma_0.1_weight_decay_0.01',
-
 pgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.001],
@@ -51,8 +47,6 @@ pgd_grid = GridSearch(
                network=[FullyConnectedReLUWithHooks()],
                n_samples=[n_steps],
     )
-
-# 'logs/ex6_input_permuted_mnist/pgd/fully_connected_relu/lr_0.001_sigma_0.05',
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
@@ -62,8 +56,6 @@ sgd_grid = GridSearch(
                n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/sgd/fully_connected_relu/lr_0.001_weight_decay_0.001',
-
 sp_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.001],
@@ -72,8 +64,6 @@ sp_grid = GridSearch(
                network=[FullyConnectedReLUWithHooks()],
                n_samples=[n_steps],
     )
-
-# 'logs/ex6_input_permuted_mnist/shrink_and_perturb/fully_connected_relu/lr_0.001_sigma_0.05_decay_0.01',
 
 adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
@@ -86,8 +76,6 @@ adam_grid = GridSearch(
                n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/adam/fully_connected_relu/lr_0.0001_weight_decay_0.0_beta1_0.0_beta2_0.99_eps_1e-08',
-
 ewc_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.001],
@@ -97,9 +85,6 @@ ewc_grid = GridSearch(
                network=[FullyConnectedReLUWithHooks()],
                n_samples=[n_steps],
     )
-
-# 'logs/ex6_input_permuted_mnist/online_ewc/fully_connected_relu/lr_0.001_lamda_1.0_beta_weight_0.9999_beta_fisher_0.999'
-
 
 mas_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
@@ -111,7 +96,6 @@ mas_grid = GridSearch(
                 n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/mas/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.9999_beta_fisher_0.999',
 
 si_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
@@ -123,8 +107,6 @@ si_grid = GridSearch(
                 n_samples=[n_steps],
     )
 
-# 'logs/ex6_input_permuted_mnist/si/fully_connected_relu/lr_0.001_lamda_10.0_beta_weight_0.99_beta_importance_0.99',
-
 rwalk_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.001],
@@ -134,8 +116,6 @@ rwalk_grid = GridSearch(
                 network=[FullyConnectedReLUWithHooks()],
                 n_samples=[n_steps],
     )
-
-# 'logs/ex6_input_permuted_mnist/rwalk/fully_connected_relu/lr_0.001_lamda_0.1_beta_weight_0.9999_beta_importance_0.99',
 
 grids = [
          upgd1_grid,
