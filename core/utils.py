@@ -59,10 +59,6 @@ tasks = {
     "label_permuted_cifar10_stats" : LabelPermutedCIFAR10,
     "label_permuted_mini_imagenet_stats" : LabelPermutedMiniImageNet,
 
-    "toy_changing_inputset": PermutedAverage,
-    "toy_changing_outputs": ChangingAverage,
-    "stationary_mnist" : StationaryMNIST,
-
 }
 
 networks = {
