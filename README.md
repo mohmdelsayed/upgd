@@ -1,4 +1,4 @@
-# Addressing Loss of Plasticity and Catastrophic Forgetting in Neural Networks
+# Addressing Loss of Plasticity and Catastrophic Forgetting in Continual Learning
 
 The official repo for reproducing the experiments. You can find the paper from [here](https://openreview.net/forum?id=sKPzAXoylB). If you want to check the implementation for UPGD go [here](https://github.com/mohmdelsayed/upgd/blob/main/core/optim/weight/upgd/first_order.py#L74).
 
@@ -21,4 +21,4 @@ pip install .
 TBD
 
 ## How to cite
-Elsayed, M., & Mahmood, A. R. (2023). Addressing Loss of Plasticity and Catastrophic Forgetting in Neural Networks. <em>In Proceedings of the 12th International Conference on Learning Representations (ICLR)</em>.
+Elsayed, M., & Mahmood, A. R. (2023). Addressing Loss of Plasticity and Catastrophic Forgetting in Continual Learning. <em>In Proceedings of the 12th International Conference on Learning Representations (ICLR)</em>.
