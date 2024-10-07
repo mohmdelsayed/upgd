@@ -102,6 +102,11 @@ python core/run/rl/ppo_continuous_action_adam.py --seed 0 --env_id HalfCheetah-v
 python core/run/rl/ppo_continuous_action_upgd.py --seed 0 --env_id HalfCheetah-v4
 ```
 
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
 ## How to cite
 
 #### Bibtex:
