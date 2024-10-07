@@ -70,12 +70,9 @@ class Plotter:
 if __name__ == "__main__":
 
     best_runs1 = [
-                    'logs/ex7_label_permuted_emnist_offline/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
-                    'logs/ex7_label_permuted_emnist_offline/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.0_beta2_0.9999_eps_1e-08/',
-                    'logs/ex7_label_permuted_emnist_offline/upgd_fo_global/fully_connected_relu/lr_0.04_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
-
+        'logs/label_permuted_emnist_offline/upgd_fo_global/fully_connected_relu/lr_0.01_beta_utility_0.9_sigma_0.001_weight_decay_0.0',
+        'logs/label_permuted_emnist_offline/adam/fully_connected_relu/lr_0.0001_weight_decay_0.1_beta1_0.0_beta2_0.9999_eps_1e-08/',
     ]
-
     print(best_runs1)
     plotter = Plotter(best_runs1, metric="accuracy")
     plotter.plot()
