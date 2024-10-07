@@ -38,13 +38,13 @@ class UPGD(torch.optim.Optimizer):
 ```
 
 ## Installation:
-#### 1. You need to have environemnt with python 3.7:
+### 1. You need to have environemnt with python 3.7:
 ``` sh
 git clone  --recursive git@github.com:mohmdelsayed/upgd.git
 python3.7 -m venv .upgd
 source .upgd/bin/activate
 ```
-#### 2. Install Dependencies:
+### 2. Install Dependencies:
 ```sh
 python -m pip install --upgrade pip
 pip install -r requirements.txt 
@@ -52,8 +52,8 @@ pip install HesScale/.
 pip install .
 ```
 
-#### 3. Run experiment:
-##### Weight utility experiment (Figure 2):
+### 3. Run experiment:
+#### Weight utility experiment (Figure 2):
 ```sh
 python experiments/weight_utility.py
 ```
@@ -62,7 +62,7 @@ This would generate a list of python cmds you need to run them. After they are d
 python core/plot/plotter_utility.py
 ```
 
-##### Input-permuted MNIST (Figure 3):
+#### Input-permuted MNIST (Figure 3):
 You first need to define the grid search of each method from here `experiments/input_permuted_mnist.py` then you generate then python cmds using:
 ```sh
 python experiments/input_permuted_mnist.py
@@ -72,7 +72,7 @@ This would generate a list of python cmds you need to run them. After they are d
 python core/plot/plotter.py
 ```
 
-##### Label-permuted CIFAR-10/EMNIST/miniImageNet (Figure 6):
+#### Label-permuted CIFAR-10/EMNIST/miniImageNet (Figure 6):
 You first need to define the grid search of each method then you generate then python cmds using:
 ```sh
 python experiments/label_permuted_emnist.py
@@ -84,7 +84,7 @@ This would generate a list of python cmds you need to run them. After they are d
 python core/plot/plotter.py
 ```
 
-##### Input/Label-permuted Tasks Diagnostic Statistics (Figure 5):
+#### Input/Label-permuted Tasks Diagnostic Statistics (Figure 5):
 You first need to choose the method and the hyperparameter setting you want to run the statistics on from:
 ```sh
 python experiments/statistics_input_permuted_mnist.py
@@ -95,7 +95,7 @@ python experiments/statistics_output_permuted_imagenet.py
 This would generate a list of python cmds you need to run them. After they are done, the results would be saved in `logs/` in a JSON format.
 
 
-##### Policy collapse experiment (Figure 8):
+#### Policy collapse experiment (Figure 8):
 You need to choose the environment id and the seed number. In the paper, we averaged over 30 different seeds.
 ```sh
 python core/run/rl/ppo_continuous_action_adam.py --seed 0 --env_id HalfCheetah-v4
